@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CrowbarDetection : MonoBehaviour
 {
-    Rigidbody crowbar;
+    private Rigidbody crowbar;
+
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
-    [SerializeField] float crowbarVelocity;
+    [SerializeField] private float crowbarVelocity;
 
     void Start()
     {
@@ -16,7 +17,10 @@ public class CrowbarDetection : MonoBehaviour
 
     void Update()
     {
+        //sets the velocity 
         crowbarVelocity = crowbar.velocity.magnitude;
+
+        //Will change from space to when an object is in a trigger box near or just remove kinematic completely and balance it on somehting
         if(Input.GetKeyDown(KeyCode.Space))
         {
             crowbar.isKinematic = false;
@@ -27,8 +31,12 @@ public class CrowbarDetection : MonoBehaviour
     {
         if(other.tag == "Floor" && crowbarVelocity > 2)
         {
+            //Delete this
             Debug.Log("Guards Alerted");
+
+            //Sets the global variables 
             GameManager.alertedGuards = true;
+            GameManager.alertedLocation = gameObject.transform;
         }
     }
 }
