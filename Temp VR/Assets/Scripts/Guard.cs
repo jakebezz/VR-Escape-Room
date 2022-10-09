@@ -5,40 +5,26 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
-    public Transform guardStartLocation;
+    //Guard original location that they will move back to
+    [SerializeField] private Transform guardStartLocation;
+    [SerializeField] private NavMeshAgent guardAgent;
 
-    private Transform moveLocation;
-    private NavMeshAgent guardAgent;
-
-    Player player;
-    [SerializeField] GameObject playerObject;
+    //Will be used in mose classes, may change to static
+    public bool alertedGuards;
+    public Transform alertedLocation;
 
     private void Start()
     {
         guardAgent = GetComponent<NavMeshAgent>();
-        player = playerObject.GetComponent<Player>();
+        alertedGuards = false;
     }
 
     void Update()
     {
-        if (GameManager.alertedGuards == true)
+        //Moves the guard to the location of the sound
+        if (alertedGuards == true)
         {
-            guardAgent.destination = GameManager.alertedLocation.position;
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if(other.tag == "DetectionTrigger")
-        {
-            if(player.isHidden == false)
-            {
-                Debug.Log("Player Caught");
-            }
-            else
-            {
-                Debug.Log("Player Hidden");
-            }
+            guardAgent.destination = alertedLocation.position;
         }
     }
 }

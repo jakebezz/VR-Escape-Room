@@ -5,21 +5,30 @@ using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
 {
+    //REWATCH VIDEO AND COMMENT CODE, CHANGE IT TOO
+
     public float radius;
-    [Range(0, 360)]
-    public float angle;
+    [Range(0, 360)] public float angle;
 
-    public GameObject playerRef;
+    public GameObject playerObj;
 
-    public LayerMask targetMask;
-    public LayerMask obstructionMask;
+    //Layer assigned to the Player, this layer will be spotted by the guard
+    [SerializeField] private LayerMask playerMask;
+    //Layer assigned to most objects, guard will no be able to see behind this mask
+    [SerializeField] private LayerMask obstructionMask;
 
+    //Maybe change this when player is in closet? door would have to be close a certain amount 
     public bool canSeePlayer;
+
+    //Access to Guard Class
+    private Guard guard;
+    [SerializeField] private GameObject guardObj;
 
     private void Start()
     {
-        playerRef = GameObject.FindGameObjectWithTag("Player");
         StartCoroutine(FOVRoutine());
+
+        guard = guardObj.GetComponent<Guard>();
     }
 
     private IEnumerator FOVRoutine()
@@ -35,7 +44,7 @@ public class FieldOfView : MonoBehaviour
 
     private void FieldOfViewCheck()
     {
-        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, targetMask);
+        Collider[] rangeChecks = Physics.OverlapSphere(transform.position, radius, playerMask);
 
         if (rangeChecks.Length != 0)
         {
@@ -49,6 +58,10 @@ public class FieldOfView : MonoBehaviour
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
                     canSeePlayer = true;
+                    guard.alertedGuards = true;
+                    guard.alertedLocation = playerObj.transform;
+
+                    Debug.Log("Going to player");
                 }
                 else
                 {

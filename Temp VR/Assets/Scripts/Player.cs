@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
         isHidden = false;
     }
 
+    //Used to check if player is in or out of closet, may delete this
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Hidden")

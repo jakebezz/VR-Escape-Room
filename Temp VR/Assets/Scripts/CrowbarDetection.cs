@@ -5,14 +5,22 @@ using UnityEngine;
 public class CrowbarDetection : MonoBehaviour
 {
     private Rigidbody crowbar;
-
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
     [SerializeField] private float crowbarVelocity;
+
+    //Used to duplicate the location of the crowbar, stops the guard from folling the crowbar object
+    [SerializeField] private GameObject crowbarLocation;
+
+    //Access to Guard Class
+    private Guard guard;
+    [SerializeField] private GameObject guardObj;
 
     void Start()
     {
         crowbar = GetComponent<Rigidbody>();
         crowbar.isKinematic = true;
+
+        guard = guardObj.GetComponent<Guard>();
     }
 
     void Update()
@@ -32,11 +40,15 @@ public class CrowbarDetection : MonoBehaviour
         if(other.tag == "Floor" && crowbarVelocity > 2)
         {
             //Delete this
-            Debug.Log("Guards Alerted");
+            Debug.Log("Guard Alerted");
+
+            //Clones the crowbar location
+            GameObject crowbarLocationClone;
+            crowbarLocationClone = Instantiate(crowbarLocation, crowbarLocation.transform.position, crowbarLocation.transform.rotation);
 
             //Sets the global variables 
-            GameManager.alertedGuards = true;
-            GameManager.alertedLocation = gameObject.transform;
+            guard.alertedGuards = true;
+            guard.alertedLocation = crowbarLocationClone.transform;
         }
     }
 }
