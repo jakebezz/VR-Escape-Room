@@ -9,18 +9,12 @@ public class CrowbarDetection : MonoBehaviour
     [SerializeField] private float crowbarVelocity;
 
     //Used to duplicate the location of the crowbar, stops the guard from folling the crowbar object
-    [SerializeField] private GameObject crowbarLocation;
-
-    //Access to Guard Class
-    private Guard guard;
-    [SerializeField] private GameObject guardObj;
+    [SerializeField] public Vector3 crowbarLocation;
 
     void Start()
     {
         crowbar = GetComponent<Rigidbody>();
         crowbar.isKinematic = true;
-
-        guard = guardObj.GetComponent<Guard>();
     }
 
     void Update()
@@ -42,13 +36,11 @@ public class CrowbarDetection : MonoBehaviour
             //Delete this
             Debug.Log("Guard Alerted");
 
-            //Clones the crowbar location
-            GameObject crowbarLocationClone;
-            crowbarLocationClone = Instantiate(crowbarLocation, crowbarLocation.transform.position, crowbarLocation.transform.rotation);
+            crowbarLocation = crowbar.transform.position;
 
             //Sets the global variables 
-            guard.alertedGuards = true;
-            guard.alertedLocation = crowbarLocationClone.transform;
+            GameManager.Instance.alertedGuards = true;
+            GameManager.Instance.alertedLocation = crowbarLocation;
         }
     }
 }

@@ -17,8 +17,11 @@ public class FieldOfView : MonoBehaviour
     //Layer assigned to most objects, guard will no be able to see behind this mask
     [SerializeField] private LayerMask obstructionMask;
 
-    //Maybe change this when player is in closet? door would have to be close a certain amount 
-    public bool canSeePlayer;
+    //Rotating guard variables
+    [SerializeField] private Transform target;
+    [SerializeField] private float rotationSpeed;
+    private Quaternion lookRotation;
+    private Vector3 rotationDirection;
 
     //Access to Guard Class
     private Guard guard;
@@ -57,25 +60,31 @@ public class FieldOfView : MonoBehaviour
 
                 if (!Physics.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionMask))
                 {
-                    canSeePlayer = true;
-                    guard.alertedGuards = true;
-                    guard.alertedLocation = playerObj.transform;
+                    GameManager.Instance.canSeePlayer = true;
+
+                    //Rotates guard to look towards player
+                    rotationDirection = (target.position - transform.position).normalized;
+                    lookRotation = Quaternion.LookRotation(rotationDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationSpeed);
+
+                    GameManager.Instance.alertedGuards = true;
+                    GameManager.Instance.alertedLocation = playerObj.transform.position;
 
                     Debug.Log("Going to player");
                 }
                 else
                 {
-                    canSeePlayer = false;
+                    GameManager.Instance.canSeePlayer = false;
                 }
             }
             else
             {
-                canSeePlayer = false;
+                GameManager.Instance.canSeePlayer = false;
             }
         }
-        else if (canSeePlayer)
+        else if (GameManager.Instance.canSeePlayer)
         {
-            canSeePlayer = false;
+            GameManager.Instance.canSeePlayer = false;
         }
     }
 }

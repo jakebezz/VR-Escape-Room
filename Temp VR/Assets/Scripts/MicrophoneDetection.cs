@@ -17,8 +17,8 @@ public class MicrophoneDetection : MonoBehaviour
     //Access to Guard Class
     private Guard guard;
     [SerializeField] private GameObject guardObj;
-    //Used to duplicated the location of the player, stops the guard from following the player
-    [SerializeField] private GameObject playerLocation;
+    //Used to set the location of the sound
+    [SerializeField]private Vector3 playerSoundPos;
 
     void Start()
     {
@@ -40,13 +40,12 @@ public class MicrophoneDetection : MonoBehaviour
         {
             Debug.Log("Guard Heard");
 
-            //Creates the clone of the players location
-            GameObject playerLocationClone;
-            playerLocationClone = Instantiate(playerLocation, playerLocation.transform.position, transform.rotation);
+            //this is constantly setting the sound position to player location because it is in update
+            playerSoundPos = gameObject.transform.position;
 
             //Sends guard to location of the cloned location
-            guard.alertedGuards = true;
-            guard.alertedLocation = playerLocationClone.transform;
+            GameManager.Instance.alertedGuards = true;
+            GameManager.Instance.alertedLocation = playerSoundPos;
 
 
         }

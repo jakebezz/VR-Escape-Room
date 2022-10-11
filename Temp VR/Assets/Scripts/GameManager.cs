@@ -4,8 +4,36 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    //PROABABLY CHANGE THIS TO SINGLETON CLASS
-    //Maybe move these to guard class? will have to see
-    
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                GameObject gameObject = new GameObject("GameManager");
+                gameObject.AddComponent<GameManager>();
+            }
+            else
+            {
+                return _instance;
+            }
+            return _instance;
+        }
+    }
 
+    private void Awake()
+    {
+        _instance = this;
+    }
+
+    public bool canSeePlayer;
+    public bool alertedGuards;
+    public Vector3 alertedLocation;
+
+    private void Start()
+    {
+        alertedGuards = false;
+        canSeePlayer = false;
+    }
 }

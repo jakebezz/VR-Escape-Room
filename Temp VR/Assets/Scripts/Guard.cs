@@ -9,22 +9,40 @@ public class Guard : MonoBehaviour
     [SerializeField] private Transform guardStartLocation;
     [SerializeField] private NavMeshAgent guardAgent;
 
-    //Will be used in mose classes, may change to static
-    public bool alertedGuards;
-    public Transform alertedLocation;
+    //For testing DELETE THIS
+    [SerializeField] int waitTime;
 
     private void Start()
     {
         guardAgent = GetComponent<NavMeshAgent>();
-        alertedGuards = false;
     }
 
     void Update()
     {
         //Moves the guard to the location of the sound
-        if (alertedGuards == true)
+        if (GameManager.Instance.alertedGuards == true)
         {
-            guardAgent.destination = alertedLocation.position;
+            StartCoroutine(WaitToMoveToAlert());
+        }
+    }
+
+    //Delays the movement of the guard so they dont move instanly
+    IEnumerator WaitToMoveToAlert()
+    {
+        yield return new WaitForSeconds(waitTime);
+        guardAgent.destination = GameManager.Instance.alertedLocation;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "DetectableObject")
+        {
+            if(GameManager.Instance.canSeePlayer == false)
+            {
+                GameManager.Instance.alertedGuards = false;
+                GameManager.Instance.alertedLocation = guardStartLocation.transform.position;
+                StartCoroutine(WaitToMoveToAlert());
+            }
         }
     }
 }

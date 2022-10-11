@@ -4,6 +4,7 @@ using UnityEngine;
 [CustomEditor(typeof(FieldOfView))]
 public class FieldOfViewEditor : Editor
 {
+    //A lot of maths stuff I honestly dont understand very well, this is only used in editor and cannot be seen by the player
     private void OnSceneGUI()
     {
         FieldOfView fov = (FieldOfView)target;
@@ -17,7 +18,7 @@ public class FieldOfViewEditor : Editor
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle01 * fov.radius);
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngle02 * fov.radius);
 
-        if (fov.canSeePlayer)
+        if (GameManager.Instance.canSeePlayer)
         {
             Handles.color = Color.green;
             Handles.DrawLine(fov.transform.position, fov.playerObj.transform.position);
