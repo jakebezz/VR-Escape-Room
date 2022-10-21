@@ -7,7 +7,7 @@ public class Guard : MonoBehaviour
 {
     //Guard original location that they will move back to
     [SerializeField] private Transform guardStartLocation;
-    [SerializeField] private NavMeshAgent guardAgent;
+    private NavMeshAgent guardAgent;
 
     //For testing DELETE THIS
     [SerializeField] int waitTime;

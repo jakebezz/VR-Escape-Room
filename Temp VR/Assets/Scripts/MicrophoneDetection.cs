@@ -46,8 +46,6 @@ public class MicrophoneDetection : MonoBehaviour
             //Sends guard to location of the cloned location
             GameManager.Instance.alertedGuards = true;
             GameManager.Instance.alertedLocation = playerSoundPos;
-
-
         }
     }
 

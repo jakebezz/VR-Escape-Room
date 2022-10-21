@@ -4,32 +4,25 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager _instance;
-    public static GameManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                GameObject gameObject = new GameObject("GameManager");
-                gameObject.AddComponent<GameManager>();
-            }
-            else
-            {
-                return _instance;
-            }
-            return _instance;
-        }
-    }
-
-    private void Awake()
-    {
-        _instance = this;
-    }
+    public static GameManager Instance;
 
     public bool canSeePlayer;
     public bool alertedGuards;
     public Vector3 alertedLocation;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     private void Start()
     {
