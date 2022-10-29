@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LaserPointer : MonoBehaviour
+public class LaserPointer : BombPartsPlacement
 {
     [SerializeField] private CatMove cat;
 
