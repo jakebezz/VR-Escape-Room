@@ -14,6 +14,14 @@ public class BombPartsPlacement : MonoBehaviour
 
     [SerializeField] private BombPartsPlacement[] bombParts;
 
+    private void Update()
+    {
+        if (AllPartsPlaced() == true)
+        {
+            Debug.Log("All Parts Placed");
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "BombPlacement")
@@ -32,14 +40,6 @@ public class BombPartsPlacement : MonoBehaviour
             isInTrigger = false;
             bombPartRigid.isKinematic = false;
             bombPartRigid.useGravity = true;
-        }
-    }
-
-    private void Update()
-    {
-        if (AllPartsPlaced() == true)
-        {
-            Debug.Log("All Parts Placed");
         }
     }
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CrowbarDetection : MonoBehaviour
+public class Crowbar : MonoBehaviour
 {
     private Rigidbody crowbar;
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
