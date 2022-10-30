@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6109407718313356830}
   - component: {fileID: 8672447222870872596}
   - component: {fileID: 6462952570385216167}
-  - component: {fileID: 8462061913835515730}
+  - component: {fileID: 3826396149171171450}
   m_Layer: 0
   m_Name: WhiteWire
   m_TagString: BombObject
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &8462061913835515730
+--- !u!114 &3826396149171171450
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2960746874574717843}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec948a6e1b17eb48a44bd4a4edcde8b, type: 3}
+  m_Script: {fileID: 11500000, guid: a73fba1697c853b47a21ed8f5d9f65e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placementLoc: {fileID: 0}
+  isInTrigger: 0
+  bombPartRigid: {fileID: 0}
+  bombParts: []

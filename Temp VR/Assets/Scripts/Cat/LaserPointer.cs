@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class LaserPointer : BombPartsPlacement
+public class LaserPointer : MonoBehaviour
 {
+    //Cat Nav agent to move
     [SerializeField] private CatMove cat;
 
+    //Variables for the Linerenderer
     private LineRenderer laserLine;
     [SerializeField] private float maxLineLength;
 
+    //Used to check if laser is hitting the floor
     private bool floorHit;
 
-    private RaycastHit hit;
+    //Raycast
+    private RaycastHit laserHit;
 
     private void Start()
     {
@@ -46,26 +50,26 @@ public class LaserPointer : BombPartsPlacement
 
     private void SetRayCast()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        //Set raycast to the hit returned from RayCastFromObject
+        laserHit = GameManager.Instance.RaycastFromObject(gameObject);
+
+        if (laserHit.collider)
         {
-            if (hit.collider)
+            //If the raycast hits the CatFloor collider, set floorHit to true
+            if (laserHit.collider.gameObject.tag == "CatFloor")
             {
-                //If the raycast hits the CatFloor collider, set floorHit to true
-                if (hit.collider.gameObject.tag == "CatFloor")
-                {
-                    floorHit = true;
-                }
-                //If the collider hit is not the CatFloor, set floorHit to false
-                else
-                {
-                    floorHit = false;
-                }
-                //Sets the end point of laser to the hit point
-                laserLine.SetPosition(1, hit.point);
+                floorHit = true;
             }
+            //If the collider hit is not the CatFloor, set floorHit to false
+            else
+            {
+                floorHit = false;
+            }
+            //Sets the end point of laser to the hit point
+            laserLine.SetPosition(1, laserHit.point);
         }
         //If there is nothing to RayCast to, set floorHit to false and end point of laser to the max length
-        else
+        else if(!laserHit.collider)
         {
             floorHit = false;
             laserLine.SetPosition(1, transform.forward * maxLineLength);
@@ -74,7 +78,7 @@ public class LaserPointer : BombPartsPlacement
         //Move Cat only if the laser it hitting the floor
         if (floorHit == true)
         {
-            StartCoroutine(DelayCatMove(0.2f, hit.point));
+            StartCoroutine(DelayCatMove(0.2f, laserHit.point));
         }
         else if (floorHit == false)
         {

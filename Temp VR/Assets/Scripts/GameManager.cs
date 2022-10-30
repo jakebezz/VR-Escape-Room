@@ -29,4 +29,15 @@ public class GameManager : MonoBehaviour
         alertedGuards = false;
         canSeePlayer = false;
     }
+
+    public RaycastHit RaycastFromObject(GameObject raycastObject)
+    {
+        RaycastHit hit;
+
+        if(Physics.Raycast(raycastObject.transform.position, raycastObject.transform.forward, out hit))
+        {
+            return hit;
+        }
+        return hit;
+    }
 }

@@ -1053,6 +1053,8 @@ GameObject:
   - component: {fileID: 254924590}
   - component: {fileID: 254924589}
   - component: {fileID: 254924592}
+  - component: {fileID: 254924593}
+  - component: {fileID: 254924594}
   m_Layer: 8
   m_Name: PasswordSlotHidden_1
   m_TagString: Untagged
@@ -1158,6 +1160,122 @@ MonoBehaviour:
   rotationChange: 90
   rotationTarget: 90
   key: 49
+  ignoreObject:
+  - {fileID: 2054487058}
+  - {fileID: 1503153239259946862}
+  currentEulerAngles: {x: 0, y: 0, z: 0}
+--- !u!54 &254924593
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254924587}
+  serializedVersion: 2
+  m_Mass: 0.2
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!153 &254924594
+ConfigurableJoint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 254924587}
+  m_ConnectedBody: {fileID: 0}
+  m_ConnectedArticulationBody: {fileID: 0}
+  m_Anchor: {x: 0, y: 0, z: 0}
+  m_Axis: {x: 1, y: 0, z: 0}
+  m_AutoConfigureConnectedAnchor: 1
+  m_ConnectedAnchor: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_SecondaryAxis: {x: 0, y: 1, z: 0}
+  m_XMotion: 2
+  m_YMotion: 0
+  m_ZMotion: 0
+  m_AngularXMotion: 2
+  m_AngularYMotion: 0
+  m_AngularZMotion: 0
+  m_LinearLimitSpring:
+    spring: 0
+    damper: 0
+  m_LinearLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularXLimitSpring:
+    spring: 0
+    damper: 0
+  m_LowAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_HighAngularXLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularYZLimitSpring:
+    spring: 0
+    damper: 0
+  m_AngularYLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_AngularZLimit:
+    limit: 0
+    bounciness: 0
+    contactDistance: 0
+  m_TargetPosition: {x: 0, y: 0, z: 0}
+  m_TargetVelocity: {x: 0, y: 0, z: 0}
+  m_XDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_YDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_TargetRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_TargetAngularVelocity: {x: 0, y: 0, z: 0}
+  m_RotationDriveMode: 0
+  m_AngularXDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_AngularYZDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_SlerpDrive:
+    serializedVersion: 3
+    positionSpring: 0
+    positionDamper: 0
+    maximumForce: 3.4028233e+38
+  m_ProjectionMode: 0
+  m_ProjectionDistance: 0.1
+  m_ProjectionAngle: 180
+  m_ConfiguredInWorldSpace: 0
+  m_SwapBodies: 0
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_EnableCollision: 0
+  m_EnablePreprocessing: 1
+  m_MassScale: 1
+  m_ConnectedMassScale: 1
 --- !u!1 &305997398
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,9 +4082,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8fbbcdd7b7f7c4daf1308372a83f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placementLoc: {fileID: 0}
-  isInTrigger: 0
-  bombPartRigid: {fileID: 0}
   cat: {fileID: 534450356}
   maxLineLength: 100
 --- !u!1001 &945631406
@@ -4319,8 +4434,8 @@ Transform:
   - {fileID: 1161866360}
   - {fileID: 880851643}
   - {fileID: 486529107}
-  - {fileID: 1082924898}
   - {fileID: 506743650}
+  - {fileID: 1082924898}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5025,6 +5140,7 @@ GameObject:
   - component: {fileID: 1191847188}
   - component: {fileID: 1191847187}
   - component: {fileID: 1191847186}
+  - component: {fileID: 1191847189}
   m_Layer: 0
   m_Name: PartPlacement
   m_TagString: BombPlacement
@@ -5115,6 +5231,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1191847183}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1191847189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1191847183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec948a6e1b17eb48a44bd4a4edcde8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placementLoc: {fileID: 0}
+  isInTrigger: 0
+  bombPartRigid: {fileID: 0}
+  bombParts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1193532149
 GameObject:
   m_ObjectHideFlags: 0
@@ -5807,6 +5942,7 @@ MonoBehaviour:
   placementLoc: {fileID: 594703331}
   isInTrigger: 0
   bombPartRigid: {fileID: 0}
+  bombParts: []
   timerLoc: {fileID: 2077225005}
   XRrig: {fileID: 1725982592}
   timeLeft: 300
@@ -7270,8 +7406,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCorrect: 0
   rotationChange: 90
-  rotationTarget: -180
+  rotationTarget: 180
   key: 50
+  ignoreObject: []
+  currentEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!1 &1626493766
 GameObject:
   m_ObjectHideFlags: 0
@@ -7388,8 +7526,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCorrect: 0
   rotationChange: 90
-  rotationTarget: -90
+  rotationTarget: 270
   key: 51
+  ignoreObject: []
+  currentEulerAngles: {x: 0, y: 0, z: 0}
 --- !u!1 &1631246425
 GameObject:
   m_ObjectHideFlags: 0
@@ -9680,7 +9820,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2054487058}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -10069,14 +10209,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504075802642994688}
-  m_LocalRotation: {x: -0.78694123, y: -0, z: -0, w: 0.61702794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.01192521, y: 0.12458458, z: -0.10923962}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1498237707830268612}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -103.801, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503153239259946862
 GameObject:
   m_ObjectHideFlags: 0
@@ -10138,7 +10278,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1014552513}
     m_Modifications:
-    - target: {fileID: 312903283714138825, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
+    - target: {fileID: 5390012091189510719, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
         type: 3}
       propertyPath: placementLoc
       value: 
@@ -10146,7 +10286,7 @@ PrefabInstance:
     - target: {fileID: 7305539191757201466, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
         type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7305539191757201466, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
         type: 3}
@@ -12128,7 +12268,7 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1014552513}
     m_Modifications:
-    - target: {fileID: 4021949927017703716, guid: 29e296cfd2e5e094ca92cedd70f59935,
+    - target: {fileID: 1155508477231724176, guid: 29e296cfd2e5e094ca92cedd70f59935,
         type: 3}
       propertyPath: placementLoc
       value: 
@@ -12205,7 +12345,7 @@ PrefabInstance:
     - target: {fileID: 2236529948264937243, guid: 45697a1f78a8ed7459179239f6bc1f1a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2236529948264937243, guid: 45697a1f78a8ed7459179239f6bc1f1a,
         type: 3}
@@ -12262,7 +12402,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: WhiteWire
       objectReference: {fileID: 0}
-    - target: {fileID: 8462061913835515730, guid: 45697a1f78a8ed7459179239f6bc1f1a,
+    - target: {fileID: 3826396149171171450, guid: 45697a1f78a8ed7459179239f6bc1f1a,
         type: 3}
       propertyPath: placementLoc
       value: 

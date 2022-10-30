@@ -13,7 +13,7 @@ public class FireExtinguisher : MonoBehaviour
 
     //Range that Raycast can hit
     [SerializeField] private float hitRange;
-    private RaycastHit hit;
+    private RaycastHit extinguisherHit;
 
     private void Start()
     {
@@ -22,27 +22,24 @@ public class FireExtinguisher : MonoBehaviour
 
     private void Update()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        extinguisherHit = GameManager.Instance.RaycastFromObject(gameObject);
+
+        if (extinguisherHit.collider.gameObject.tag == "Vent" && dynamiteOutOfVent == false)
         {
-            if (hit.collider.gameObject.tag == "Vent" && dynamiteOutOfVent == false)
+            Debug.Log("Hit Collider");
+            if (Input.GetKey(KeyCode.Y))
             {
-                Debug.Log("Hit Collider");
-                if (Input.GetKey(KeyCode.Y))
-                {
-                    dynamiteRigid.AddForce(-Vector3.forward * force);
-                }
+                dynamiteRigid.AddForce(-Vector3.forward * force);
             }
 
-            //If the hit object has a rigidbody the player is able to add force
-            if (hit.rigidbody != null)
+            if (extinguisherHit.rigidbody != null)
             {
                 Debug.Log("Hit Rigidbody");
                 if (Input.GetKey(KeyCode.Y))
                 {
-                    hit.rigidbody.AddForce(transform.forward * force);
+                    extinguisherHit.rigidbody.AddForce(transform.forward * force);
                 }
             }
-
         }
     }
 }

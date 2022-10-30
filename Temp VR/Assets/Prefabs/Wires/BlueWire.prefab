@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4844197646628574325}
   - component: {fileID: 1291811092406164764}
   - component: {fileID: 2510050444301173525}
-  - component: {fileID: 312903283714138825}
+  - component: {fileID: 5390012091189510719}
   m_Layer: 0
   m_Name: BlueWire
   m_TagString: BombObject
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &312903283714138825
+--- !u!114 &5390012091189510719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -125,7 +125,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7397213140379591882}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ec948a6e1b17eb48a44bd4a4edcde8b, type: 3}
+  m_Script: {fileID: 11500000, guid: a73fba1697c853b47a21ed8f5d9f65e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placementLoc: {fileID: 0}
+  isInTrigger: 0
+  bombPartRigid: {fileID: 0}
+  bombParts: []

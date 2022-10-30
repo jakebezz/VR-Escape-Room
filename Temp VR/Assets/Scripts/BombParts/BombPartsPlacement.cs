@@ -12,6 +12,8 @@ public class BombPartsPlacement : MonoBehaviour
     //MAYBE A GLOBAL VELOCITY THING SO IF ANY OF THEM HIT THE GROUND TOO FAST IT WILL ALET GUARD
     public Rigidbody bombPartRigid;
 
+    [SerializeField] private BombPartsPlacement[] bombParts;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "BombPlacement")
@@ -31,5 +33,25 @@ public class BombPartsPlacement : MonoBehaviour
             bombPartRigid.isKinematic = false;
             bombPartRigid.useGravity = true;
         }
+    }
+
+    private void Update()
+    {
+        if (AllPartsPlaced() == true)
+        {
+            Debug.Log("All Parts Placed");
+        }
+    }
+
+    private bool AllPartsPlaced()
+    {
+        foreach(BombPartsPlacement parts in bombParts)
+        {
+            if(parts.isInTrigger == false)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
