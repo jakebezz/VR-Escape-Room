@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BombPartsPlacement" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgQAgAAAAAAAAAAAAAAAAgAAAAAAAIAAQQAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BombParts\BombPartsPlacement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CasePassword" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AASAAAAAICAAAAAAAAAEBAQAAAAAAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BombParts\CasePassword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dynamite" Collapsed="true">
+    <Position X="0.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BombParts\Dynamite.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timer" Collapsed="true">
+    <Position X="2.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAQBAACAAgAAACAAAAAAAEBAAAAAABAQAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BombParts\Timer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Wires" Collapsed="true">
+    <Position X="5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\BombParts\Wires.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CatMove" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Cat\CatMove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LaserPointer" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABAAAACgAAAAgAAgAAAAACAAAgAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Assets\Scripts\Cat\LaserPointer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Crowbar" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAEAAAACAAAAAAAAAAAAAAEAAEAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Crowbar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ElectricalBox" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\ElectricalBox.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FireExtinguisher" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAAEACAAAAAAAAAAAAAAAAAAEAgAAQAAAAABAAA=</HashCode>
+      <FileName>Assets\Scripts\FireExtinguisher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameManager" Collapsed="true">
+    <Position X="11" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAACAAAQAAAAAAQAAgAAAAAAAAQAAAAAAAAEA=</HashCode>
+      <FileName>Assets\Scripts\GameManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FieldOfView" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQEAAAACAAAAAAAAAAAAAAAAAAAAAABAAAAAEAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Guard\FieldOfView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Guard" Collapsed="true">
+    <Position X="12.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAAACAAAAAAACAQAQAAAAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Guard\Guard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="OpenCase" Collapsed="true">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Assets\Scripts\OpenCase.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MicrophoneDetection" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAQAABACAAAAIAAAA4AAAEAAAAACAAAAAAAIAAAAg=</HashCode>
+      <FileName>Assets\Scripts\Player\MicrophoneDetection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAACAAAAAAAAAAAAAAAAAAAIAAQAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Unity.Template.VR.XRPlatformControllerSetup" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAIAABAAAAIAAAAACAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\Scripts\Player\XRPlatformControllerSetup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

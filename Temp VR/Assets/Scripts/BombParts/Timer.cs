@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class Timer : BombPartsPlacement
+public class Timer : BombParts
 {
     //Timer Object
     [SerializeField] private Transform timerLoc;

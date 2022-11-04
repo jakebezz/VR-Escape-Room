@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wires : BombPartsPlacement
+public class Wires : BombParts
 {
     private void Start()
     {
