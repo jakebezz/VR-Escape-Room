@@ -38,4 +38,12 @@ public class Crowbar : MonoBehaviour
             GameManager.Instance.alertedLocation = transform.position;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Ball")
+        {
+            crowbar.isKinematic = false;
+        }
+    }
 }

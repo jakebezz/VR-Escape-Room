@@ -9,7 +9,7 @@ public class Guard : MonoBehaviour
     [SerializeField] private Transform guardStartLocation;
     private NavMeshAgent guardAgent;
 
-    //For testing DELETE THIS
+    //Sets delay before guard moves to location
     [SerializeField] int waitTime;
 
     private void Start()
@@ -33,16 +33,5 @@ public class Guard : MonoBehaviour
         guardAgent.destination = GameManager.Instance.alertedLocation;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "DetectableObject")
-        {
-            if(GameManager.Instance.canSeePlayer == false)
-            {
-                GameManager.Instance.alertedGuards = false;
-                GameManager.Instance.alertedLocation = guardStartLocation.transform.position;
-                StartCoroutine(WaitToMoveToAlert());
-            }
-        }
-    }
+
 }

@@ -13,126 +13,137 @@ public class ColourChangingPuzzle : MonoBehaviour
     
     //Currently Code is 7 9 7
     //Bools to change
-    public bool lightOne;
-    public bool lightTwo;
-    public bool lightThree;
-    public bool lightFour;
+    public bool[] lightBool = new bool[4];
+
+    bool inputOne = true;
+    bool inputTwo = true;
+    bool inputThree = true;
+    bool inputFour = true;
+
+    bool puzzleSolved = false;
 
     private void Start()
     {
-        //Set all bools to true
-        lightOne = true;
-        lightTwo = true;
-        lightThree = true;
-        lightFour = true;
+        for(int i = 0; i < lightBool.Length; i++)
+        {
+            lightBool[i] = true;
+        }
     }
 
-
+    //Maybe Change this into Parent and Children
     private void Update()
     {
-        //Light One
-        if(lightOne == true)
-        {
-            lightMeshes[0].enabled = true;
-        }
-        else
-        {
-            lightMeshes[0].enabled = false;
-        }
-        //Light Two
-        if (lightTwo == true)
-        {
-            lightMeshes[1].enabled = true;
-        }
-        else
-        {
-            lightMeshes[1].enabled = false;
-        }
-        //Light Three
-        if (lightThree == true)
-        {
-            lightMeshes[2].enabled = true;
-        }
-        else
-        {
-            lightMeshes[2].enabled = false;
-        }
-        //Light Four
-        if (lightFour == true)
-        {
-            lightMeshes[3].enabled = true;
-        }
-        else
-        {
-            lightMeshes[3].enabled = false;
-        }
-
+        /// Light One - lightBool[0]
+        /// Light Two - lightBool[1]
+        /// Light Three - lightBool[2]
+        /// Light Four - lightBool[3]
 
         //Light One
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            if (lightOne == true || lightThree == false || lightFour == false)
+            if (inputOne == true)
             {
                 //Makes lightOne false, lightTwo stays the same, lightThree on and lightFour on
-                ChangeOnOff(false, lightTwo, true, true);
+                ChangeOnOff(false, lightBool[1], true, true);
+                inputOne = false;
             }
             else
             {
                 //Inverses the lights so they can turn on and off when gesture is made
-                ChangeOnOff(!lightOne, lightTwo, !lightThree, !lightFour);
+                ChangeOnOff(true, lightBool[1], false, false);
+                inputOne = true;
             }
+            SetMeshEnabled();
         }
 
         //Light Two
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            if (lightTwo == true || lightThree == true || lightFour == true)
+            if (inputTwo == true)
             {
-                ChangeOnOff(lightOne, false, false, false);
+                ChangeOnOff(lightBool[0], false, false, false);
+                inputTwo = false;
             }
             else
             {
-                ChangeOnOff(lightOne, !lightTwo, !lightThree, !lightFour);
+                ChangeOnOff(lightBool[0], true, true, true);
+                inputTwo = true;
             }
+            SetMeshEnabled();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            if (lightOne == false || lightTwo == true || lightThree == true)
+            if (inputThree == true)
             {
-                ChangeOnOff(true, false, false, lightFour);
+                ChangeOnOff(true, false, false, lightBool[3]);
+                inputThree = false;
             }
             else
             {
-                ChangeOnOff(!lightOne, !lightTwo, !lightThree, lightFour);
-            }
+                ChangeOnOff(false, true, true, lightBool[3]);
+                inputThree = true;
+            }   
+            SetMeshEnabled();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            if (lightOne == true || lightThree == false || lightFour == true)
+            if (inputFour == true)
             {
-                ChangeOnOff(false, lightTwo, true, false);
+                ChangeOnOff(false, lightBool[1], true, false);
+                inputFour = false;
             }
             else
             {
-                ChangeOnOff(!lightOne, lightTwo, !lightThree, !lightFour);
+                ChangeOnOff(true, lightBool[1], false, true);
+                inputFour = true;
             }
+            SetMeshEnabled();
         }
 
         //If all lights are off start the powerOff event
-        if ((lightOne == false) && (lightTwo == false) && (lightThree == false) && (lightFour == false))
+        if (CheckBoolArrayIsFalse() == false && puzzleSolved == false)
         {
+            puzzleSolved = true;
             powerOff.Invoke();
         }
     }
 
     //Function that changes the vaule of the light bools
-    public void ChangeOnOff(bool one, bool two, bool three, bool four)
+    private void ChangeOnOff(bool one, bool two, bool three, bool four)
     {
-        lightOne = one;
-        lightTwo = two;
-        lightThree = three;
-        lightFour = four;
+        lightBool[0] = one;
+        lightBool[1] = two;
+        lightBool[2] = three;
+        lightBool[3] = four;
+    }
+
+    private bool CheckBoolArrayIsFalse()
+    {
+        for(int i = 0; i < lightBool.Length; i++)
+        {
+            if(lightBool[i] == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Funtion to set the mesh enabled of the objects, is a function istead of in update to save preformance
+    private void SetMeshEnabled()
+    {
+        for (int i = 0; i < lightBool.Length; i++)
+        {
+            if (lightBool[i] == true)
+            {
+                lightMeshes[i].enabled = true;
+            }
+            else
+            {
+                lightMeshes[i].enabled = false;
+            }
+        }
     }
 }

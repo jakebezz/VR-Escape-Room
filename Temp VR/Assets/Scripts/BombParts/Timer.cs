@@ -7,8 +7,9 @@ public class Timer : BombParts
     //Timer Object
     [SerializeField] private Transform timerLoc;
     [SerializeField] private GameObject XRrig;
+    private MeshRenderer meshRenderer;
     private bool connectedToCamera;
-    //private Rigidbody timerRigid;
+    
 
     //Timer Countdown
     [SerializeField] private float timeLeft;
@@ -18,6 +19,8 @@ public class Timer : BombParts
     private void Start()
     {
         bombPartRigid = GetComponent<Rigidbody>();
+        meshRenderer = GetComponent<MeshRenderer>();
+        meshRenderer.enabled = false;
         connectedToCamera = true;
         runTimer = true;
     }
@@ -68,6 +71,7 @@ public class Timer : BombParts
 
     private void DropCamera()
     {
+        meshRenderer.enabled = true;
         connectedToCamera = false;
         bombPartRigid.isKinematic = false;
         bombPartRigid.useGravity = true;
