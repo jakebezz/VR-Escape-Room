@@ -15,18 +15,16 @@ public class ColourChangingPuzzle : MonoBehaviour
     //Bools to change
     public bool[] lightBool = new bool[4];
 
-    bool inputOne = true;
-    bool inputTwo = true;
-    bool inputThree = true;
-    bool inputFour = true;
+    bool[] input = new bool[4];
 
     bool puzzleSolved = false;
 
     private void Start()
     {
-        for(int i = 0; i < lightBool.Length; i++)
+        for(int i = 0; i < 4; i++)
         {
             lightBool[i] = true;
+            input[i] = true;
         }
     }
 
@@ -41,17 +39,17 @@ public class ColourChangingPuzzle : MonoBehaviour
         //Light One
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            if (inputOne == true)
+            if (input[0] == true)
             {
                 //Makes lightOne false, lightTwo stays the same, lightThree on and lightFour on
                 ChangeOnOff(false, lightBool[1], true, true);
-                inputOne = false;
+                input[0] = false;
             }
             else
             {
                 //Inverses the lights so they can turn on and off when gesture is made
-                ChangeOnOff(true, lightBool[1], false, false);
-                inputOne = true;
+                ChangeOnOff(!lightBool[0], lightBool[1], !lightBool[2], !lightBool[3]);
+                input[0] = true;
             }
             SetMeshEnabled();
         }
@@ -59,45 +57,45 @@ public class ColourChangingPuzzle : MonoBehaviour
         //Light Two
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            if (inputTwo == true)
+            if (input[1] == true)
             {
                 ChangeOnOff(lightBool[0], false, false, false);
-                inputTwo = false;
+                input[1] = false;
             }
             else
             {
-                ChangeOnOff(lightBool[0], true, true, true);
-                inputTwo = true;
+                ChangeOnOff(lightBool[0], !lightBool[1], !lightBool[2], !lightBool[3]);
+                input[1] = true;
             }
             SetMeshEnabled();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            if (inputThree == true)
+            if (input[2] == true)
             {
                 ChangeOnOff(true, false, false, lightBool[3]);
-                inputThree = false;
+                input[2] = false;
             }
             else
             {
-                ChangeOnOff(false, true, true, lightBool[3]);
-                inputThree = true;
+                ChangeOnOff(!lightBool[0], !lightBool[1], !lightBool[2], lightBool[3]);
+                input[2] = true;
             }   
             SetMeshEnabled();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            if (inputFour == true)
+            if (input[3] == true)
             {
                 ChangeOnOff(false, lightBool[1], true, false);
-                inputFour = false;
+                input[3] = false;
             }
             else
             {
-                ChangeOnOff(true, lightBool[1], false, true);
-                inputFour = true;
+                ChangeOnOff(!lightBool[0], lightBool[1], !lightBool[2], !lightBool[3]);
+                input[3] = true;
             }
             SetMeshEnabled();
         }

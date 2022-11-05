@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class OpenDoor : MonoBehaviour
 {
-    [SerializeField] private Animator doorAnim;
+    private Animator doorAnim;
 
     private string doorOpen = "DoorOpen";
     private string doorClose = "DoorClose";
+
+    private void Start()
+    {
+        doorAnim = GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
