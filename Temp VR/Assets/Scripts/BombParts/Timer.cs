@@ -27,6 +27,7 @@ public class Timer : BombParts
 
     private void Update()
     {
+
         if(runTimer)
         {
             if(timeLeft > 0)
@@ -48,17 +49,20 @@ public class Timer : BombParts
             gameObject.transform.rotation = XRrig.transform.rotation;
         }
 
+        //If the player is "Grabbing" the timer release it
         if(Input.GetKey(KeyCode.B))
         {
             DropCamera();
         }
 
+        //If timer is in the bomb case rotate it so it is laying at the bottom with the time facing up
         if(isInTrigger == true)
         {
             transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
     }
 
+    //Updates and prints the timer every frame/second
     private void UpdateTimer(float currentTime)
     {
         currentTime += 1;

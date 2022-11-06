@@ -18,6 +18,7 @@ public class Dynamite : BombParts
         velocity = bombPartRigid.velocity.magnitude;
     }
 
+    //If the dyanamite is out of the vent and/or hits the ground too fast
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.name == "Pillow")
@@ -33,8 +34,8 @@ public class Dynamite : BombParts
             Debug.Log("Guard Alerted");
 
             //Sets the global variables 
-            GameManager.Instance.alertedGuards = true;
-            GameManager.Instance.alertedLocation = transform.position;
+            Guard.alertedGuards = true;
+            Guard.alertedLocation = transform.position;
         }
     }
 }

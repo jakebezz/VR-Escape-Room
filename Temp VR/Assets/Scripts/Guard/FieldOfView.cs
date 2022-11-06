@@ -14,8 +14,8 @@ public class FieldOfView : MonoBehaviour
     {
         if(Physics.CheckSphere(transform.position, radius, layerMask) && player.isHidden == false)
         {
-            GameManager.Instance.alertedLocation = player.gameObject.transform.position;
-            GameManager.Instance.canSeePlayer = true;
+            Guard.alertedLocation = player.gameObject.transform.position;
+            Guard.canSeePlayer = true;
             Debug.Log("Player Seen");
         }
     }

@@ -11,21 +11,32 @@ public class ColourChangingPuzzle : MonoBehaviour
     //Meshes of cubes - CHANGE INTO LIGHTS
     [SerializeField] private MeshRenderer[] lightMeshes;
     
-    //Currently Code is 7 9 7
     //Bools to change
-    public bool[] lightBool = new bool[4];
-
-    bool[] input = new bool[4];
+    public bool[] lightIsOn;
 
     bool puzzleSolved = false;
 
     private void Start()
     {
-        for(int i = 0; i < 4; i++)
+        //This is probably pointless but gives more room for Extendibility
+        for (int i = 0; i < lightIsOn.Length; i++)
         {
-            lightBool[i] = true;
-            input[i] = true;
+            if (i != 2)
+            {
+                lightIsOn[i] = true;
+            }
+            else
+            {
+                lightIsOn[i] = false;
+            }
         }
+
+        lightIsOn[0] = true;
+        lightIsOn[1] = true;
+        lightIsOn[2] = false;
+        lightIsOn[3] = true;
+
+        SetMeshEnabled();
     }
 
     //Maybe Change this into Parent and Children
@@ -36,68 +47,36 @@ public class ColourChangingPuzzle : MonoBehaviour
         /// Light Three - lightBool[2]
         /// Light Four - lightBool[3]
 
+        //Current Code: 6 7
+
         //Light One
         if (Input.GetKeyDown(KeyCode.Alpha6))
         {
-            if (input[0] == true)
-            {
-                //Makes lightOne false, lightTwo stays the same, lightThree on and lightFour on
-                ChangeOnOff(false, lightBool[1], true, true);
-                input[0] = false;
-            }
-            else
-            {
-                //Inverses the lights so they can turn on and off when gesture is made
-                ChangeOnOff(!lightBool[0], lightBool[1], !lightBool[2], !lightBool[3]);
-                input[0] = true;
-            }
+            ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
             SetMeshEnabled();
+            Debug.Log("6");
         }
 
         //Light Two
         if (Input.GetKeyDown(KeyCode.Alpha7))
         {
-            if (input[1] == true)
-            {
-                ChangeOnOff(lightBool[0], false, false, false);
-                input[1] = false;
-            }
-            else
-            {
-                ChangeOnOff(lightBool[0], !lightBool[1], !lightBool[2], !lightBool[3]);
-                input[1] = true;
-            }
+            ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
             SetMeshEnabled();
+            Debug.Log("7");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
-            if (input[2] == true)
-            {
-                ChangeOnOff(true, false, false, lightBool[3]);
-                input[2] = false;
-            }
-            else
-            {
-                ChangeOnOff(!lightBool[0], !lightBool[1], !lightBool[2], lightBool[3]);
-                input[2] = true;
-            }   
+            ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
             SetMeshEnabled();
+            Debug.Log("8");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            if (input[3] == true)
-            {
-                ChangeOnOff(false, lightBool[1], true, false);
-                input[3] = false;
-            }
-            else
-            {
-                ChangeOnOff(!lightBool[0], lightBool[1], !lightBool[2], !lightBool[3]);
-                input[3] = true;
-            }
+            ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
             SetMeshEnabled();
+            Debug.Log("9");
         }
 
         //If all lights are off start the powerOff event
@@ -111,17 +90,18 @@ public class ColourChangingPuzzle : MonoBehaviour
     //Function that changes the vaule of the light bools
     private void ChangeOnOff(bool one, bool two, bool three, bool four)
     {
-        lightBool[0] = one;
-        lightBool[1] = two;
-        lightBool[2] = three;
-        lightBool[3] = four;
+        lightIsOn[0] = one;
+        lightIsOn[1] = two;
+        lightIsOn[2] = three;
+        lightIsOn[3] = four;
     }
 
+    //Checks if all bools are false
     private bool CheckBoolArrayIsFalse()
     {
-        for(int i = 0; i < lightBool.Length; i++)
+        for(int i = 0; i < lightIsOn.Length; i++)
         {
-            if(lightBool[i] == true)
+            if(lightIsOn[i] == true)
             {
                 return true;
             }
@@ -132,9 +112,9 @@ public class ColourChangingPuzzle : MonoBehaviour
     //Funtion to set the mesh enabled of the objects, is a function istead of in update to save preformance
     private void SetMeshEnabled()
     {
-        for (int i = 0; i < lightBool.Length; i++)
+        for (int i = 0; i < lightIsOn.Length; i++)
         {
-            if (lightBool[i] == true)
+            if (lightIsOn[i] == true)
             {
                 lightMeshes[i].enabled = true;
             }

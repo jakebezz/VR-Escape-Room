@@ -5,13 +5,20 @@ using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
+    //Static variables to be accessed in various classes
+    public static bool canSeePlayer;
+    public static bool alertedGuards;
+    public static Vector3 alertedLocation;
+
+    //Animation
     private Animator animator;
     private string walk = "Walk";
     private string lookAround = "LookAround";
 
+    private NavMeshAgent guardAgent;
+
     //Guard original location that they will move back to
     [SerializeField] private Transform guardStartLocation;
-    private NavMeshAgent guardAgent;
 
     //Sets delay before guard moves to location
     [SerializeField] private int waitToMove;
@@ -22,21 +29,25 @@ public class Guard : MonoBehaviour
     {
         guardAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+
+        alertedGuards = false;
+        canSeePlayer = false;
     }
 
     void Update()
     {
         //Moves the guard to the location of the sound
-        if (GameManager.Instance.alertedGuards == true)
+        if (alertedGuards == true)
         {
-            StartCoroutine(WaitToMoveToAlert(GameManager.Instance.alertedLocation, waitToMove));
+            StartCoroutine(WaitToMoveToAlert(alertedLocation, waitToMove));
         }
 
-        if (Vector3.Distance(GameManager.Instance.alertedLocation, transform.position) <= 1.0f && guardAgent.velocity.magnitude == 0f)
+        //If the guard is near the alerted location and standing still he will look around and then return to his post a few seconds later
+        if (Vector3.Distance(alertedLocation, transform.position) <= 1.0f && guardAgent.velocity.magnitude == 0f)
         {
             Debug.Log("Guard At Destination");
             animator.Play(lookAround, 0, 0.0f);
-            GameManager.Instance.alertedGuards = false;
+            alertedGuards = false;
             StartCoroutine(WaitToMoveToAlert(guardStartLocation.position, waitToReturn));
         }
     }

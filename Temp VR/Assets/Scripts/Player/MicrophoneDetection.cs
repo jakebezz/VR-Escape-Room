@@ -14,17 +14,12 @@ public class MicrophoneDetection : MonoBehaviour
 
     private AudioClip microphoneClip;
 
-    //Access to Guard Class
-    private Guard guard;
-    [SerializeField] private GameObject guardObj;
     //Used to set the location of the sound
     [SerializeField]private Vector3 playerSoundPos;
 
     void Start()
     {
         MicrophoneToAudioClip();
-
-        guard = guardObj.GetComponent<Guard>();
     }
 
     void Update()
@@ -44,8 +39,8 @@ public class MicrophoneDetection : MonoBehaviour
             playerSoundPos = gameObject.transform.position;
 
             //Sends guard to location of the cloned location
-            GameManager.Instance.alertedGuards = true;
-            GameManager.Instance.alertedLocation = playerSoundPos;
+            Guard.alertedGuards = true;
+            Guard.alertedLocation = playerSoundPos;
         }
     }
 

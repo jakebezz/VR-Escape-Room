@@ -8,6 +8,8 @@ public class Crowbar : MonoBehaviour
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
     [SerializeField] private float velocity;
 
+    //[SerializeField] private GameObject triggerBox;
+
     void Start()
     {
         crowbar = GetComponent<Rigidbody>();
@@ -34,14 +36,11 @@ public class Crowbar : MonoBehaviour
             Debug.Log("Guard Alerted");
 
             //Sets the global variables 
-            GameManager.Instance.alertedGuards = true;
-            GameManager.Instance.alertedLocation = transform.position;
+            Guard.alertedGuards = true;
+            Guard.alertedLocation = transform.position;
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.name == "Ball")
+        if (other.name == "Ball")
         {
             crowbar.isKinematic = false;
         }
