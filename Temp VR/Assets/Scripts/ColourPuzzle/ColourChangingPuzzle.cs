@@ -18,19 +18,6 @@ public class ColourChangingPuzzle : MonoBehaviour
 
     private void Start()
     {
-        //This is probably pointless but gives more room for Extendibility
-        for (int i = 0; i < lightIsOn.Length; i++)
-        {
-            if (i != 2)
-            {
-                lightIsOn[i] = true;
-            }
-            else
-            {
-                lightIsOn[i] = false;
-            }
-        }
-
         lightIsOn[0] = true;
         lightIsOn[1] = true;
         lightIsOn[2] = false;
