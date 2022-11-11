@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
     //Used to check if player is hiding in closet
     public bool isHidden;
 
+    //Add Damage Effect
+    public bool electricDamage = true;
+
     private void Start()
     {
         isHidden = false;
@@ -26,6 +29,21 @@ public class Player : MonoBehaviour
         if(other.tag == "Hidden")
         {
             isHidden = false;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if(other.gameObject.name == "ElectricTrigger")
+        {
+            if(electricDamage == true)
+            {
+                Debug.Log("Player take damage");
+            }
+            else
+            {
+                Debug.Log("Player take no damage");
+            }
         }
     }
 }

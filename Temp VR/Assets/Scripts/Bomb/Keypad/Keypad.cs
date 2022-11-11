@@ -5,6 +5,8 @@ using TMPro;
 
 public class Keypad : MonoBehaviour
 {
+    [SerializeField] private GameObject bombLid;
+
     //The correct code
     [SerializeField] private int[] keyCode = new int[4];
 
@@ -43,11 +45,12 @@ public class Keypad : MonoBehaviour
 
         if(CheckPassCode() == false)
         {
-            Debug.Log("Password Is False");
+            Debug.Log("Password is False");
         }
         else if(CheckPassCode() == true)
         {
             Debug.Log("Password is True");
+            Debug.Log(bombLid.name + " can be opened");
         }
     }
 
