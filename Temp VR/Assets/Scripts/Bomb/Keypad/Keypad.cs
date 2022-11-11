@@ -5,11 +5,16 @@ using TMPro;
 
 public class Keypad : MonoBehaviour
 {
+    //The correct code
     [SerializeField] private int[] keyCode = new int[4];
+
+    //Visual of the code on the pad
     public TextMeshPro[] codeVisual = new TextMeshPro[4];
 
+    //List of what the player has guessed, will be cleared if they guess wrong 
     public List<int> codeGuessed;
 
+    //Input number of the player, will change which part of the array will display
     public int input = 0;
 
     private void Start()
@@ -23,6 +28,7 @@ public class Keypad : MonoBehaviour
 
     private void Update()
     {
+        //If the players next guess is the 5th guess, clear list and reset input
         if(codeGuessed.Count > 4)
         {
             Debug.Log("Code Cleared or Denied");
@@ -45,8 +51,10 @@ public class Keypad : MonoBehaviour
         }
     }
 
+    //Checks if the passcode is correct
     private bool CheckPassCode()
     {
+        //If the list is empty, return false
         if (codeGuessed.Count == 0)
         {
             return false;
