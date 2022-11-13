@@ -8,9 +8,16 @@ public class ColourChangingPuzzle : MonoBehaviour
     //Event to be used when all lights are off
     [SerializeField] private UnityEvent powerOff;
 
-    //Meshes of cubes - CHANGE INTO LIGHTS
-    [SerializeField] private MeshRenderer[] lightMeshes;
-    
+    //Array of lights
+    [SerializeField] private Light[] spotLights;
+
+    //Array of the light emissions 
+    [SerializeField] private Material[] lightEmissions;
+
+    //Array of light ray objects
+    [SerializeField] private GameObject[] lightRays;
+
+
     //Bools to change
     public bool[] lightIsOn;
 
@@ -26,7 +33,6 @@ public class ColourChangingPuzzle : MonoBehaviour
         SetMeshEnabled();
     }
 
-    //Maybe Change this into Parent and Children
     private void Update()
     {
         /// Light One - lightBool[0]
@@ -41,7 +47,6 @@ public class ColourChangingPuzzle : MonoBehaviour
         {
             ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
             SetMeshEnabled();
-            Debug.Log("6");
         }
 
         //Light Two
@@ -49,21 +54,18 @@ public class ColourChangingPuzzle : MonoBehaviour
         {
             ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
             SetMeshEnabled();
-            Debug.Log("7");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
             SetMeshEnabled();
-            Debug.Log("8");
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha9))
         {
             ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
             SetMeshEnabled();
-            Debug.Log("9");
         }
 
         //If all lights are off start the powerOff event
@@ -96,18 +98,22 @@ public class ColourChangingPuzzle : MonoBehaviour
         return false;
     }
 
-    //Funtion to set the mesh enabled of the objects, is a function istead of in update to save preformance
+    //Funtion to set the light and emission enabled or disabled
     private void SetMeshEnabled()
     {
         for (int i = 0; i < lightIsOn.Length; i++)
         {
             if (lightIsOn[i] == true)
             {
-                lightMeshes[i].enabled = true;
+                spotLights[i].enabled = true;
+                lightEmissions[i].EnableKeyword("_EMISSION");
+                lightRays[i].SetActive(true);
             }
             else
             {
-                lightMeshes[i].enabled = false;
+                spotLights[i].enabled = false;
+                lightEmissions[i].DisableKeyword("_EMISSION");
+                lightRays[i].SetActive(false);
             }
         }
     }
