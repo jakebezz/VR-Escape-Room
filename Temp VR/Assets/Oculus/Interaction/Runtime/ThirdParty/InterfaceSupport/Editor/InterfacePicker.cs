@@ -21,17 +21,17 @@ namespace Oculus.Interaction.InterfaceSupport
         private class MonoInspector
         {
             public readonly MonoBehaviour Mono;
-            //public readonly Editor Editor;
+            public readonly Editor Editor;
 
             public MonoInspector(MonoBehaviour mono)
             {
                 Mono = mono;
-                //Editor = Editor.CreateEditor(mono);
+                Editor = Editor.CreateEditor(mono);
             }
 
             public void Destroy()
             {
-                //DestroyImmediate(Editor);
+                DestroyImmediate(Editor);
             }
         }
 
@@ -145,7 +145,7 @@ namespace Oculus.Interaction.InterfaceSupport
         {
             GUI.enabled = false;
             EditorGUIUtility.labelWidth = position.width * LABEL_COLUMN_RATIO;
-            //monoInspector.Editor.OnInspectorGUI();
+            monoInspector.Editor.OnInspectorGUI();
             GUI.enabled = true;
         }
 
