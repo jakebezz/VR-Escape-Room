@@ -6,11 +6,12 @@ using UnityEngine.AI;
 public class Guard : MonoBehaviour
 {
     //Static variables to be accessed in various classes
-    public static bool canSeePlayer;
     public static bool alertedGuard;
 
+    [SerializeField] private Player player;
+
     //Public bool used in Power Off Event
-    public bool moveToPowerSwitch;
+    private bool moveToPowerSwitch;
 
     //Animation
     private Animator animator;
@@ -69,7 +70,7 @@ public class Guard : MonoBehaviour
 
 
     //Delays the movement of the guard so they dont move instanly
-    IEnumerator WaitToMoveToPoint(Transform moveLoc, float wait)
+    private IEnumerator WaitToMoveToPoint(Transform moveLoc, float wait)
     {
         moving = true;
         while (moving)
@@ -95,6 +96,11 @@ public class Guard : MonoBehaviour
                     if(moveLoc == movePoint[2])
                     {
                         alertedGuard = false;
+
+                        if(player.isHidden == false)
+                        {
+                            Debug.Log("Player Spotted");
+                        }
                     }
 
                     if(moveLoc == movePoint[3])

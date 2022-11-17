@@ -16,10 +16,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] private Volume volume;
     private Vignette vignette;
+    private ColorAdjustments colorAdjustments;
 
     private void Start()
     {
         volume.profile.TryGet<Vignette>(out vignette);
+        volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
     }
 
     private void Update()
@@ -35,8 +37,43 @@ public class Player : MonoBehaviour
         {
             vignette.active = false;
         }
-    }
 
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            if (colorAdjustments.active == true)
+            {
+                colorAdjustments.active = false;
+            }
+            else
+            {
+                colorAdjustments.active = true;
+            }
+        }
+
+        if(colorAdjustments.active == true)
+        {
+            if(Input.GetMouseButton(0))
+            {
+                colorAdjustments.hueShift.value++;
+            }
+
+            if(Input.GetMouseButton(1))
+            {
+                colorAdjustments.hueShift.value--;
+            }
+
+            if((colorAdjustments.hueShift.value > 50  && colorAdjustments.hueShift.value < 60) || (colorAdjustments.hueShift.value < -50 && colorAdjustments.hueShift.value > -60))
+            {
+                Debug.Log("Can See Hidden Objects");
+            }
+
+
+
+            Debug.Log("Hue Shift Value: " + colorAdjustments.hueShift.value);
+        }
+
+    }
 
     private void OnTriggerStay(Collider other)
     {
