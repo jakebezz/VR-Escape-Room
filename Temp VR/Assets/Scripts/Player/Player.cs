@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     //Used to check if player is in or out of closet, may delete this
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Hidden")
+        if(other.CompareTag("Hidden"))
         {
             isHidden = true;
         }
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Hidden")
+        if(other.CompareTag("Hidden"))
         {
             isHidden = false;
         }
