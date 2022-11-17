@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
@@ -10,27 +12,31 @@ public class Player : MonoBehaviour
     //Add Damage Effect
     public bool electricDamage = true;
 
+    [SerializeField] private GameObject trackingSpace;
+
+    [SerializeField] private Volume volume;
+    private Vignette vignette;
+
     private void Start()
     {
-        isHidden = false;
+        volume.profile.TryGet<Vignette>(out vignette);
     }
 
-    //Used to check if player is in or out of closet, may delete this
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if(other.CompareTag("Hidden"))
+        if(trackingSpace.transform.localPosition.y < -0.31)
         {
             isHidden = true;
+            Debug.Log("Player Is Hidden");
+
+            vignette.active = true;
+        }
+        else
+        {
+            vignette.active = false;
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.CompareTag("Hidden"))
-        {
-            isHidden = false;
-        }
-    }
 
     private void OnTriggerStay(Collider other)
     {

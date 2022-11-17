@@ -6,8 +6,6 @@ TagManager:
   tags:
   - Floor
   - Hidden
-  - DetectionTrigger
-  - DetectableObject
   - BombObject
   - BombPlacement
   - HiddenCamera
@@ -21,9 +19,9 @@ TagManager:
   - 
   - Water
   - UI
-  - Target
-  - Obstruction
-  - Hidden
+  - Player
+  - 
+  - 
   - 
   - 
   - 
