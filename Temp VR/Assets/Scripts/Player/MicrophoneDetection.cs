@@ -39,8 +39,7 @@ public class MicrophoneDetection : MonoBehaviour
             playerSoundPos = gameObject.transform.position;
 
             //Sends guard to location of the cloned location
-            Guard.alertedGuards = true;
-            Guard.alertedLocation = playerSoundPos;
+            Guard.alertedGuard = true;
         }
     }
 

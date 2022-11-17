@@ -28,9 +28,11 @@ public class Keypad : MonoBehaviour
         keyCode[3] = 9;
     }
 
+    //MOVE FROM UPDATE INTO WHEN BUTTON IS PRESSED - NEED VR INTERACTION FOR THIS
     private void Update()
     {
         //If the players next guess is the 5th guess, clear list and reset input
+        //CHANGE TO WHEN CLEAR BUTTON IS PRESSED - MAKE DELEGATE FOR CLEAR AND ENTER BUTTON
         if(codeGuessed.Count > 4)
         {
             Debug.Log("Code Cleared or Denied");

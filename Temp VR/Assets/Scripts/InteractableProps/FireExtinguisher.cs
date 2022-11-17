@@ -13,16 +13,18 @@ public class FireExtinguisher : MonoBehaviour
 
     //Range that Raycast can hit
     [SerializeField] private float hitRange;
+    private RaycastHit hit;
 
     private void Start()
     {
         dynamiteRigid = dynamite.bombPartRigid;
     }
 
+    //MOVE FROM UPDATE INTO WHEN BUTTON IS PRESSED OR HANDLE IS SQUEEZED
     private void Update()
     {
         //Raycast from FireExtinguisher
-        if (Physics.Raycast(sprayPoint.transform.position, sprayPoint.transform.forward, out RaycastHit hit, hitRange))
+        if (Physics.Raycast(sprayPoint.transform.position, sprayPoint.transform.forward, out hit, hitRange))
         {
             //If raycast hits the vent and the dynamite is in vent add force to it
             if (hit.collider.tag == "Vent" && dynamite.outOfVent == false)

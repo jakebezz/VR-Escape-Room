@@ -36,8 +36,7 @@ public class Crowbar : MonoBehaviour
             Debug.Log("Guard Alerted");
 
             //Sets the global variables 
-            Guard.alertedGuards = true;
-            Guard.alertedLocation = transform.position;
+            Guard.alertedGuard = true;
         }
 
         if (other.name == "Ball")

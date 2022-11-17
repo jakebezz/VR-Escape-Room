@@ -7,56 +7,121 @@ public class Guard : MonoBehaviour
 {
     //Static variables to be accessed in various classes
     public static bool canSeePlayer;
-    public static bool alertedGuards;
-    public static Vector3 alertedLocation;
+    public static bool alertedGuard;
+
+    //Public bool used in Power Off Event
+    public bool moveToPowerSwitch;
 
     //Animation
     private Animator animator;
     private string walk = "Walk";
     private string lookAround = "LookAround";
 
-    private NavMeshAgent guardAgent;
+    private NavMeshAgent agent;
 
-    //Guard original location that they will move back to
-    [SerializeField] private Transform guardStartLocation;
+    /// <summary>
+    /// Move points for the Guard
+    /// movePoint[0] = pointA
+    /// movePoint[1] = pointB
+    /// movePoint[2] = pointWindow
+    /// movePoint[3] = pointPower
+    /// </summary>
+    [SerializeField] private Transform[] movePoint;
+
+    //Will either be movePoint[0 or 1]
+    private Transform targetPoint;
 
     //Sets delay before guard moves to location
-    [SerializeField] private int waitToMove;
-    //Different vaule for return so that guard stays around sound location a bit longer
-    [SerializeField] private int waitToReturn;
+    [SerializeField] private int waitTime;
+
+    //Bool to loop the couroutine
+    private bool moving;
 
     private void Start()
     {
-        guardAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
 
-        alertedGuards = false;
+        alertedGuard = false;
         canSeePlayer = false;
+        
+        moveToPowerSwitch = false;
+
+        transform.position = movePoint[0].position;
+        targetPoint = movePoint[1];
     }
 
-    void Update()
+    private void Update()
     {
-        //Moves the guard to the location of the sound
-        if (alertedGuards == true)
+        if(alertedGuard == false && moveToPowerSwitch == false)
         {
-            StartCoroutine(WaitToMoveToAlert(alertedLocation, waitToMove));
+            MoveToTarget();
         }
-
-        //If the guard is near the alerted location and standing still he will look around and then return to his post a few seconds later
-        if (Vector3.Distance(alertedLocation, transform.position) <= 1.0f && guardAgent.velocity.magnitude == 0f)
+        else if(alertedGuard == true)
         {
-            Debug.Log("Guard At Destination");
-            animator.Play(lookAround, 0, 0.0f);
-            alertedGuards = false;
-            StartCoroutine(WaitToMoveToAlert(guardStartLocation.position, waitToReturn));
+            MoveToAlert(movePoint[2]);
+        }
+        else if(moveToPowerSwitch == true)
+        {
+            MoveToAlert(movePoint[3]);
         }
     }
+
 
     //Delays the movement of the guard so they dont move instanly
-    IEnumerator WaitToMoveToAlert(Vector3 location, float wait)
+    IEnumerator WaitToMoveToPoint(Transform moveLoc, float wait)
     {
-        yield return new WaitForSeconds(wait);
-        guardAgent.destination = location;
-        animator.Play(walk, 0, 0.0f);
+        moving = true;
+        while (moving)
+        {
+            yield return new WaitForSeconds(wait);
+            agent.SetDestination(moveLoc.position);
+            //animator.Play(walk, 0, 0.0f);
+
+            if (!agent.pathPending)
+            {
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    if(moveLoc == movePoint[0])
+                    {
+                        targetPoint = movePoint[1];
+                    }
+
+                    if(moveLoc == movePoint[1])
+                    {
+                        targetPoint = movePoint[0];
+                    }
+
+                    if(moveLoc == movePoint[2])
+                    {
+                        alertedGuard = false;
+                    }
+
+                    if(moveLoc == movePoint[3])
+                    {
+                        moveToPowerSwitch = false;
+                    }
+
+                    moving = false;
+                    Debug.Log("Point has been reached");
+                }
+            }
+        }
+    }
+
+    private void MoveToAlert(Transform point)
+    {
+        StartCoroutine(WaitToMoveToPoint(point, 1));
+        StartCoroutine(WaitToMoveToPoint(targetPoint, 5));
+    }
+
+    private void MoveToTarget()
+    {
+        StartCoroutine(WaitToMoveToPoint(targetPoint, waitTime));
+    }
+
+    public void PowerSwitchOn()
+    {
+        moveToPowerSwitch = true;
     }
 }

@@ -34,8 +34,7 @@ public class Dynamite : BombParts
             Debug.Log("Guard Alerted");
 
             //Sets the global variables 
-            Guard.alertedGuards = true;
-            Guard.alertedLocation = transform.position;
+            Guard.alertedGuard = true;
         }
     }
 }
