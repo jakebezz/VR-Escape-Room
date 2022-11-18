@@ -44,7 +44,6 @@ public class Guard : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
 
         alertedGuard = false;
-        canSeePlayer = false;
         
         moveToPowerSwitch = false;
 

@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     //Add Damage Effect
     public bool electricDamage = true;
 
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera hiddenCamera;
+
     [SerializeField] private GameObject trackingSpace;
 
     [SerializeField] private Volume volume;
@@ -22,6 +25,9 @@ public class Player : MonoBehaviour
     {
         volume.profile.TryGet<Vignette>(out vignette);
         volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
+
+        mainCamera.enabled = true;
+        hiddenCamera.enabled = false;
     }
 
     private void Update()
@@ -65,7 +71,14 @@ public class Player : MonoBehaviour
 
             if((colorAdjustments.hueShift.value > 50  && colorAdjustments.hueShift.value < 60) || (colorAdjustments.hueShift.value < -50 && colorAdjustments.hueShift.value > -60))
             {
+                mainCamera.enabled = false;
+                hiddenCamera.enabled = true;
                 Debug.Log("Can See Hidden Objects");
+            }
+            else
+            {
+                mainCamera.enabled = true;
+                hiddenCamera.enabled = false;
             }
 
 
