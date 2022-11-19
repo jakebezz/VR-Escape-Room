@@ -35,9 +35,6 @@ public class Guard : MonoBehaviour
     //Sets delay before guard moves to location
     [SerializeField] private int waitTime;
 
-    //Bool to loop the couroutine
-    private bool moving;
-
     private void Start()
     {
         animator = GetComponent<Animator>();
@@ -48,32 +45,32 @@ public class Guard : MonoBehaviour
         moveToPowerSwitch = false;
 
         transform.position = movePoint[0].position;
-        targetPoint = movePoint[1];
-    }
 
-    private void Update()
-    {
-        if(alertedGuard == false && moveToPowerSwitch == false)
-        {
-            MoveToTarget();
-        }
-        else if(alertedGuard == true)
-        {
-            MoveToAlert(movePoint[2]);
-        }
-        else if(moveToPowerSwitch == true)
-        {
-            MoveToAlert(movePoint[3]);
-        }
+        targetPoint = movePoint[1];
+        StartCoroutine(WaitToMoveToPoint(movePoint[1], waitTime));
     }
 
 
     //Delays the movement of the guard so they dont move instanly
     private IEnumerator WaitToMoveToPoint(Transform moveLoc, float wait)
     {
-        moving = true;
-        while (moving)
+        while (true)
         {
+            if (alertedGuard == true)
+            {
+                moveLoc = movePoint[2];
+            }
+
+            else if(moveToPowerSwitch == true)
+            {
+                moveLoc = movePoint[3];
+            }
+
+            else
+            {
+                moveLoc = targetPoint;
+            }
+
             yield return new WaitForSeconds(wait);
             agent.SetDestination(moveLoc.position);
             //animator.Play(walk, 0, 0.0f);
@@ -82,7 +79,7 @@ public class Guard : MonoBehaviour
             {
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    if(moveLoc == movePoint[0])
+                    if (moveLoc == movePoint[0])
                     {
                         targetPoint = movePoint[1];
                     }
@@ -95,34 +92,19 @@ public class Guard : MonoBehaviour
                     if(moveLoc == movePoint[2])
                     {
                         alertedGuard = false;
-
-                        if(player.isHidden == false)
-                        {
-                            Debug.Log("Player Spotted");
-                        }
+                        moveLoc = targetPoint;
                     }
 
                     if(moveLoc == movePoint[3])
                     {
                         moveToPowerSwitch = false;
+                        moveLoc = targetPoint;
                     }
 
-                    moving = false;
                     Debug.Log("Point has been reached");
                 }
             }
         }
-    }
-
-    private void MoveToAlert(Transform point)
-    {
-        StartCoroutine(WaitToMoveToPoint(point, 1));
-        StartCoroutine(WaitToMoveToPoint(targetPoint, 5));
-    }
-
-    private void MoveToTarget()
-    {
-        StartCoroutine(WaitToMoveToPoint(targetPoint, waitTime));
     }
 
     public void PowerSwitchOn()

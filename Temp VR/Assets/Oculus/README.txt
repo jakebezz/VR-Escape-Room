@@ -1,0 +1,1 @@
+I didn't want to have the whole Oculus package installed but there was issues with exporting just the Rig and the other parts I needed :)
