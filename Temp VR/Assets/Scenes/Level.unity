@@ -13722,7 +13722,9 @@ MonoBehaviour:
   - {fileID: 1316682545}
   - {fileID: 1611903426}
   - {fileID: 472251196}
-  waitTime: 2
+  waitTime: 5
+  waitAtWindow: 10
+  waitAtPower: 20
 --- !u!4 &8386676815731600300
 Transform:
   m_ObjectHideFlags: 0
@@ -13753,7 +13755,7 @@ NavMeshAgent:
   m_Acceleration: 3
   avoidancePriority: 50
   m_AngularSpeed: 60
-  m_StoppingDistance: 0.3
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

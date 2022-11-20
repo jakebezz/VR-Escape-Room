@@ -30,10 +30,16 @@ public class Guard : MonoBehaviour
     [SerializeField] private Transform[] movePoint;
 
     //Will either be movePoint[0 or 1]
-    private Transform targetPoint;
+    private Transform patrolPoint;
+    private Transform moveLocation;
 
     //Sets delay before guard moves to location
-    [SerializeField] private int waitTime;
+    [SerializeField] private float waitTime = 10f;
+
+    [SerializeField] private float mainPointWait;
+    [SerializeField] private float alertPointWait;
+
+    bool runTimer = true;
 
     private void Start()
     {
@@ -46,65 +52,97 @@ public class Guard : MonoBehaviour
 
         transform.position = movePoint[0].position;
 
-        targetPoint = movePoint[1];
-        StartCoroutine(WaitToMoveToPoint(movePoint[1], waitTime));
+        moveLocation = movePoint[1];
+        patrolPoint = movePoint[1];
     }
 
-
-    //Delays the movement of the guard so they dont move instanly
-    private IEnumerator WaitToMoveToPoint(Transform moveLoc, float wait)
+    private void Update()
     {
-        while (true)
+        if (runTimer)
         {
-            if (alertedGuard == true)
+            if (waitTime > 0)
             {
-                moveLoc = movePoint[2];
+                Debug.Log("Move Timer " + waitTime);
+                waitTime -= Time.deltaTime;
             }
-
-            else if(moveToPowerSwitch == true)
-            {
-                moveLoc = movePoint[3];
-            }
-
             else
             {
-                moveLoc = targetPoint;
+                waitTime = 0;
+                agent.SetDestination(moveLocation.position);
+                runTimer = false;
             }
-
-            yield return new WaitForSeconds(wait);
-            agent.SetDestination(moveLoc.position);
-            //animator.Play(walk, 0, 0.0f);
-
+        }
+        else
+        {
+            //If player at desination, set next destination as target point, also check if bools are true
             if (!agent.pathPending)
             {
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    if (moveLoc == movePoint[0])
+                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        targetPoint = movePoint[1];
+                        moveLocation = CheckStates();
+                        runTimer = true;
                     }
-
-                    if(moveLoc == movePoint[1])
+                }
+                else
+                {
+                    if (alertedGuard == true || moveToPowerSwitch == true)
                     {
-                        targetPoint = movePoint[0];
+                        moveLocation = CheckStates();
+                        runTimer = true;
                     }
-
-                    if(moveLoc == movePoint[2])
-                    {
-                        alertedGuard = false;
-                        moveLoc = targetPoint;
-                    }
-
-                    if(moveLoc == movePoint[3])
-                    {
-                        moveToPowerSwitch = false;
-                        moveLoc = targetPoint;
-                    }
-
-                    Debug.Log("Point has been reached");
+                }
+            }
+            else
+            {
+                if (alertedGuard == true || moveToPowerSwitch == true)
+                {
+                    moveLocation = CheckStates();
+                    runTimer = true;
                 }
             }
         }
+    }
+
+    private Transform CheckStates()
+    {
+        if (alertedGuard == false && moveToPowerSwitch == false)
+        {
+            if (patrolPoint == movePoint[0])
+            {
+                patrolPoint = movePoint[1];
+                waitTime = 10f;
+                return patrolPoint;
+            }
+
+            if (patrolPoint == movePoint[1])
+            {
+                patrolPoint = movePoint[0];
+                waitTime = 10f;
+                return patrolPoint;
+            }
+        }
+
+        else
+        {
+            if (alertedGuard == true)
+            {
+                alertedGuard = false;
+                waitTime = 1f;
+                return movePoint[2];
+            }
+
+            if (moveToPowerSwitch == true)
+            {
+                moveToPowerSwitch = false;
+                waitTime = 1f;
+                return movePoint[3];
+            }
+        }
+
+        waitTime = 10f;
+        return patrolPoint;
     }
 
     public void PowerSwitchOn()
