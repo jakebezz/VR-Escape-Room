@@ -13722,9 +13722,11 @@ MonoBehaviour:
   - {fileID: 1316682545}
   - {fileID: 1611903426}
   - {fileID: 472251196}
-  waitTime: 5
-  waitAtWindow: 10
-  waitAtPower: 20
+  waitTime: 0
+  windowWaitTime: 0
+  powerWaitTime: 0
+  reactionTime: 0
+  patrolPointTime: 0
 --- !u!4 &8386676815731600300
 Transform:
   m_ObjectHideFlags: 0
