@@ -33,6 +33,7 @@ public class ColourChangingPuzzle : MonoBehaviour
         SetMeshEnabled();
     }
 
+    //CHANGE THIS TO WHEN HAND INPUT IS MADE
     private void Update()
     {
         /// Light One - lightBool[0]
@@ -42,37 +43,36 @@ public class ColourChangingPuzzle : MonoBehaviour
 
         //Current Code: 6 7
 
-        //Light One
-        if (Input.GetKeyDown(KeyCode.Alpha6))
-        {
-            ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
-            SetMeshEnabled();
-        }
-
-        //Light Two
-        if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
-            ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
-            SetMeshEnabled();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha8))
-        {
-            ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
-            SetMeshEnabled();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Alpha9))
-        {
-            ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
-            SetMeshEnabled();
-        }
-
         //If all lights are off start the powerOff event
         if (CheckBoolArrayIsFalse() == false && puzzleSolved == false)
         {
             puzzleSolved = true;
             powerOff.Invoke();
+        }
+        else
+        {
+            //Light One
+            if (Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
+            }
+
+            //Light Two
+            if (Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Alpha9))
+            {
+                ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
+            }
+            SetMeshEnabled();
         }
     }
 

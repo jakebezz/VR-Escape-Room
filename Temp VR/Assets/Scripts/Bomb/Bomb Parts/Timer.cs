@@ -27,7 +27,6 @@ public class Timer : BombParts
 
     private void Update()
     {
-
         if(runTimer)
         {
             if(timeLeft > 0)

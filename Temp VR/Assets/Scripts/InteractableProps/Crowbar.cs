@@ -8,7 +8,7 @@ public class Crowbar : MonoBehaviour
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
     [SerializeField] private float velocity;
 
-    //[SerializeField] private GameObject triggerBox;
+    private string floorTag = "Floor";
 
     void Start()
     {
@@ -30,7 +30,7 @@ public class Crowbar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Floor" && velocity > 2f)
+        if(other.CompareTag(floorTag) && velocity > 2f)
         {
             //Delete this
             Debug.Log("Guard Alerted");
@@ -39,7 +39,8 @@ public class Crowbar : MonoBehaviour
             Guard.alertedGuard = true;
         }
 
-        if (other.name == "Ball")
+        //If player throws an object that has a rigidbody
+        if (other.gameObject.GetComponent<Rigidbody>() != null)
         {
             crowbar.isKinematic = false;
         }

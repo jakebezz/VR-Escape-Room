@@ -7,6 +7,9 @@ public class Dynamite : BombParts
     public bool outOfVent;
     [SerializeField] private float velocity;
 
+    private string pillowTag = "Pillow";
+    private string floorTag = "Floor";
+
     private void Start()
     {
         outOfVent = false;
@@ -21,12 +24,12 @@ public class Dynamite : BombParts
     //If the dyanamite is out of the vent and/or hits the ground too fast
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Pillow")
+        if (collision.gameObject.CompareTag(pillowTag))
         {
             outOfVent = true;
         }
 
-        if (collision.gameObject.tag == "Floor" && velocity > 2f)
+        if (collision.gameObject.CompareTag(floorTag) && velocity > 2f)
         {
             outOfVent = true;
 

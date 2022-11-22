@@ -65,21 +65,25 @@ public class Guard : MonoBehaviour
         patrolPoint = movePoint[0];
     }
 
-    //Wanted this to be a Coroutine but it wouldn't work :(
+
+    //MAYBE MAKE TRIGGERS AT LOCATIONS AND CHANGE UPDATE TO ONTRIGGER ENTER/STAY
     private void Update()
     {
         //If the timer is being run
         if (runTimer)
         {
-            if (waitTime > 0)
+            if (waitTime >= 0)
             {
-                //Debug.Log("Move Timer " + waitTime);
                 waitTime -= Time.deltaTime;
 
-                if (alertedGuard == true || moveToPowerSwitch == true)
+                if (alertedGuard == true)
                 {
-                    waitTime = reactionTime;
-                    moveLocation = CheckStates();
+                    WindowPoint();
+                }
+
+                if (moveToPowerSwitch == true)
+                {
+                    PowerPoint();
                 }
             }
             //Moves agent to destination when timer is 0
@@ -100,116 +104,92 @@ public class Guard : MonoBehaviour
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        moveLocation = CheckStates();
+                        RepeatPatrol();
                         runTimer = true;
                     }
                 }
                 //If agent is moving to destination
                 else
                 {
-                    if (alertedGuard == true || moveToPowerSwitch == true)
+                    if (alertedGuard == true)
                     {
-                        moveLocation = CheckStates();
+                        WindowPoint();
+                        runTimer = true;
+                    }
+
+                    if (moveToPowerSwitch == true)
+                    {
+                        PowerPoint();
                         runTimer = true;
                     }
                 }
             }
-            //If agent doesnt have path
+            //If agent is waiting at destination
             else
             {
-                //If bools are active
-                if (alertedGuard == true || moveToPowerSwitch == true)
+                if (alertedGuard == true)
                 {
-                    moveLocation = CheckStates();
+                    WindowPoint();
+                    runTimer = true;
+                }
+
+                else if (moveToPowerSwitch == true)
+                {
+                    PowerPoint();
                     runTimer = true;
                 }
                 else
                 {
-                    moveLocation = CheckStates();
-                    runTimer = true;
+                    RepeatPatrol();
                 }
+
             }
         }
     }
 
-    private Transform CheckStates()
+    private void RepeatPatrol()
     {
-        //If the alert bools are false, guard will patrol up and down street
-        if (alertedGuard == false && moveToPowerSwitch == false)
+        if (patrolPoint == movePoint[0])
         {
-            if (patrolPoint == movePoint[0])
-            {
-                //Swaps the patrol point
-                patrolPoint = movePoint[1];
-
-                //If guard moves to window from partrol point
-                if (atWindow == true)
-                {
-                    waitTime = windowWaitTime;
-                    atWindow = false;
-                }
-                //If guard moves to power from partrol point
-                else if (atPower == true)
-                {
-                    waitTime = powerWaitTime;
-                    atPower = false;
-                }
-                //If guard moved from partrol point to partol point
-                else
-                {
-                    waitTime = patrolPointTime;
-                }
-
-                return patrolPoint;
-            }
-
-            if (patrolPoint == movePoint[1])
-            {
-                patrolPoint = movePoint[0];
-
-                if (atWindow == true)
-                {
-                    waitTime = windowWaitTime;
-                    atWindow = false;
-                }
-                else if (atPower == true)
-                {
-                    waitTime = powerWaitTime;
-                    atPower = false;
-                }
-                else
-                {
-                    waitTime = patrolPointTime;
-                }
-
-                return patrolPoint;
-            } 
+            patrolPoint = movePoint[1];
         }
-
         else
         {
-            //Alerted guard values
-            if (alertedGuard == true)
-            {
-                atWindow = true;
-                alertedGuard = false;
-                waitTime = reactionTime;
-                return movePoint[2];
-            }
-
-            //Power switch value
-            if (moveToPowerSwitch == true)
-            {
-                atPower = true;
-                moveToPowerSwitch = false;
-                waitTime = reactionTime;
-                return movePoint[3];
-            }
+            patrolPoint = movePoint[0];
         }
 
-        //Default return
-        waitTime = patrolPointTime;
-        return patrolPoint;
+        if (atWindow == true)
+        {
+            waitTime = windowWaitTime;
+            atWindow = false;
+        }
+        else if (atPower == true)
+        {
+            waitTime = powerWaitTime;
+            atPower = false;
+        }
+        else
+        {
+            waitTime = patrolPointTime;
+        }
+
+        moveLocation = patrolPoint;
+    }
+
+    private void WindowPoint()
+    {
+        waitTime = reactionTime;
+        moveLocation = movePoint[2];
+        atWindow = true;
+        alertedGuard = false;
+    }
+
+    private void PowerPoint()
+    {
+        waitTime = reactionTime;
+        moveLocation = movePoint[3];
+        atPower = true;
+        moveToPowerSwitch = false;
     }
 
     public void PowerSwitchOn()

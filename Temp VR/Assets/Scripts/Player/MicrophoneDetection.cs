@@ -35,9 +35,6 @@ public class MicrophoneDetection : MonoBehaviour
         {
             Debug.Log("Guard Heard");
 
-            //this is constantly setting the sound position to player location because it is in update
-            playerSoundPos = gameObject.transform.position;
-
             //Sends guard to location of the cloned location
             Guard.alertedGuard = true;
         }

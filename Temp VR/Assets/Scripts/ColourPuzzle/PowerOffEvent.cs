@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PowerOffEvent : MonoBehaviour
 {
+
+    //TEMP WILL BE DELETED
     public void TurnLightsOff()
     {
         Debug.Log("Lights In Scene Powered off");

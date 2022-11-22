@@ -21,6 +21,9 @@ public class Player : MonoBehaviour
     private Vignette vignette;
     private ColorAdjustments colorAdjustments;
 
+    private string hiddenTag = "Hidden";
+    private string electricTag = "ElectricTrigger";
+
     private void Start()
     {
         volume.profile.TryGet<Vignette>(out vignette);
@@ -32,19 +35,6 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(trackingSpace.transform.localPosition.y < -0.31)
-        {
-            isHidden = true;
-            Debug.Log("Player Is Hidden");
-
-            vignette.active = true;
-        }
-        else
-        {
-            vignette.active = false;
-        }
-
-
         if(Input.GetKeyDown(KeyCode.G))
         {
             if (colorAdjustments.active == true)
@@ -81,8 +71,6 @@ public class Player : MonoBehaviour
                 hiddenCamera.enabled = false;
             }
 
-
-
             Debug.Log("Hue Shift Value: " + colorAdjustments.hueShift.value);
         }
 
@@ -90,7 +78,22 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject.name == "ElectricTrigger")
+        if(other.CompareTag(hiddenTag))
+        {
+            if (trackingSpace.transform.localPosition.y < -0.5)
+            {
+                isHidden = true;
+                Debug.Log("Player Is Hidden");
+
+                vignette.active = true;
+            }
+            else
+            {
+                vignette.active = false;
+            }
+        }
+
+        if (other.CompareTag(electricTag))
         {
             if(electricDamage == true)
             {
@@ -100,6 +103,14 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("Player take no damage");
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(other.CompareTag(hiddenTag))
+        {
+            vignette.active = false;
         }
     }
 }

@@ -12,6 +12,8 @@ TagManager:
   - PowerTrigger
   - Vent
   - Guard
+  - ElectricTrigger
+  - Pillow
   layers:
   - Default
   - TransparentFX

@@ -14,6 +14,8 @@ public class Keys : MonoBehaviour
     [SerializeField] private KeyCode key;
 
 
+    //MAYBE CREATE ENUM THEN USE KEYPAD SCRIPT TO GET ENUM AND INPUT THAT NUMBER
+
     private void Update()
     {
         if (Input.GetKeyDown(key) && keypad.codeGuessed.Count <= 4)
