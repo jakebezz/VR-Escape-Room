@@ -16,9 +16,10 @@ public class Timer : BombParts
     [SerializeField] private TextMeshPro timerText;
     private bool runTimer;
 
-    private void Start()
+    protected override void Start()
     {
-        bombPartRigid = GetComponent<Rigidbody>();
+        base.Start();
+
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
         connectedToCamera = true;
@@ -52,12 +53,6 @@ public class Timer : BombParts
         if(Input.GetKey(KeyCode.B))
         {
             DropCamera();
-        }
-
-        //If timer is in the bomb case rotate it so it is laying at the bottom with the time facing up
-        if(isInTrigger == true)
-        {
-            transform.rotation = Quaternion.Euler(90f, 0f, 0f);
         }
     }
 

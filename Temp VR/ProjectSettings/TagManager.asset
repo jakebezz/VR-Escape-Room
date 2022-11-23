@@ -11,9 +11,9 @@ TagManager:
   - HiddenCamera
   - PowerTrigger
   - Vent
-  - Guard
   - ElectricTrigger
   - Pillow
+  - WindowTrigger
   layers:
   - Default
   - TransparentFX

@@ -50,6 +50,8 @@ public class Guard : MonoBehaviour
     private bool atWindow = false;
     private bool atPower = false;
 
+    private string windowTag = "WindowTrigger";
+
     private void Start()
     {
         //Get components
@@ -104,45 +106,14 @@ public class Guard : MonoBehaviour
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                     {
-                        RepeatPatrol();
-                        runTimer = true;
+                        AtDestination();
                     }
                 }
                 //If agent is moving to destination
                 else
                 {
-                    if (alertedGuard == true)
-                    {
-                        WindowPoint();
-                        runTimer = true;
-                    }
-
-                    if (moveToPowerSwitch == true)
-                    {
-                        PowerPoint();
-                        runTimer = true;
-                    }
+                    MovingToDestination();
                 }
-            }
-            //If agent is waiting at destination
-            else
-            {
-                if (alertedGuard == true)
-                {
-                    WindowPoint();
-                    runTimer = true;
-                }
-
-                else if (moveToPowerSwitch == true)
-                {
-                    PowerPoint();
-                    runTimer = true;
-                }
-                else
-                {
-                    RepeatPatrol();
-                }
-
             }
         }
     }
@@ -182,6 +153,7 @@ public class Guard : MonoBehaviour
         moveLocation = movePoint[2];
         atWindow = true;
         alertedGuard = false;
+        runTimer = true;
     }
 
     private void PowerPoint()
@@ -192,6 +164,56 @@ public class Guard : MonoBehaviour
         moveToPowerSwitch = false;
     }
 
+    private void AtDestination()
+    {
+        if (alertedGuard == true)
+        {
+            WindowPoint();
+            runTimer = true;
+        }
+
+        else if (moveToPowerSwitch == true)
+        {
+            PowerPoint();
+            runTimer = true;
+        }
+        else
+        {
+            RepeatPatrol();
+            runTimer = true;
+        }
+    }
+    
+    private void MovingToDestination()
+    {
+        if (alertedGuard == true)
+        {
+            WindowPoint();
+            runTimer = true;
+        }
+
+        if (moveToPowerSwitch == true)
+        {
+            PowerPoint();
+            runTimer = true;
+        }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag(windowTag))
+        {
+            Debug.Log("Guard in Trigger");
+            if (player.isHidden == false)
+            {
+                Debug.Log("Guard Caught Player");
+                WindowPoint();
+                //End Game Event
+            }
+        }
+    }
+
+    //Used in Power Off Event
     public void PowerSwitchOn()
     {
         moveToPowerSwitch = true;

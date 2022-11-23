@@ -12,15 +12,20 @@ public class Player : MonoBehaviour
     //Add Damage Effect
     public bool electricDamage = true;
 
+    //Cameras
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Camera hiddenCamera;
-
     [SerializeField] private GameObject trackingSpace;
 
+    //Post Processing
     [SerializeField] private Volume volume;
     private Vignette vignette;
     private ColorAdjustments colorAdjustments;
+    private float deafaultIntensity;
+    private float deafaultSmoothness;
+    private float increaseIntensity = 0.1f;
 
+    //Tag Strings
     private string hiddenTag = "Hidden";
     private string electricTag = "ElectricTrigger";
 
@@ -31,6 +36,11 @@ public class Player : MonoBehaviour
 
         mainCamera.enabled = true;
         hiddenCamera.enabled = false;
+
+        isHidden = false;
+
+        deafaultIntensity = vignette.intensity.value;
+        deafaultSmoothness = vignette.smoothness.value;
     }
 
     private void Update()
@@ -76,6 +86,14 @@ public class Player : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag(electricTag))
+        {
+            electricDamage = true;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
         if(other.CompareTag(hiddenTag))
@@ -85,7 +103,7 @@ public class Player : MonoBehaviour
                 isHidden = true;
                 Debug.Log("Player Is Hidden");
 
-                vignette.active = true;
+                VignetteControl(Color.black, deafaultIntensity, deafaultSmoothness);
             }
             else
             {
@@ -95,8 +113,10 @@ public class Player : MonoBehaviour
 
         if (other.CompareTag(electricTag))
         {
+            increaseIntensity += 0.01f;
             if(electricDamage == true)
             {
+                VignetteControl(Color.cyan, increaseIntensity, 0.5f);
                 Debug.Log("Player take damage");
             }
             else
@@ -111,6 +131,35 @@ public class Player : MonoBehaviour
         if(other.CompareTag(hiddenTag))
         {
             vignette.active = false;
+            isHidden = false;
         }
+
+        if(other.CompareTag(electricTag))
+        {
+            increaseIntensity = 0.1f;
+            electricDamage = false;
+
+            StartCoroutine(RemoveVignette());
+        }
+    }
+
+    private void VignetteControl(Color color, float intensity, float smoothness)
+    {
+        vignette.active = true;
+        vignette.color.Override(color);
+        vignette.intensity.Override(intensity);
+        vignette.smoothness.Override(smoothness);
+    }
+
+    private IEnumerator RemoveVignette()
+    {
+        do 
+        {
+            yield return new WaitForSeconds(0.1f);
+            vignette.intensity.value -= 0.2f;
+        } 
+        while (vignette.intensity.value >= 0.2);
+
+        vignette.active = false;
     }
 }

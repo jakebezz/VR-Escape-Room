@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Wires : BombParts
 {
-    private void Start()
+    protected override void Start()
     {
-        bombPartRigid = gameObject.GetComponent<Rigidbody>();
+        base.Start();
     }
 }

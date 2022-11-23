@@ -10,10 +10,10 @@ public class Dynamite : BombParts
     private string pillowTag = "Pillow";
     private string floorTag = "Floor";
 
-    private void Start()
+    protected override void Start()
     {
         outOfVent = false;
-        bombPartRigid = GetComponent<Rigidbody>();
+        base.Start();
     }
 
     private void Update()

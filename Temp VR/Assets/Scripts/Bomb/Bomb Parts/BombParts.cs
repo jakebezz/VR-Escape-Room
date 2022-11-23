@@ -5,37 +5,35 @@ using UnityEngine;
 public class BombParts : MonoBehaviour
 {
     //Parent Class with a very basic job, places the object at the Bomb Placement location
-    public Transform placementLoc;
+    public GameObject placementLoc;
+
     //Used to rotate Timer so the time faces up
-    public bool isInTrigger;
+    public bool isPlaced;
 
     //MAYBE A GLOBAL VELOCITY THING SO IF ANY OF THEM HIT THE GROUND TOO FAST IT WILL ALET GUARD
     public Rigidbody bombPartRigid;
 
-    private List<GameObject> bombParts;
-
     private string bombPlacementTag = "BombPlacement";
 
-    private void Start()
+    protected virtual void Start()
     {
-        foreach(Transform child in transform)
+        placementLoc.SetActive(false);
+
+        if (gameObject.GetComponent<Rigidbody>() != null)
         {
-            bombParts.Add(child.gameObject);
+            bombPartRigid = gameObject.GetComponent<Rigidbody>();
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag(bombPlacementTag))
         {
-            gameObject.transform.position = placementLoc.position;
-            isInTrigger = true;
-            bombPartRigid.isKinematic = true;
-            bombPartRigid.useGravity = false;
+            placementLoc.SetActive(true);
 
-            if (CheckAllPartsPlaced() == true)
+            if (Input.GetKeyDown(KeyCode.K))
             {
-                Debug.Log("All Parts Placed");
+                MoveToPlacement();
             }
         }
     }
@@ -44,21 +42,19 @@ public class BombParts : MonoBehaviour
     {
         if (other.CompareTag(bombPlacementTag))
         {
-            isInTrigger = false;
-            bombPartRigid.isKinematic = false;
-            bombPartRigid.useGravity = true;
+            //bombPartRigid.isKinematic = false;
+            //bombPartRigid.useGravity = true;
+            isPlaced = false;
+            placementLoc.SetActive(false);
         }
     }
 
-    private bool CheckAllPartsPlaced()
+    private void MoveToPlacement()
     {
-        for (int i = 0; i < bombParts.Count; i++)
-        {
-            if (bombParts[i].GetComponent<BombParts>().isInTrigger == false)
-            {
-                return false;
-            }
-        }
-        return true;
+        gameObject.transform.position = placementLoc.transform.position;
+        gameObject.transform.rotation = placementLoc.transform.rotation;
+        bombPartRigid.isKinematic = true;
+        bombPartRigid.useGravity = false;
+        isPlaced = true;
     }
 }
