@@ -120,8 +120,10 @@ public class Guard : MonoBehaviour
         }
     }
 
+    //Repeat Patrol points
     private void RepeatPatrol()
     {
+        //Swaps the patrol points to the two points
         if (patrolPoint == movePoint[0])
         {
             patrolPoint = movePoint[1];
@@ -131,23 +133,27 @@ public class Guard : MonoBehaviour
             patrolPoint = movePoint[0];
         }
 
+        //Changes the wait time to the windowWaitTime, in this function becuase the guard will go straight to the patrol point there were heading to after the wait time
         if (atWindow == true)
         {
             waitTime = windowWaitTime;
             atWindow = false;
         }
+        //Starts Courotine
         else if (atPower == true)
         {
             StartCoroutine(TurnOnPower());
         }
+        //Deafult wait time at the patrol points
         else
         {
             waitTime = patrolPointTime;
         }
-
+        //Sets moveLocation to patrolPoint
         moveLocation = patrolPoint;
     }
 
+    //Moves guard to Window Point
     private void WindowPoint()
     {
         waitTime = reactionTime;
@@ -157,6 +163,7 @@ public class Guard : MonoBehaviour
         runTimer = true;
     }
 
+    //Moves guard to Power Point
     private void PowerPoint()
     {
         waitTime = reactionTime;
@@ -165,19 +172,22 @@ public class Guard : MonoBehaviour
         moveToPowerSwitch = false;
     }
 
+    //Selects the next destination for the guard while they wait
     private void AtDestination()
     {
+        //If guard is alerted go to window point and start timer
         if (alertedGuard == true)
         {
             WindowPoint();
             runTimer = true;
         }
-
+        //If power is turned off, go to the power point and start timer
         else if (moveToPowerSwitch == true)
         {
             PowerPoint();
             runTimer = true;
         }
+        //If nothing happened, resume patrol to deafult points
         else
         {
             RepeatPatrol();
@@ -185,6 +195,7 @@ public class Guard : MonoBehaviour
         }
     }
     
+    //Checks if guard is alerted while they are moving
     private void MovingToDestination()
     {
         if (alertedGuard == true)
@@ -200,6 +211,7 @@ public class Guard : MonoBehaviour
         }
     }
 
+    //Checks if player is hidden when guard is near the window
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag(windowTag))
@@ -219,7 +231,7 @@ public class Guard : MonoBehaviour
     {
         moveToPowerSwitch = true;
     }
-
+    //Turns on power after 30 seconds
     public IEnumerator TurnOnPower()
     {
         waitTime = powerWaitTime;

@@ -31,34 +31,40 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        //Gets the Post Processing Effects
         volume.profile.TryGet<Vignette>(out vignette);
         volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
 
+        //Enable and Disable cameras
         mainCamera.enabled = true;
         hiddenCamera.enabled = false;
 
         isHidden = false;
 
+        //Used to reset Vignette Intensity and Smoothness
         deafaultIntensity = vignette.intensity.value;
         deafaultSmoothness = vignette.smoothness.value;
     }
 
     private void Update()
     {
+        //Player equips glasses so see hidden object
         if(Input.GetKeyDown(KeyCode.G))
         {
-            if (colorAdjustments.active == true)
-            {
-                colorAdjustments.active = false;
-            }
-            else
+            //Activates the Color Adjustment effect
+            if (colorAdjustments.active == false)
             {
                 colorAdjustments.active = true;
             }
+            else
+            {
+                colorAdjustments.active = false;
+            }
         }
 
-        if(colorAdjustments.active == true)
+        if (colorAdjustments.active == true)
         {
+            //Change Hue Shift
             if(Input.GetMouseButton(0))
             {
                 colorAdjustments.hueShift.value++;
@@ -69,8 +75,10 @@ public class Player : MonoBehaviour
                 colorAdjustments.hueShift.value--;
             }
 
+            //Reveals hidden objects when the hue shift reaches a certain threshold
             if((colorAdjustments.hueShift.value > 50  && colorAdjustments.hueShift.value < 60) || (colorAdjustments.hueShift.value < -50 && colorAdjustments.hueShift.value > -60))
             {
+                //Endables hidden camera
                 mainCamera.enabled = false;
                 hiddenCamera.enabled = true;
                 Debug.Log("Can See Hidden Objects");
@@ -86,6 +94,7 @@ public class Player : MonoBehaviour
 
     }
 
+    //Player takes damage
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag(electricTag))
@@ -96,13 +105,16 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(other.CompareTag(hiddenTag))
+        //If player crouches by the window they are hidden
+        if (other.CompareTag(hiddenTag))
         {
+            //How far the need to crouch
             if (trackingSpace.transform.localPosition.y < -0.5)
             {
                 isHidden = true;
                 Debug.Log("Player Is Hidden");
-
+                
+                //Activate vignette effect
                 VignetteControl(Color.black, deafaultIntensity, deafaultSmoothness);
             }
             else
@@ -111,8 +123,10 @@ public class Player : MonoBehaviour
             }
         }
 
+        //Plays vignette effect if player is in electic trigger
         if (other.CompareTag(electricTag))
         {
+            //Increase the vignette intensity overtime
             increaseIntensity += 0.01f;
             if(electricDamage == true)
             {
@@ -128,21 +142,25 @@ public class Player : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //Disables vigentte when player is no longer in hidden trigger
         if(other.CompareTag(hiddenTag))
         {
             vignette.active = false;
             isHidden = false;
         }
 
+        //Reset variables when player is no longer in electrical trigger
         if(other.CompareTag(electricTag))
         {
             increaseIntensity = 0.1f;
             electricDamage = false;
 
+            //Remove vignette effect over time
             StartCoroutine(RemoveVignette());
         }
     }
 
+    //Activate vignette effect with variables
     private void VignetteControl(Color color, float intensity, float smoothness)
     {
         vignette.active = true;
@@ -151,6 +169,7 @@ public class Player : MonoBehaviour
         vignette.smoothness.Override(smoothness);
     }
 
+    //Removes the vignette effect overtime
     private IEnumerator RemoveVignette()
     {
         do 

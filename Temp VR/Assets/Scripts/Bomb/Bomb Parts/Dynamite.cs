@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Dynamite : BombParts
 {
+    //Bool - used so that the fire extinguisher doesnt keep affecting the dynamite when its not in the vent
     public bool outOfVent;
+    //Object velocity
     [SerializeField] private float velocity;
 
+    //Tags
     private string pillowTag = "Pillow";
     private string floorTag = "Floor";
 
@@ -18,6 +21,7 @@ public class Dynamite : BombParts
 
     private void Update()
     {
+        //Sets velocity to the objects velocity
         velocity = bombPartRigid.velocity.magnitude;
     }
 

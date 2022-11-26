@@ -13,8 +13,10 @@ public class BombParts : MonoBehaviour
     //MAYBE A GLOBAL VELOCITY THING SO IF ANY OF THEM HIT THE GROUND TOO FAST IT WILL ALET GUARD
     public Rigidbody bombPartRigid;
 
+    //Tag
     private string bombPlacementTag = "BombPlacement";
 
+    //Virtual start iherited by the children, deactivates the placement hologram for the object, gets the rigidbody from the object
     protected virtual void Start()
     {
         placementLoc.SetActive(false);
@@ -25,12 +27,14 @@ public class BombParts : MonoBehaviour
         }
     }
 
+    //Activate the hologram when object enters box
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag(bombPlacementTag))
         {
             placementLoc.SetActive(true);
 
+            //Snaps obejct to position
             if (Input.GetKeyDown(KeyCode.K))
             {
                 MoveToPlacement();
@@ -49,6 +53,7 @@ public class BombParts : MonoBehaviour
         }
     }
 
+    //Moves the object to where the hologram is
     private void MoveToPlacement()
     {
         gameObject.transform.position = placementLoc.transform.position;

@@ -6,9 +6,11 @@ public class ClearKey : KeysParent
 {
     private void Start()
     {
+        //Sets deleate to clear input
         pressKey = ClearInput;
     }
 
+    //Rests the variables and sets the screen to display four 0's
     private void ClearInput()
     {
         Debug.Log("Code Cleared");

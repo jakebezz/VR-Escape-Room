@@ -123,7 +123,7 @@ public class ColourChangingPuzzle : MonoBehaviour
         }
     }
 
-    //Called in Power On Tvent
+    //Called in Power On Event and on Start
     public void ResetLights()
     {
         lightIsOn[0] = true;

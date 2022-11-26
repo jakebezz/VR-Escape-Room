@@ -8,6 +8,7 @@ public class Crowbar : MonoBehaviour
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
     [SerializeField] private float velocity;
 
+    //Tag
     private string floorTag = "Floor";
 
     void Start()

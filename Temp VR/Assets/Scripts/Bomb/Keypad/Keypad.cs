@@ -40,6 +40,7 @@ public class Keypad : MonoBehaviour
         {
             for (int i = 0; i < keyCode.Length; i++)
             {
+                //If one of the number is false, return false
                 if (codeGuessed[i] != keyCode[i])
                 {
                     return false;

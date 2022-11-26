@@ -6,15 +6,18 @@ public class EnterKey : KeysParent
 {
     private void Start()
     {
+        //Sets delegate to Enter key
         pressKey = EnterInput;
     }
 
+    //Checks if the code inputed is correct
     private void EnterInput()
     {
         if (keypad.CheckPassCode() == true)
         {
             Debug.Log("Code Correct");
         }
+        //If code is incorrect, rest the variables and sets the screen to display four 0's
         else
         {
             Debug.Log("Code Incorrect");

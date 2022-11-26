@@ -20,6 +20,7 @@ public class Timer : BombParts
     {
         base.Start();
 
+        //Sets variabls
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
         connectedToCamera = true;
@@ -28,6 +29,7 @@ public class Timer : BombParts
 
     private void Update()
     {
+        //Runs tiemr
         if(runTimer)
         {
             if(timeLeft > 0)
@@ -37,13 +39,15 @@ public class Timer : BombParts
             }
             else
             {
+                //Ends game
                 Debug.Log("END GAME");
                 timeLeft = 0;
                 runTimer = false;
             }
         }
 
-        if(connectedToCamera)
+        //Keeps the timer connected to the camera
+        if (connectedToCamera)
         {
             gameObject.transform.position = timerLoc.position;
             gameObject.transform.rotation = XRrig.transform.rotation;
@@ -67,6 +71,7 @@ public class Timer : BombParts
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
+    //Drops camera
     private void DropCamera()
     {
         meshRenderer.enabled = true;

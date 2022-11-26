@@ -380,7 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placementLoc: {fileID: 0}
-  isInTrigger: 0
+  isPlaced: 0
   bombPartRigid: {fileID: 0}
   timerLoc: {fileID: 0}
   XRrig: {fileID: 0}
