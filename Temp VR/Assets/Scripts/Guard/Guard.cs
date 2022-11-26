@@ -8,6 +8,8 @@ public class Guard : MonoBehaviour
     //Static variables to be accessed in various classes
     public static bool alertedGuard = false;
 
+    [SerializeField] private ColourChangingPuzzle puzzle;
+
     //Guard navmesh agent
     private NavMeshAgent agent;
 
@@ -136,8 +138,7 @@ public class Guard : MonoBehaviour
         }
         else if (atPower == true)
         {
-            waitTime = powerWaitTime;
-            atPower = false;
+            StartCoroutine(TurnOnPower());
         }
         else
         {
@@ -217,5 +218,13 @@ public class Guard : MonoBehaviour
     public void PowerSwitchOn()
     {
         moveToPowerSwitch = true;
+    }
+
+    public IEnumerator TurnOnPower()
+    {
+        waitTime = powerWaitTime;
+        atPower = false;
+        yield return new WaitForSeconds(powerWaitTime);
+        puzzle.powerOn.Invoke();
     }
 }

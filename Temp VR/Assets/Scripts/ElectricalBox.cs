@@ -11,7 +11,13 @@ public class ElectricalBox : MonoBehaviour
     //Function to be called in event
     public void TurnOffPowerBox()
     {
-        electric.Stop();
+        electric.Pause();
         canBeOpened = true;
+    }
+
+    public void TurnOnPowerBox()
+    {
+        electric.Play();
+        canBeOpened = false;
     }
 }

@@ -7,6 +7,7 @@ public class ColourChangingPuzzle : MonoBehaviour
 {
     //Event to be used when all lights are off
     [SerializeField] private UnityEvent powerOff;
+    public UnityEvent powerOn;
 
     //Array of lights
     [SerializeField] private Light[] spotLights;
@@ -16,19 +17,21 @@ public class ColourChangingPuzzle : MonoBehaviour
 
     //Array of light ray objects
     [SerializeField] private GameObject[] lightRays;
+    [SerializeField] private GameObject[] keyNumbers;
 
+    //Enviroment objects
+    [SerializeField] private GameObject[] enviromentRays;
+    [SerializeField] private Material enviromentEmissions;
 
     //Bools to change
     public bool[] lightIsOn;
 
-    bool puzzleSolved = false;
+    private bool puzzleSolved = false;
+    private bool spotlightEnabled = true;
 
     private void Start()
     {
-        lightIsOn[0] = true;
-        lightIsOn[1] = true;
-        lightIsOn[2] = false;
-        lightIsOn[3] = true;
+        ResetLights();
 
         SetMeshEnabled();
     }
@@ -108,13 +111,47 @@ public class ColourChangingPuzzle : MonoBehaviour
                 spotLights[i].enabled = true;
                 lightEmissions[i].EnableKeyword("_EMISSION");
                 lightRays[i].SetActive(true);
+                keyNumbers[i].SetActive(true);
             }
             else
             {
                 spotLights[i].enabled = false;
                 lightEmissions[i].DisableKeyword("_EMISSION");
                 lightRays[i].SetActive(false);
+                keyNumbers[i].SetActive(false);
             }
+        }
+    }
+
+    //Called in Power On Tvent
+    public void ResetLights()
+    {
+        lightIsOn[0] = true;
+        lightIsOn[1] = true;
+        lightIsOn[2] = false;
+        lightIsOn[3] = true;
+    }
+
+    //Turns on/off the enviroment lights - Called in powerOff/On event
+    public void SwitchSpotLights()
+    {
+        if(spotlightEnabled == true)
+        {
+            foreach(GameObject light in enviromentRays)
+            {
+                light.SetActive(false);
+            }
+            enviromentEmissions.DisableKeyword("_EMISSION");
+            spotlightEnabled = false;
+        }
+        else
+        {
+            foreach (GameObject light in enviromentRays)
+            {
+                light.SetActive(true);
+            }
+            enviromentEmissions.EnableKeyword("_EMISSION");
+            spotlightEnabled = true;
         }
     }
 }

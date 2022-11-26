@@ -28,36 +28,8 @@ public class Keypad : MonoBehaviour
         keyCode[3] = 9;
     }
 
-    //MOVE FROM UPDATE INTO WHEN BUTTON IS PRESSED - NEED VR INTERACTION FOR THIS
-    private void Update()
-    {
-        //If the players next guess is the 5th guess, clear list and reset input
-        //CHANGE TO WHEN CLEAR BUTTON IS PRESSED - MAKE DELEGATE FOR CLEAR AND ENTER BUTTON
-        if(codeGuessed.Count > 4)
-        {
-            Debug.Log("Code Cleared or Denied");
-            codeGuessed.Clear();
-            input = 0;
-
-            for (int i = 0; i < codeVisual.Length; i++)
-            {
-                codeVisual[i].SetText(0.ToString());
-            }
-        }
-
-        if(CheckPassCode() == false)
-        {
-            Debug.Log("Password is False");
-        }
-        else if(CheckPassCode() == true)
-        {
-            Debug.Log("Password is True");
-            Debug.Log(bombLid.name + " can be opened");
-        }
-    }
-
     //Checks if the passcode is correct
-    private bool CheckPassCode()
+    public bool CheckPassCode()
     {
         //If the list is empty, return false
         if (codeGuessed.Count == 0)
