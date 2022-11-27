@@ -25,6 +25,9 @@ public class Player : MonoBehaviour
     private float deafaultSmoothness;
     private float increaseIntensity = 0.1f;
 
+    //Number Objects
+    [SerializeField] private HiddenObject[] hiddenObjects;
+
     //Tag Strings
     private string hiddenTag = "Hidden";
     private string electricTag = "ElectricTrigger";
@@ -35,6 +38,8 @@ public class Player : MonoBehaviour
         volume.profile.TryGet<Vignette>(out vignette);
         volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
 
+        colorAdjustments.active = false;
+
         //Enable and Disable cameras
         mainCamera.enabled = true;
         hiddenCamera.enabled = false;
@@ -44,6 +49,11 @@ public class Player : MonoBehaviour
         //Used to reset Vignette Intensity and Smoothness
         deafaultIntensity = vignette.intensity.value;
         deafaultSmoothness = vignette.smoothness.value;
+
+        foreach(HiddenObject hidden in hiddenObjects)
+        {
+            hidden.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
@@ -51,15 +61,9 @@ public class Player : MonoBehaviour
         //Player equips glasses so see hidden object
         if(Input.GetKeyDown(KeyCode.G))
         {
-            //Activates the Color Adjustment effect
-            if (colorAdjustments.active == false)
-            {
-                colorAdjustments.active = true;
-            }
-            else
-            {
-                colorAdjustments.active = false;
-            }
+            colorAdjustments.active = !colorAdjustments.active;
+            mainCamera.enabled = !mainCamera.enabled;
+            hiddenCamera.enabled = !hiddenCamera.enabled;
         }
 
         if (colorAdjustments.active == true)
@@ -68,25 +72,16 @@ public class Player : MonoBehaviour
             if(Input.GetMouseButton(0))
             {
                 colorAdjustments.hueShift.value++;
+                ShowHiddenObjects();
             }
 
-            if(Input.GetMouseButton(1))
+            if (colorAdjustments.hueShift.value > 20)
             {
-                colorAdjustments.hueShift.value--;
-            }
-
-            //Reveals hidden objects when the hue shift reaches a certain threshold
-            if((colorAdjustments.hueShift.value > 50  && colorAdjustments.hueShift.value < 60) || (colorAdjustments.hueShift.value < -50 && colorAdjustments.hueShift.value > -60))
-            {
-                //Endables hidden camera
-                mainCamera.enabled = false;
-                hiddenCamera.enabled = true;
-                Debug.Log("Can See Hidden Objects");
-            }
-            else
-            {
-                mainCamera.enabled = true;
-                hiddenCamera.enabled = false;
+                if (Input.GetMouseButton(1))
+                {
+                    colorAdjustments.hueShift.value--;
+                    ShowHiddenObjects();
+                }
             }
 
             Debug.Log("Hue Shift Value: " + colorAdjustments.hueShift.value);
@@ -181,4 +176,20 @@ public class Player : MonoBehaviour
 
         vignette.active = false;
     }
+
+    private void ShowHiddenObjects()
+    {
+        for (int i = 0; i < hiddenObjects.Length; i++)
+        {
+            if (hiddenObjects[i].RevealHiddenObject(colorAdjustments.hueShift.value) == true)
+            {
+                hiddenObjects[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                hiddenObjects[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
 }
