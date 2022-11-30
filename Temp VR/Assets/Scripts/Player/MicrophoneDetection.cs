@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MicrophoneDetection : MonoBehaviour
 {
+    #region Detection Variables
     //REWATCH VIDEO AND COMMENT CODE, CHANGE IT TOO
     [SerializeField] private int sampleWindow = 64;
     [SerializeField] private AudioSource source;
@@ -11,42 +12,56 @@ public class MicrophoneDetection : MonoBehaviour
     [SerializeField] private float threshold = 0.1f;
     //the smaller the number the easier the detection
     [SerializeField] private float detectionNumber = 1;
+    [SerializeField] private float loudness;
 
     private AudioClip microphoneClip;
+    #endregion
 
-    //Used to set the location of the sound
-    [SerializeField]private Vector3 playerSoundPos;
+    #region Visuals
+    [SerializeField] private GameObject soundBar;
+    [SerializeField] private Vector3 minScale;
+    [SerializeField] private Vector3 maxScale;
+
+    [SerializeField] private Color quietColour;
+    [SerializeField] private Color loudColour;
+    private MeshRenderer soundBarMesh;
+    #endregion
 
     void Start()
     {
+        soundBarMesh = soundBar.GetComponent<MeshRenderer>();
+        soundBarMesh.material.color = quietColour;
         MicrophoneToAudioClip();
     }
 
     void Update()
     {
-        float loudness = GetLoundnessFromMicroPhone(source.timeSamples, source.clip) * loudnessSensibility;
+        loudness = GetLoundnessFromMicroPhone(source.timeSamples, source.clip) * loudnessSensibility;
 
-        if(loudness < threshold)
+        if (loudness < threshold)
         {
             loudness = 0;
         }
 
-        if(loudness > detectionNumber)
+        if (loudness >= detectionNumber)
         {
             Debug.Log("Guard Heard");
-
-            //Sends guard to location of the cloned location
             Guard.alertedGuard = true;
+            soundBar.transform.localScale = Vector3.Lerp(maxScale, maxScale, loudness);
+        }
+        else
+        {
+            soundBar.transform.localScale = Vector3.Lerp(minScale, maxScale, loudness);
         }
     }
 
-    public void MicrophoneToAudioClip()
+    private void MicrophoneToAudioClip()
     {
         string microphoneName = Microphone.devices[0];
         microphoneClip = Microphone.Start(microphoneName, true, 20, AudioSettings.outputSampleRate);
     }
 
-    public float GetLoundnessFromMicroPhone(int clipPosition, AudioClip clip)
+    private float GetLoundnessFromMicroPhone(int clipPosition, AudioClip clip)
     {
         clipPosition = Microphone.GetPosition(Microphone.devices[0]);
         clip = microphoneClip;
