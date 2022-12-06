@@ -6,7 +6,7 @@ public class Timer : BombParts
 {
     //Timer Object
     [SerializeField] private Transform timerLoc;
-    [SerializeField] private GameObject XRrig;
+    [SerializeField] private GameObject centerEyeAnchor;
     private MeshRenderer meshRenderer;
     private bool connectedToCamera;
     
@@ -50,7 +50,7 @@ public class Timer : BombParts
         if (connectedToCamera)
         {
             gameObject.transform.position = timerLoc.position;
-            gameObject.transform.rotation = XRrig.transform.rotation;
+            gameObject.transform.rotation = centerEyeAnchor.transform.rotation;
         }
 
         //If the player is "Grabbing" the timer release it
