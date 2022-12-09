@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.40748647, g: 0.40707633, b: 0.41267133, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6134,14 +6134,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982173994}
-  m_LocalRotation: {x: -0.7330605, y: -0.48893082, z: -0.43998048, w: 0.17316525}
-  m_LocalPosition: {x: -0.054995134, y: -0.050278068, z: -0.057943583}
+  m_LocalRotation: {x: -0.685809, y: 0.21529314, z: -0.64137954, w: 0.26822993}
+  m_LocalPosition: {x: -0.1468, y: -0.050278068, z: -0.1498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 401367955}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -24.509, y: 15.443, z: 60.424}
+  m_LocalEulerAnglesHint: {x: -5.264, y: 91.92, z: 219.947}
 --- !u!114 &982173996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6165,16 +6165,16 @@ MonoBehaviour:
     - {x: 0.2600843, y: -0.17180258, z: -0.20812193, w: 0.92710584}
     - {x: -0.08891831, y: 0.046156988, z: -0.27164295, w: 0.9571694}
     - {x: 0.10018333, y: -0.018187977, z: -0.4367189, w: 0.8938172}
-    - {x: -0.029561631, y: -0.064535014, z: 0.122649804, w: -0.98990834}
+    - {x: -0.029561851, y: -0.06453494, z: 0.12264981, w: -0.98990834}
     - {x: -0.025633005, y: -0.0044115493, z: -0.42368275, w: 0.9054371}
     - {x: -0.02794065, y: 0.004629202, z: -0.80897504, w: 0.5871603}
     - {x: -0.024382561, y: 0.0794882, z: -0.24158902, w: 0.96681017}
     - {x: -0.012240324, y: -0.0044158073, z: -0.66244036, w: 0.7490017}
     - {x: -0.06120756, y: -0.022168254, z: -0.41721633, w: 0.9064727}
     - {x: -0.10871504, y: 0.08217435, z: -0.5421252, w: 0.82917345}
-    - {x: -0.039701983, y: -0.010990132, z: -0.39759633, w: 0.9166353}
+    - {x: -0.039701976, y: -0.010990147, z: -0.39759633, w: 0.9166353}
     - {x: 0.015348468, y: 0.029304937, z: 0.19761547, w: -0.97972125}
-    - {x: -0.20703588, y: 0.14034292, z: -0.018311804, w: 0.96804166}
+    - {x: -0.20703588, y: 0.14034297, z: -0.018311795, w: 0.96804166}
     - {x: -0.032855246, y: -0.112060085, z: 0.51162636, w: -0.8512353}
     - {x: -0.05395704, y: 0.034710146, z: -0.18017592, w: 0.9815399}
     - {x: -0.013918626, y: 0.046902627, z: 0.3476841, w: -0.93633443}
@@ -11586,7 +11586,7 @@ MonoBehaviour:
     - {x: -0.08891831, y: 0.046156988, z: -0.27164295, w: 0.9571694}
     - {x: 0.10018333, y: -0.018187977, z: -0.4367189, w: 0.8938172}
     - {x: -0.036395606, y: -0.06094314, z: 0.014418846, w: -0.9973732}
-    - {x: -0.026008692, y: -0.00024983613, z: -0.27322555, w: 0.9615983}
+    - {x: -0.026008781, y: -0.00024951436, z: -0.27322552, w: 0.9615982}
     - {x: -0.025001649, y: 0.013304931, z: -0.5792633, w: 0.81464833}
     - {x: -0.006089315, y: 0.082920425, z: -0.020466855, w: 0.99632746}
     - {x: -0.0128555745, y: -0.0020128405, z: -0.50827026, w: 0.8610993}
@@ -13061,6 +13061,32 @@ PrefabInstance:
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a912065df8e0b4b4385507810e31c60d, type: 3}
+--- !u!1 &2262886113447369237 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1919344763264231735, guid: a912065df8e0b4b4385507810e31c60d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2262886113447369236}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2262886113447369238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2262886113447369237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!114 &2887396017220961782
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -35,7 +35,10 @@ public class BombParts : MonoBehaviour
             placementLoc.SetActive(true);
 
             //If Obejct it let go, move to placement
-            MoveToPlacement();
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                MoveToPlacement();
+            }
         }
     }
 

@@ -5,8 +5,6 @@ using TMPro;
 
 public class Keypad : MonoBehaviour
 {
-    [SerializeField] private GameObject bombLid;
-
     //The correct code
     public int[] keyCode = new int[4];
 
