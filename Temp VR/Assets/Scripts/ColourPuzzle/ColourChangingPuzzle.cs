@@ -17,7 +17,7 @@ public class ColourChangingPuzzle : MonoBehaviour
 
     //Array of light ray objects
     [SerializeField] private GameObject[] lightRays;
-    [SerializeField] private GameObject[] keyNumbers;
+    [SerializeField] private MeshRenderer[] keyNumbers;
 
     //Enviroment objects
     [SerializeField] private GameObject[] enviromentRays;
@@ -51,31 +51,6 @@ public class ColourChangingPuzzle : MonoBehaviour
         {
             puzzleSolved = true;
             powerOff.Invoke();
-        }
-        else
-        {
-            //Light One
-            if (Input.GetKeyDown(KeyCode.Alpha6))
-            {
-                ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
-            }
-
-            //Light Two
-            if (Input.GetKeyDown(KeyCode.Alpha7))
-            {
-                ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha8))
-            {
-                ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
-            }
-
-            if (Input.GetKeyDown(KeyCode.Alpha9))
-            {
-                ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
-            }
-            SetMeshEnabled();
         }
     }
 
@@ -111,14 +86,14 @@ public class ColourChangingPuzzle : MonoBehaviour
                 spotLights[i].enabled = true;
                 lightEmissions[i].EnableKeyword("_EMISSION");
                 lightRays[i].SetActive(true);
-                keyNumbers[i].SetActive(true);
+                keyNumbers[i].enabled = true;
             }
             else
             {
                 spotLights[i].enabled = false;
                 lightEmissions[i].DisableKeyword("_EMISSION");
                 lightRays[i].SetActive(false);
-                keyNumbers[i].SetActive(false);
+                keyNumbers[i].enabled = false;
             }
         }
     }
@@ -153,5 +128,30 @@ public class ColourChangingPuzzle : MonoBehaviour
             enviromentEmissions.EnableKeyword("_EMISSION");
             spotlightEnabled = true;
         }
+    }
+
+    //Functions called when poses are made
+    public void ChangeRed()
+    {
+        ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
+        SetMeshEnabled();
+    }
+
+    public void ChangeYellow()
+    {
+        ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
+        SetMeshEnabled();
+    }
+
+    public void ChangeBlue()
+    {
+        ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
+        SetMeshEnabled();
+    }
+
+    public void ChangeWhite()
+    {
+        ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
+        SetMeshEnabled();
     }
 }

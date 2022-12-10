@@ -14,8 +14,7 @@ public class Player : MonoBehaviour
 
     //Cameras
     [SerializeField] private Camera mainCamera;
-    [SerializeField] private Camera hiddenCamera;
-    [SerializeField] private GameObject trackingSpace;
+    [SerializeField] private GameObject centerEyeAnchor;
 
     //Post Processing
     [SerializeField] private Volume volume;
@@ -27,6 +26,14 @@ public class Player : MonoBehaviour
 
     //Number Objects
     [SerializeField] private HiddenObject[] hiddenObjects;
+
+    [SerializeField] private LayerMask deafultLayerMask;
+    [SerializeField] private LayerMask hiddenLayerMask;
+    private bool showHidden;
+
+    [SerializeField] private GameObject handPoses;
+
+    [SerializeField] private float crouchHeight;
 
     //Tag Strings
     private string hiddenTag = "Hidden";
@@ -42,7 +49,10 @@ public class Player : MonoBehaviour
 
         //Enable and Disable cameras
         mainCamera.enabled = true;
-        hiddenCamera.enabled = false;
+
+        showHidden = false;
+
+        mainCamera.cullingMask = deafultLayerMask;
 
         isHidden = false;
 
@@ -63,7 +73,16 @@ public class Player : MonoBehaviour
         {
             colorAdjustments.active = !colorAdjustments.active;
             mainCamera.enabled = !mainCamera.enabled;
-            hiddenCamera.enabled = !hiddenCamera.enabled;
+            showHidden = !showHidden;
+
+            if (showHidden == true)
+            {
+                mainCamera.cullingMask = hiddenLayerMask;
+            }
+            else
+            {
+                mainCamera.cullingMask = deafultLayerMask;
+            }
         }
 
         if (colorAdjustments.active == true)
@@ -92,7 +111,12 @@ public class Player : MonoBehaviour
     //Player takes damage
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(electricTag))
+        if (other.CompareTag(hiddenTag))
+        {
+            handPoses.SetActive(true);
+        }
+
+        if (other.CompareTag(electricTag))
         {
             electricDamage = true;
         }
@@ -104,7 +128,7 @@ public class Player : MonoBehaviour
         if (other.CompareTag(hiddenTag))
         {
             //How far the need to crouch
-            if (trackingSpace.transform.localPosition.y < -0.5)
+            if (centerEyeAnchor.transform.localPosition.y < crouchHeight)
             {
                 isHidden = true;
                 Debug.Log("Player Is Hidden");
@@ -142,6 +166,8 @@ public class Player : MonoBehaviour
         {
             vignette.active = false;
             isHidden = false;
+
+            handPoses.SetActive(false);
         }
 
         //Reset variables when player is no longer in electrical trigger
