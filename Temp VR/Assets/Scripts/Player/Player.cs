@@ -85,26 +85,7 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (colorAdjustments.active == true)
-        {
-            //Change Hue Shift
-            if(Input.GetMouseButton(0))
-            {
-                colorAdjustments.hueShift.value++;
-                ShowHiddenObjects();
-            }
-
-            if (colorAdjustments.hueShift.value > 20)
-            {
-                if (Input.GetMouseButton(1))
-                {
-                    colorAdjustments.hueShift.value--;
-                    ShowHiddenObjects();
-                }
-            }
-
             Debug.Log("Hue Shift Value: " + colorAdjustments.hueShift.value);
-        }
 
     }
 
@@ -215,6 +196,21 @@ public class Player : MonoBehaviour
             {
                 hiddenObjects[i].gameObject.SetActive(false);
             }
+        }
+    }
+
+    public void IncreaseHueShift()
+    {
+        colorAdjustments.hueShift.value += 20;
+        ShowHiddenObjects();
+    }
+
+    public void DecreaseHueShift()
+    {
+        if (colorAdjustments.hueShift.value > 20)
+        {
+            colorAdjustments.hueShift.value -= 20;
+            ShowHiddenObjects();
         }
     }
 

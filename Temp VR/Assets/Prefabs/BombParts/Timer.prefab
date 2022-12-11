@@ -383,6 +383,6 @@ MonoBehaviour:
   isPlaced: 0
   bombPartRigid: {fileID: 0}
   timerLoc: {fileID: 0}
-  XRrig: {fileID: 0}
+  centerEyeAnchor: {fileID: 0}
   timeLeft: 300
   timerText: {fileID: 3480742408453592244}

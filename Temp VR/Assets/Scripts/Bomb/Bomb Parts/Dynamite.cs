@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oculus.Interaction;
 
 public class Dynamite : BombParts
 {
@@ -9,6 +10,7 @@ public class Dynamite : BombParts
     //Object velocity
     [SerializeField] private float velocity;
 
+    [SerializeField] private Grabbable grabbable;
     //Tags
     private string pillowTag = "Pillow";
     private string floorTag = "Floor";
@@ -16,6 +18,10 @@ public class Dynamite : BombParts
     protected override void Start()
     {
         outOfVent = false;
+
+        grabbable = GetComponent<Grabbable>();
+        grabbable.enabled = false;
+
         base.Start();
     }
 
@@ -31,11 +37,13 @@ public class Dynamite : BombParts
         if (collision.gameObject.CompareTag(pillowTag))
         {
             outOfVent = true;
+            grabbable.enabled = true;
         }
 
         if (collision.gameObject.CompareTag(floorTag) && velocity > 2f)
         {
             outOfVent = true;
+            grabbable.enabled = true;
 
             //Delete this
             Debug.Log("Guard Alerted");

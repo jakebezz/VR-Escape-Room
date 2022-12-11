@@ -11,6 +11,8 @@ public class FireExtinguisher : MonoBehaviour
 
     [SerializeField] private GameObject sprayPoint;
 
+    [SerializeField] private GameObject highlightVent;
+
     //Range that Raycast can hit
     [SerializeField] private float hitRange;
     private RaycastHit hit;
@@ -29,6 +31,8 @@ public class FireExtinguisher : MonoBehaviour
             //If raycast hits the vent and the dynamite is in vent add force to it
             if (hit.collider.tag == "Vent" && dynamite.outOfVent == false)
             {
+                highlightVent.SetActive(true);
+
                 Debug.Log("Hit Vent");
                 if (Input.GetKey(KeyCode.Y))
                 {
@@ -44,6 +48,10 @@ public class FireExtinguisher : MonoBehaviour
                         hit.rigidbody.AddForce(transform.forward * force);
                     }
                 }
+            }
+            else
+            {
+                highlightVent.SetActive(false);
             }
         }
     }

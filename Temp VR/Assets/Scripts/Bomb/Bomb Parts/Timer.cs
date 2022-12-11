@@ -52,12 +52,6 @@ public class Timer : BombParts
             gameObject.transform.position = timerLoc.position;
             gameObject.transform.rotation = centerEyeAnchor.transform.rotation;
         }
-
-        //If the player is "Grabbing" the timer release it
-        if(Input.GetKey(KeyCode.B))
-        {
-            DropCamera();
-        }
     }
 
     //Updates and prints the timer every frame/second
@@ -72,7 +66,7 @@ public class Timer : BombParts
     }
 
     //Drops camera
-    private void DropCamera()
+    public void DropCamera()
     {
         meshRenderer.enabled = true;
         connectedToCamera = false;

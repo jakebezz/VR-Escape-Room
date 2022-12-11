@@ -17,16 +17,12 @@ public class KeysParent : MonoBehaviour
     public delegate void PressKey();
     public PressKey pressKey;
 
-    private void Update()
+    //Called in Oculus input 
+    public void InvokePressKey()
     {
-        //Invoke delegate, will change to when player presses key
-        if (Input.GetKeyDown(key))
-        {
-            pressKey?.Invoke();
-        }
+        pressKey?.Invoke();
     }
 
-    //Called in Oculus input 
     public void InputKey()
     {
         if (keypad.codeGuessed.Count < 4)
