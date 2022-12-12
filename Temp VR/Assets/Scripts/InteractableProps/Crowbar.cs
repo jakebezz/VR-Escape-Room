@@ -54,7 +54,7 @@ public class Crowbar : MonoBehaviour
 
         if (other.CompareTag(crateLidTag))
         {
-            grabbableLid.enabled = true;
+            inLidTrigger = true;
             crowbarLidPlacement.SetActive(true);
         }
 
@@ -65,17 +65,34 @@ public class Crowbar : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(crateLidTag))
+        {
+            inLidTrigger = false;
+            crowbarLidPlacement.SetActive(false);
+        }
+    }
+
     public void MoveToHighlight()
     {
-        gameObject.transform.position = crowbarLidPlacement.transform.position;
-        gameObject.transform.rotation = crowbarLidPlacement.transform.rotation;
-        crowbar.isKinematic = true;
-        crowbarLidPlacement.SetActive(false);
+        if (inLidTrigger == true)
+        {
+            gameObject.transform.position = crowbarLidPlacement.transform.position;
+            gameObject.transform.rotation = crowbarLidPlacement.transform.rotation;
+            crowbar.isKinematic = true;
+            crowbarLidPlacement.SetActive(false);
+            grabbableLid.enabled = true;
+        }
     }
 
     public void LeaveHighlight()
     {
-        crowbar.isKinematic = false;
-        crowbarLidPlacement.SetActive(false);
+        if (inLidTrigger == true)
+        {
+            inLidTrigger = false;
+            crowbar.isKinematic = false;
+            crowbarLidPlacement.SetActive(false);
+        }
     }
 }
