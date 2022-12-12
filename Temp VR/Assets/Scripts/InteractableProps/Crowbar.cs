@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oculus.Interaction;
 
 public class Crowbar : MonoBehaviour
 {
@@ -8,15 +9,24 @@ public class Crowbar : MonoBehaviour
     //Crowbar Velocity, is its own variable to make playtesting adjustments easier
     [SerializeField] private float velocity;
 
+    [SerializeField] private Grabbable grabbableLid;
+
+    [SerializeField] private GameObject crowbarLidPlacement;
+    private bool inLidTrigger;
+
     [SerializeField] MicrophoneDetection micDetection;
 
     //Tag
     private string floorTag = "Floor";
+    private string crateLidTag = "CrateLidTrigger";
 
     void Start()
     {
         crowbar = GetComponent<Rigidbody>();
         crowbar.isKinematic = true;
+
+        grabbableLid.enabled = false;
+        crowbarLidPlacement.SetActive(false);
     }
 
     void Update()
@@ -33,7 +43,7 @@ public class Crowbar : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag(floorTag) && velocity > 2f)
+        if (other.CompareTag(floorTag) && velocity > 2f)
         {
             //Delete this
             Debug.Log("Guard Alerted");
@@ -42,10 +52,30 @@ public class Crowbar : MonoBehaviour
             Guard.alertedGuard = true;
         }
 
+        if (other.CompareTag(crateLidTag))
+        {
+            grabbableLid.enabled = true;
+            crowbarLidPlacement.SetActive(true);
+        }
+
         //If player throws an object that has a rigidbody
         if (other.gameObject.GetComponent<Rigidbody>() != null)
         {
             crowbar.isKinematic = false;
         }
+    }
+
+    public void MoveToHighlight()
+    {
+        gameObject.transform.position = crowbarLidPlacement.transform.position;
+        gameObject.transform.rotation = crowbarLidPlacement.transform.rotation;
+        crowbar.isKinematic = true;
+        crowbarLidPlacement.SetActive(false);
+    }
+
+    public void LeaveHighlight()
+    {
+        crowbar.isKinematic = false;
+        crowbarLidPlacement.SetActive(false);
     }
 }

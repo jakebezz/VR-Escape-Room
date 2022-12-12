@@ -14,6 +14,9 @@ TagManager:
   - ElectricTrigger
   - Pillow
   - WindowTrigger
+  - RoomLight
+  - GlassesTrigger
+  - CrateLidTrigger
   layers:
   - Default
   - TransparentFX

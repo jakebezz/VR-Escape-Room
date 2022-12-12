@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oculus.Interaction;
 
 public class EnterKey : KeysParent
 {
-    [SerializeField] private Rigidbody lidRigid;
+    [SerializeField] private Grabbable grabbableLid;
 
     private void Start()
     {
+        grabbableLid.enabled = false;
         //Sets delegate to Enter key
         pressKey = EnterInput;
     }
@@ -18,7 +20,7 @@ public class EnterKey : KeysParent
         if (CheckPassCode() == true)
         {
             Debug.Log("Code Correct");
-            lidRigid.isKinematic = false;
+            grabbableLid.enabled = true;
         }
         //If code is incorrect, rest the variables and sets the screen to display four 0's
         else

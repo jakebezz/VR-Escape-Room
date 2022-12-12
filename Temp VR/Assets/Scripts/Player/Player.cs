@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
 
     //Number Objects
     [SerializeField] private HiddenObject[] hiddenObjects;
+    [SerializeField] private GameObject[] shiftButtons;
 
     [SerializeField] private LayerMask deafultLayerMask;
     [SerializeField] private LayerMask hiddenLayerMask;
@@ -60,32 +61,36 @@ public class Player : MonoBehaviour
         deafaultIntensity = vignette.intensity.value;
         deafaultSmoothness = vignette.smoothness.value;
 
-        foreach(HiddenObject hidden in hiddenObjects)
+        foreach (HiddenObject hidden in hiddenObjects)
         {
             hidden.gameObject.SetActive(false);
+        }
+
+        foreach (GameObject button in shiftButtons)
+        {
+            button.SetActive(false);
         }
     }
 
     private void Update()
     {
         //Player equips glasses so see hidden object
-        if(Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G))
         {
-            colorAdjustments.active = !colorAdjustments.active;
-            mainCamera.enabled = !mainCamera.enabled;
-            showHidden = !showHidden;
-
-            if (showHidden == true)
-            {
-                mainCamera.cullingMask = hiddenLayerMask;
-            }
-            else
-            {
-                mainCamera.cullingMask = deafultLayerMask;
-            }
+            EnableHidden();
         }
 
-            Debug.Log("Hue Shift Value: " + colorAdjustments.hueShift.value);
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            IncreaseHueShift();
+            Debug.Log(colorAdjustments.hueShift.value);
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            DecreaseHueShift();
+            Debug.Log(colorAdjustments.hueShift.value);
+        }
 
     }
 
@@ -199,10 +204,21 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void MakeButtonsVisible(bool showButtons)
+    {
+        foreach (GameObject button in shiftButtons)
+        {
+            button.SetActive(showButtons);
+        }
+    }
+
     public void IncreaseHueShift()
     {
-        colorAdjustments.hueShift.value += 20;
-        ShowHiddenObjects();
+        if (colorAdjustments.hueShift.value < 175)
+        {
+            colorAdjustments.hueShift.value += 20;
+            ShowHiddenObjects();
+        }
     }
 
     public void DecreaseHueShift()
@@ -212,6 +228,24 @@ public class Player : MonoBehaviour
             colorAdjustments.hueShift.value -= 20;
             ShowHiddenObjects();
         }
+    }
+
+    public void EnableHidden()
+    {
+        colorAdjustments.active = !colorAdjustments.active;
+        showHidden = !showHidden;
+        mainCamera.cullingMask = hiddenLayerMask;
+
+        MakeButtonsVisible(true);
+    }
+
+    public void DisableHidden()
+    {
+        colorAdjustments.active = !colorAdjustments.active;
+        showHidden = !showHidden;
+        mainCamera.cullingMask = deafultLayerMask;
+
+        MakeButtonsVisible(false);
     }
 
 }
