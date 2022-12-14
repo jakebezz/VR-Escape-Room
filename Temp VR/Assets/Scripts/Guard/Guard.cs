@@ -20,9 +20,10 @@ public class Guard : MonoBehaviour
     private bool moveToPowerSwitch = false;
 
     //Animation
-    private Animator animator;
-    private string walk = "Walk";
-    private string lookAround = "LookAround";
+    [SerializeField] private Animator animator;
+    private string lookingForPlayerAnim = "isLookingForPlayer";
+    private string turnOnPowerAnim = "isAtPower";
+    private string walkingAnim = "isWalking";
 
 
     /// <summary>
@@ -60,6 +61,8 @@ public class Guard : MonoBehaviour
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
+        animator.SetBool(walkingAnim, true);
+
         //Moves the guard to the first point
         transform.position = movePoint[0].position;
 
@@ -94,6 +97,9 @@ public class Guard : MonoBehaviour
             else
             {
                 waitTime = 0;
+                animator.SetBool(lookingForPlayerAnim, false);
+                animator.SetBool(turnOnPowerAnim, false);
+                animator.SetBool(walkingAnim, true);
                 agent.SetDestination(moveLocation.position);
                 runTimer = false;
             }
@@ -179,6 +185,9 @@ public class Guard : MonoBehaviour
         if (alertedGuard == true)
         {
             WindowPoint();
+            animator.SetBool(lookingForPlayerAnim, true);
+            animator.SetBool(turnOnPowerAnim, false);
+            animator.SetBool(walkingAnim, false);
             runTimer = true;
         }
         //If power is turned off, go to the power point and start timer
@@ -236,6 +245,9 @@ public class Guard : MonoBehaviour
     {
         waitTime = powerWaitTime;
         atPower = false;
+        animator.SetBool(turnOnPowerAnim, true);
+        animator.SetBool(lookingForPlayerAnim, false);
+        animator.SetBool(walkingAnim, false);
         yield return new WaitForSeconds(powerWaitTime);
         puzzle.powerOn.Invoke();
     }

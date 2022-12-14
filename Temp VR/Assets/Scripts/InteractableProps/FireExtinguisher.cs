@@ -33,22 +33,15 @@ public class FireExtinguisher : MonoBehaviour
             {
                 highlightVent.SetActive(true);
 
-                Debug.Log("Hit Vent");
-                if (Input.GetKey(KeyCode.Y))
-                {
-                    dynamiteRigid.AddForce(-Vector3.forward * force);
-                }
-
-                //If the hit collider has a rigidbody you can add force to it
-                if (hit.rigidbody != null)
-                {
-                    Debug.Log("Hit Rigidbody");
-                    if (Input.GetKey(KeyCode.Y))
-                    {
-                        hit.rigidbody.AddForce(transform.forward * force);
-                    }
-                }
+                dynamiteRigid.AddForce(-Vector3.forward * force);
             }
+
+            //If the hit collider has a rigidbody you can add force to it
+            else if (hit.rigidbody != null)
+            {
+                hit.rigidbody.AddForce(transform.forward * force);
+            }
+
             else
             {
                 highlightVent.SetActive(false);
