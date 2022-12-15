@@ -16,8 +16,12 @@ public class Crowbar : MonoBehaviour
 
     [SerializeField] MicrophoneDetection micDetection;
 
+    [SerializeField] private AudioClip hitFloorSound;
+    [SerializeField] private AudioClip hitPillowSound;
+
     //Tag
     private string floorTag = "Floor";
+    private string pillowTag = "Pillow";
     private string crateLidTag = "CrateLidTrigger";
 
     void Start()
@@ -45,11 +49,14 @@ public class Crowbar : MonoBehaviour
     {
         if (other.CompareTag(floorTag) && velocity > 2f)
         {
-            //Delete this
-            Debug.Log("Guard Alerted");
+            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.2f);
 
             //Sets the global variables 
             Guard.alertedGuard = true;
+        }
+        else if (other.CompareTag(pillowTag) && velocity > 2f)
+        {
+            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.2f);
         }
 
         if (other.CompareTag(crateLidTag))

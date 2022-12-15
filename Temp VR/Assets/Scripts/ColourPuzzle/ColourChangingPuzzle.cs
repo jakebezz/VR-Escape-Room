@@ -29,6 +29,9 @@ public class ColourChangingPuzzle : MonoBehaviour
     private bool puzzleSolved = false;
     private bool spotlightEnabled = true;
 
+    [SerializeField] private AudioClip powerOffSound;
+    [SerializeField] private AudioClip powerOnSound;
+
     private void Start()
     {
         ResetLights();
@@ -153,5 +156,15 @@ public class ColourChangingPuzzle : MonoBehaviour
     {
         ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
         SetMeshEnabled();
+    }
+
+    public void PlayPowerOffSound()
+    {
+        SoundManager.Instance.PlaySoundAtPoint(powerOffSound, transform.position, 1f);
+    }
+
+    public void PlayPowerOnSound()
+    {
+        SoundManager.Instance.PlaySoundAtPoint(powerOnSound, transform.position, 1f);
     }
 }

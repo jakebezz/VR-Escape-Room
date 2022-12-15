@@ -19,12 +19,6 @@ public class Guard : MonoBehaviour
     //Public bool used in Power Off Event
     private bool moveToPowerSwitch = false;
 
-    //Animation
-    [SerializeField] private Animator animator;
-    private string lookingForPlayerAnim = "isLookingForPlayer";
-    private string turnOnPowerAnim = "isAtPower";
-    private string walkingAnim = "isWalking";
-
 
     /// <summary>
     /// Move points for the Guard
@@ -55,13 +49,14 @@ public class Guard : MonoBehaviour
 
     private string windowTag = "WindowTrigger";
 
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip[] grunt;
+
     private void Start()
     {
         //Get components
-        animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
-        animator.SetBool(walkingAnim, true);
+        audioSource = GetComponent<AudioSource>();
 
         //Moves the guard to the first point
         transform.position = movePoint[0].position;
@@ -83,6 +78,9 @@ public class Guard : MonoBehaviour
             {
                 waitTime -= Time.deltaTime;
 
+                //Stops audio when guard is still
+                audioSource.Stop();
+
                 if (alertedGuard == true)
                 {
                     WindowPoint();
@@ -96,10 +94,10 @@ public class Guard : MonoBehaviour
             //Moves agent to destination when timer is 0
             else
             {
+                //Plays audio when they walk
+                audioSource.Play();
+
                 waitTime = 0;
-                animator.SetBool(lookingForPlayerAnim, false);
-                animator.SetBool(turnOnPowerAnim, false);
-                animator.SetBool(walkingAnim, true);
                 agent.SetDestination(moveLocation.position);
                 runTimer = false;
             }
@@ -162,6 +160,8 @@ public class Guard : MonoBehaviour
     //Moves guard to Window Point
     private void WindowPoint()
     {
+        SoundManager.Instance.PlaySoundAtPoint(grunt[Random.Range(0, 3)], transform.position, 0.7f);
+
         waitTime = reactionTime;
         moveLocation = movePoint[2];
         atWindow = true;
@@ -172,6 +172,8 @@ public class Guard : MonoBehaviour
     //Moves guard to Power Point
     private void PowerPoint()
     {
+        SoundManager.Instance.PlaySoundAtPoint(grunt[Random.Range(0, 3)], transform.position, 0.7f);
+
         waitTime = reactionTime;
         moveLocation = movePoint[3];
         atPower = true;
@@ -185,9 +187,6 @@ public class Guard : MonoBehaviour
         if (alertedGuard == true)
         {
             WindowPoint();
-            animator.SetBool(lookingForPlayerAnim, true);
-            animator.SetBool(turnOnPowerAnim, false);
-            animator.SetBool(walkingAnim, false);
             runTimer = true;
         }
         //If power is turned off, go to the power point and start timer
@@ -245,9 +244,6 @@ public class Guard : MonoBehaviour
     {
         waitTime = powerWaitTime;
         atPower = false;
-        animator.SetBool(turnOnPowerAnim, true);
-        animator.SetBool(lookingForPlayerAnim, false);
-        animator.SetBool(walkingAnim, false);
         yield return new WaitForSeconds(powerWaitTime);
         puzzle.powerOn.Invoke();
     }
