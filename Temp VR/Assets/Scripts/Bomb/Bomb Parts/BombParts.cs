@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BombParts : MonoBehaviour
 {
+    [SerializeField] private CheckAllParts checkPlacement;
+
     //Parent Class with a very basic job, places the object at the Bomb Placement location
     public GameObject placementLoc;
 
@@ -28,16 +30,16 @@ public class BombParts : MonoBehaviour
     }
 
     //Activate the hologram when object enters box
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(bombPlacementTag))
         {
             placementLoc.SetActive(true);
+            MoveToPlacement();
 
-            //If Obejct it let go, move to placement
-            if (Input.GetKeyDown(KeyCode.A))
+            if (checkPlacement.CheckAllPlaced() == true)
             {
-                MoveToPlacement();
+                GameManager.Instance.PlacedAllBombParts();
             }
         }
     }
