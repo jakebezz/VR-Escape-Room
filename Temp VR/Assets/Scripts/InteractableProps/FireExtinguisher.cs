@@ -17,6 +17,8 @@ public class FireExtinguisher : MonoBehaviour
     [SerializeField] private float hitRange;
     private RaycastHit hit;
 
+    [SerializeField] private ParticleSystem smoke;
+
     private void Start()
     {
         dynamiteRigid = dynamite.bombPartRigid;
@@ -34,17 +36,28 @@ public class FireExtinguisher : MonoBehaviour
                 highlightVent.SetActive(true);
 
                 dynamiteRigid.AddForce(-Vector3.forward * force);
+
+                if (!smoke.isPlaying)
+                {
+                    smoke.Play();
+                }
             }
 
             //If the hit collider has a rigidbody you can add force to it
             else if (hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(transform.forward * force);
+
+                if (!smoke.isPlaying)
+                {
+                    smoke.Play();
+                }
             }
 
             else
             {
                 highlightVent.SetActive(false);
+                smoke.Stop();
             }
         }
     }
