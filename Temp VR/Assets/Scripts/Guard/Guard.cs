@@ -224,12 +224,11 @@ public class Guard : MonoBehaviour
     {
         if (other.gameObject.CompareTag(windowTag))
         {
-            Debug.Log("Guard in Trigger");
             if (player.isHidden == false)
             {
-                Debug.Log("Guard Caught Player");
-                WindowPoint();
-                //End Game Event
+                alertedGuard = false;
+                runTimer = false;
+                GameManager.Instance.CaughtPlayer();
             }
         }
     }

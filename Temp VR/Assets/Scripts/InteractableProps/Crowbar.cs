@@ -49,14 +49,14 @@ public class Crowbar : MonoBehaviour
     {
         if (other.CompareTag(floorTag) && velocity > 2f)
         {
-            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.2f);
+            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.01f);
 
             //Sets the global variables 
             Guard.alertedGuard = true;
         }
         else if (other.CompareTag(pillowTag) && velocity > 2f)
         {
-            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.2f);
+            SoundManager.Instance.PlaySoundAtPoint(hitPillowSound, transform.position, 0.01f);
         }
 
         if (other.CompareTag(crateLidTag))

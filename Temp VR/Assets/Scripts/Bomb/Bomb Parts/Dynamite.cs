@@ -11,6 +11,9 @@ public class Dynamite : BombParts
     [SerializeField] private float velocity;
 
     [SerializeField] private Grabbable grabbable;
+
+    [SerializeField] private AudioClip hitGround;
+
     //Tags
     private string pillowTag = "Pillow";
     private string floorTag = "Floor";
@@ -34,22 +37,29 @@ public class Dynamite : BombParts
     //If the dyanamite is out of the vent and/or hits the ground too fast
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(pillowTag))
-        {
-            outOfVent = true;
-            grabbable.enabled = true;
-        }
-
         if (collision.gameObject.CompareTag(floorTag) && velocity > 2f)
         {
-            outOfVent = true;
             grabbable.enabled = true;
 
-            //Delete this
-            Debug.Log("Guard Alerted");
+            SoundManager.Instance.PlaySoundAtPoint(hitGround, transform.position, 0.1f);
 
             //Sets the global variables 
             Guard.alertedGuard = true;
+        }
+
+        if (collision.gameObject.CompareTag(pillowTag))
+        {
+            grabbable.enabled = true;
+
+            SoundManager.Instance.PlaySoundAtPoint(hitGround, transform.position, 0.01f);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.name == "DynamiteTrigger")
+        {
+            outOfVent = true;
         }
     }
 }

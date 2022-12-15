@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MicrophoneDetection : MonoBehaviour
 {
-    #region Detection Variables
+    
     //REWATCH VIDEO AND COMMENT CODE, CHANGE IT TOO
     [SerializeField] private int sampleWindow = 64;
     [SerializeField] private AudioSource source;
@@ -15,22 +15,9 @@ public class MicrophoneDetection : MonoBehaviour
     [SerializeField] private float loudness;
 
     private AudioClip microphoneClip;
-    #endregion
-
-    #region Visuals
-    [SerializeField] private GameObject soundBar;
-    [SerializeField] private Vector3 minScale;
-    [SerializeField] private Vector3 maxScale;
-
-    [SerializeField] private Color quietColour;
-    [SerializeField] private Color loudColour;
-    private MeshRenderer soundBarMesh;
-    #endregion
 
     void Start()
     {
-        soundBarMesh = soundBar.GetComponent<MeshRenderer>();
-        soundBarMesh.material.color = quietColour;
         MicrophoneToAudioClip();
     }
 
@@ -45,13 +32,7 @@ public class MicrophoneDetection : MonoBehaviour
 
         if (loudness >= detectionNumber)
         {
-            Debug.Log("Guard Heard");
             Guard.alertedGuard = true;
-            soundBar.transform.localScale = Vector3.Lerp(maxScale, maxScale, loudness);
-        }
-        else
-        {
-            soundBar.transform.localScale = Vector3.Lerp(minScale, maxScale, loudness);
         }
     }
 

@@ -40,9 +40,10 @@ public class Timer : BombParts
             else
             {
                 //Ends game
-                Debug.Log("END GAME");
                 timeLeft = 0;
                 runTimer = false;
+
+                GameManager.Instance.RanOUtOfTime();
             }
         }
 
