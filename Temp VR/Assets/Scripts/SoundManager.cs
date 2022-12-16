@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Singleton class for Sounds, used to make some sound controlled through one audio source
+/// </summary>
 public class SoundManager : MonoBehaviour
 {
-    //Singleton class for Sounds, used to make all sounds controlled through one audio source
     public static SoundManager Instance;
+    private AudioSource audioSource;
 
-    AudioSource audioSource;
-
-    //Sets Instance to Instance if it does not exist, detroys it if it already exists
+    /// <summary>
+    /// Sets Instance to Instance if it does not exist, detroys it if it already exists
+    /// </summary>
     private void Awake()
     {
         if (Instance == null)
@@ -28,12 +31,12 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlaySound(AudioClip clip, bool loop)
-    {
-        audioSource.PlayOneShot(clip);
-        audioSource.loop = loop;
-    }
-
+    /// <summary>
+    /// Plays a sound at a set Location 
+    /// </summary>
+    /// <param name="clip"></param>
+    /// <param name="position"></param>
+    /// <param name="volume"></param>
     public void PlaySoundAtPoint(AudioClip clip, Vector3 position, float volume)
     {
         AudioSource.PlayClipAtPoint(clip, position, volume);

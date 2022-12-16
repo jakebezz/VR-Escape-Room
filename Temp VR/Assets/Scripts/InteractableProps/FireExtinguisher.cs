@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class FireExtinguisher : MonoBehaviour
 {
-    [SerializeField] private Dynamite dynamite;
-    private Rigidbody dynamiteRigid;
-
-    [SerializeField] private float force;
-
-    [SerializeField] private GameObject sprayPoint;
-
-    [SerializeField] private GameObject highlightVent;
-
-    //Range that Raycast can hit
-    [SerializeField] private float hitRange;
+    #region RayCast
+    [SerializeField] private float hitRange;                            //Range that Raycast can hit
     private RaycastHit hit;
+    #endregion
 
-    [SerializeField] private ParticleSystem smoke;
+    [SerializeField] private float force;                               //Force to be added to Dynamite    
+    [Header("References")]
+    [SerializeField] private GameObject sprayPoint;                     //Spray Point object
+    [SerializeField] private GameObject highlightVent;                  //Vent Highlight
+    [SerializeField] private ParticleSystem smoke;                      //Smoke particle effect
+    [SerializeField] private Dynamite dynamite;                         //Dynamite script
+
+    private Rigidbody dynamiteRigid;                                    //Dynamite rigidbody
 
     private void Start()
     {
         dynamiteRigid = dynamite.bombPartRigid;
     }
 
-    //MOVE FROM UPDATE INTO WHEN BUTTON IS PRESSED OR HANDLE IS SQUEEZED
     private void Update()
     {
         //Raycast from FireExtinguisher
@@ -34,7 +32,6 @@ public class FireExtinguisher : MonoBehaviour
             if (hit.collider.tag == "Vent" && dynamite.outOfVent == false)
             {
                 highlightVent.SetActive(true);
-
                 dynamiteRigid.AddForce(-Vector3.forward * force);
 
                 if (!smoke.isPlaying)

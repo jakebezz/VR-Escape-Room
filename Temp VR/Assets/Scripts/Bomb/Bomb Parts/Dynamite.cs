@@ -1,63 +1,70 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Oculus.Interaction;
 
 public class Dynamite : BombParts
 {
-    //Bool - used so that the fire extinguisher doesnt keep affecting the dynamite when its not in the vent
-    public bool outOfVent;
-    //Object velocity
-    [SerializeField] private float velocity;
+    [Space(20)]
+    [SerializeField] private AudioClip hitGroundSound;                  //Sound when hitting ground
+    [NonSerialized] public bool outOfVent;                              //Bool - used so that the fire extinguisher doesnt keep affecting the dynamite when its not in the vent
+    private Grabbable grabbable;                                        //Reference to Oculus Grabbable
+    private float velocity;                                             //Object velocity
 
-    [SerializeField] private Grabbable grabbable;
-
-    [SerializeField] private AudioClip hitGround;
-
-    //Tags
+    #region Tags
     private string pillowTag = "Pillow";
     private string floorTag = "Floor";
+    private string dynamiteTrigger = "DynamiteTrigger";
+    #endregion
 
     protected override void Start()
     {
+        base.Start();
+
         outOfVent = false;
 
         grabbable = GetComponent<Grabbable>();
         grabbable.enabled = false;
-
-        base.Start();
     }
 
     private void Update()
     {
-        //Sets velocity to the objects velocity
-        velocity = bombPartRigid.velocity.magnitude;
+        velocity = bombPartRigid.velocity.magnitude;                   //Sets velocity to the objects velocity
     }
 
-    //If the dyanamite is out of the vent and/or hits the ground too fast
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(floorTag) && velocity > 2f)
+        //Dynamite hitting floor
+        if (collision.gameObject.CompareTag(floorTag))
         {
-            grabbable.enabled = true;
+            if (grabbable.enabled == false)
+            {
+                grabbable.enabled = true;
+            }
 
-            SoundManager.Instance.PlaySoundAtPoint(hitGround, transform.position, 0.1f);
+            //Alert guard and play loud sound if Velocity is too high when hitting floor
+            if (velocity > 2f)
+            {
+                SoundManager.Instance.PlaySoundAtPoint(hitGroundSound, transform.position, 0.1f);
 
-            //Sets the global variables 
-            Guard.alertedGuard = true;
+                Guard.alertedGuard = true;
+            }
         }
 
+        //Dynamite hitting pillow
         if (collision.gameObject.CompareTag(pillowTag))
         {
             grabbable.enabled = true;
 
-            SoundManager.Instance.PlaySoundAtPoint(hitGround, transform.position, 0.01f);
+            SoundManager.Instance.PlaySoundAtPoint(hitGroundSound, transform.position, 0.01f);
         }
     }
 
+    //Set outOfVent true when Dynamite has reached the trigger
     private void OnTriggerEnter(Collider other)
     {
-        if(other.name == "DynamiteTrigger")
+        if (other.name == dynamiteTrigger && outOfVent == false)
         {
             outOfVent = true;
         }

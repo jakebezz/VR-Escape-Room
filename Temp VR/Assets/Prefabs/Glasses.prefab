@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 78825947121422134}
   - component: {fileID: 4560431594791170716}
   m_Layer: 0
-  m_Name: SM_Item_Mask_Glasses_01
+  m_Name: Glasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

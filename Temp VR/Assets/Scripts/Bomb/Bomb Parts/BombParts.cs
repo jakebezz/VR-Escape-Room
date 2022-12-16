@@ -1,65 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class BombParts : MonoBehaviour
 {
-    [SerializeField] private CheckAllParts checkPlacement;
+    [Header("Placement References")]
+    [SerializeField] private CheckAllParts checkPlacement;                                  //Reference to Check if all parts are placed
+    [SerializeField] private GameObject hologram;                                                             //HologramObject to move Bomb part to
 
-    //Parent Class with a very basic job, places the object at the Bomb Placement location
-    public GameObject placementLoc;
+    [NonSerialized] public bool isPlaced;                                                   //Check if Object is placed
+    [NonSerialized] public Rigidbody bombPartRigid;                                         //Rigidbody of the Bomb Parts
+    private string bombPlacementTag = "BombPlacement";                                      //Tag to compare
 
-    //Used to rotate Timer so the time faces up
-    public bool isPlaced;
-
-    //MAYBE A GLOBAL VELOCITY THING SO IF ANY OF THEM HIT THE GROUND TOO FAST IT WILL ALET GUARD
-    public Rigidbody bombPartRigid;
-
-    //Tag
-    private string bombPlacementTag = "BombPlacement";
-
-    //Virtual start iherited by the children, deactivates the placement hologram for the object, gets the rigidbody from the object
+    /// <summary>
+    /// Virtual start iherited by the children, deactivates the placement hologram for the object, gets the rigidbody from the object
+    /// </summary>
     protected virtual void Start()
     {
-        placementLoc.SetActive(false);
+        hologram.SetActive(false);
 
-        if (gameObject.GetComponent<Rigidbody>() != null)
-        {
-            bombPartRigid = gameObject.GetComponent<Rigidbody>();
-        }
+        bombPartRigid = gameObject.GetComponent<Rigidbody>();
     }
 
-    //Activate the hologram when object enters box
+    /// <summary>
+    /// Activate the hologram when object enters box
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(bombPlacementTag))
         {
-            placementLoc.SetActive(true);
+            hologram.SetActive(true);
+
             MoveToPlacement();
 
+            //Checks if all parts have been placed when an object is placed
             if (checkPlacement.CheckAllPlaced() == true)
             {
                 GameManager.Instance.PlacedAllBombParts();
+
             }
         }
     }
 
+    /// <summary>
+    /// Resets Variables when exiting trigger
+    /// </summary>
+    /// <param name="other"></param>
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(bombPlacementTag))
         {
-            //bombPartRigid.isKinematic = false;
-            //bombPartRigid.useGravity = true;
+            bombPartRigid.isKinematic = false;
+            bombPartRigid.useGravity = true;
             isPlaced = false;
-            placementLoc.SetActive(false);
+            hologram.SetActive(false);
         }
     }
 
-    //Moves the object to where the hologram is
+    /// <summary>
+    /// Moves the object to hologram location
+    /// </summary>
     private void MoveToPlacement()
     {
-        gameObject.transform.position = placementLoc.transform.position;
-        gameObject.transform.rotation = placementLoc.transform.rotation;
+        gameObject.transform.position = hologram.transform.position;
+        gameObject.transform.rotation = hologram.transform.rotation;
         bombPartRigid.isKinematic = true;
         bombPartRigid.useGravity = false;
         isPlaced = true;

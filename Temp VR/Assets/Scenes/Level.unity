@@ -550,6 +550,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5929747166591337669, guid: 4029947bc2cec114eb1397e4975a6c70,
         type: 3}
+      propertyPath: hologram
+      value: 
+      objectReference: {fileID: 3020796121256993205}
+    - target: {fileID: 5929747166591337669, guid: 4029947bc2cec114eb1397e4975a6c70,
+        type: 3}
+      propertyPath: grabbable
+      value: 
+      objectReference: {fileID: 1729294507}
+    - target: {fileID: 5929747166591337669, guid: 4029947bc2cec114eb1397e4975a6c70,
+        type: 3}
       propertyPath: hitGround
       value: 
       objectReference: {fileID: 8300000, guid: e15123978c3c71b4faa646922e004ad9, type: 3}
@@ -568,6 +578,16 @@ PrefabInstance:
       propertyPath: bombPartRigid
       value: 
       objectReference: {fileID: 1729294504}
+    - target: {fileID: 5929747166591337669, guid: 4029947bc2cec114eb1397e4975a6c70,
+        type: 3}
+      propertyPath: checkPlacement
+      value: 
+      objectReference: {fileID: 1264001200}
+    - target: {fileID: 5929747166591337669, guid: 4029947bc2cec114eb1397e4975a6c70,
+        type: 3}
+      propertyPath: hitGroundSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e15123978c3c71b4faa646922e004ad9, type: 3}
     - target: {fileID: 6022271864130058050, guid: 4029947bc2cec114eb1397e4975a6c70,
         type: 3}
       propertyPath: _oneGrabTransformer
@@ -1862,18 +1882,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 120594572}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &120594581 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 78825947121422134, guid: 8654b15919165984eb25a3047d77464f,
-    type: 3}
-  m_PrefabInstance: {fileID: 120594572}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &129709375 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3065837590135858745, guid: f450d8179cb57eb4391c52512dfa19f6,
@@ -3351,7 +3359,7 @@ Transform:
   - {fileID: 157243036}
   - {fileID: 2142076265}
   m_Father: {fileID: 1373526307}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &371783395
 PrefabInstance:
@@ -4807,7 +4815,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keypad: {fileID: 1436703473}
   number: 0
-  key: 99
 --- !u!114 &534924977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4970,7 +4977,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keypad: {fileID: 1436703473}
   number: 0
-  key: 101
   grabbableLid: {fileID: 1504075802642994691}
 --- !u!114 &568824510
 MonoBehaviour:
@@ -6168,7 +6174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8951a656a7c00e74094166ef415cdce5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _collider: {fileID: 0}
+  _collider: {fileID: 1462548917}
 --- !u!114 &666858187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6743,6 +6749,7 @@ RectTransform:
   - {fileID: 2140017186}
   - {fileID: 1557669131}
   - {fileID: 724735118}
+  - {fileID: 1605808507}
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7139,7 +7146,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &724735118
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7261,12 +7268,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 724735117}
   m_CullTransparentMesh: 1
---- !u!1 &736241876 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1190131086089332, guid: a22bb852cf433044e8752ea7fe62f570,
-    type: 3}
-  m_PrefabInstance: {fileID: 819382382}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &782628375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8187,7 +8188,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1373526307}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -9253,7 +9254,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   electric: {fileID: 239376628}
-  canBeOpened: 0
+  doorGrabbable: {fileID: 1193532159}
+  isActive: 0
 --- !u!82 &1014552515
 AudioSource:
   m_ObjectHideFlags: 0
@@ -9512,276 +9514,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d9d9b84cabfcde4eba2d8b23dab969e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerOff:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1560718665}
-        m_TargetAssemblyTypeName: PowerOffEvent, Assembly-CSharp
-        m_MethodName: TurnLightsOff
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1560718665}
-        m_TargetAssemblyTypeName: PowerOffEvent, Assembly-CSharp
-        m_MethodName: GuardSaysSomething
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1014552514}
-        m_TargetAssemblyTypeName: ElectricalBox, Assembly-CSharp
-        m_MethodName: TurnOffPowerBox
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8386676815731600299}
-        m_TargetAssemblyTypeName: Guard, Assembly-CSharp
-        m_MethodName: PowerSwitchOn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1025892318}
-        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
-        m_MethodName: SwitchSpotLights
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 736241876}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 639477479}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8637370213972410490}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 9125358095653171354}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1562436414759019413}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1193532159}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1025892318}
-        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
-        m_MethodName: PlayPowerOffSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  powerOn:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1025892318}
-        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
-        m_MethodName: ResetLights
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1014552514}
-        m_TargetAssemblyTypeName: ElectricalBox, Assembly-CSharp
-        m_MethodName: TurnOnPowerBox
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1025892318}
-        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
-        m_MethodName: SwitchSpotLights
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 736241876}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 639477479}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 8637370213972410490}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 9125358095653171354}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1562436414759019413}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1193532159}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1025892318}
-        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
-        m_MethodName: PlayPowerOnSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+  puzzleInformation: "\rCurrent Code: LightOne, LightTwo\n\nLight One - lightBool[0]\r\nLight
+    Two - lightBool[1]\r\nLight Three - lightBool[2]\r\nLight Four - lightBool[3]\r"
   spotLights:
   - {fileID: 1104483333}
   - {fileID: 411742375}
@@ -9806,9 +9540,146 @@ MonoBehaviour:
   - {fileID: 1600093082}
   - {fileID: 1991286302}
   enviromentEmissions: {fileID: 2100000, guid: 007d9d5904bba064ba684e9576047a41, type: 2}
-  lightIsOn: 00000000
-  powerOffSound: {fileID: 0}
-  powerOnSound: {fileID: 0}
+  powerOffSound: {fileID: 8300000, guid: cc421062b70e4484aa4cf8d4959cc504, type: 3}
+  powerOnSound: {fileID: 8300000, guid: c7304bb37a890c54c93093c7630e6bbc, type: 3}
+  powerOffEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1014552514}
+        m_TargetAssemblyTypeName: ElectricalBox, Assembly-CSharp
+        m_MethodName: TurnOffPowerBox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8637370213972410490}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 9125358095653171354}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1562436414759019413}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 851433108294393718}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7810559199289340868}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1025892318}
+        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
+        m_MethodName: SetEnvriomentLights
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  powerOnEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1014552514}
+        m_TargetAssemblyTypeName: ElectricalBox, Assembly-CSharp
+        m_MethodName: TurnOnPowerBox
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 851433108294393718}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 7810559199289340868}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1025892318}
+        m_TargetAssemblyTypeName: ColourChangingPuzzle, Assembly-CSharp
+        m_MethodName: SetEnvriomentLights
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!4 &1025892319
 Transform:
   m_ObjectHideFlags: 0
@@ -9816,8 +9687,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1025892317}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.54100037, y: -0.093, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 3.6920004, y: 0.347, z: -0.12522161}
   m_LocalScale: {x: 1.2386, y: 1.2386, z: 1.2386}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9825,9 +9696,8 @@ Transform:
   - {fileID: 1889940750768506969}
   - {fileID: 4103521298039160037}
   - {fileID: 3710463819952799544}
-  - {fileID: 1560718666}
-  m_Father: {fileID: 1373526307}
-  m_RootOrder: 0
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1031285549 stripped
 MonoBehaviour:
@@ -10089,7 +9959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1051114464
 Transform:
   m_ObjectHideFlags: 0
@@ -10373,7 +10243,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1373526307}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10819,123 +10689,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 825210d9c7aeaaa438fd0f1978ee00fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  disableInteraction:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 583495564}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2119195540}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1597473776}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 120594581}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1729294507}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1316315867}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 700013151}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1240903986}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1562436414759019413}
-        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: set_enabled
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   quitObject: {fileID: 693269844}
   restartObject: {fileID: 307136824}
-  canvas: {fileID: 699689692}
-  caughtText: {fileID: 2140017185}
-  placedAllBombPartsText: {fileID: 1557669130}
-  ranOutOfTimeText: {fileID: 724735117}
+  caughtText: {fileID: 2140017187}
+  placedAllBombPartsText: {fileID: 1557669132}
+  ranOutOfTimeText: {fileID: 724735119}
+  killedByElectricText: {fileID: 1605808505}
 --- !u!4 &1113696567
 Transform:
   m_ObjectHideFlags: 0
@@ -12156,6 +11915,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1915035472}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   _whenUnselect:
     m_PersistentCalls:
       m_Calls: []
@@ -12979,7 +12750,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1373526307}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13103,7 +12874,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1025892319}
   - {fileID: 363840562}
   - {fileID: 1515408234}
   - {fileID: 1334965995}
@@ -14186,7 +13956,7 @@ Transform:
   - {fileID: 597015004}
   - {fileID: 1707230748}
   m_Father: {fileID: 1373526307}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1519847833 stripped
 Transform:
@@ -14748,7 +14518,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1557669131
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14868,50 +14638,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557669130}
   m_CullTransparentMesh: 1
---- !u!1 &1560718664
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1560718666}
-  - component: {fileID: 1560718665}
-  m_Layer: 0
-  m_Name: PowerOffEvent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1560718665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560718664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b1434a43e7ea8d4e91657a3e6e35e08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1560718666
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560718664}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.093, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1025892319}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1566218664
 GameObject:
   m_ObjectHideFlags: 0
@@ -15079,7 +14805,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1373526307}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -15524,6 +15250,145 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 215854168}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1605808504
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1605808507}
+  - component: {fileID: 1605808506}
+  - component: {fileID: 1605808505}
+  m_Layer: 5
+  m_Name: KilledByElectricText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1605808505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605808504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'You were Electricuted to Death...
+
+
+    Grab the Green Button to Restart
+    or the Red Button to Quit'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294959104
+  m_fontColor: {r: 0, g: 0.87890935, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 10.2
+  m_fontSizeBase: 10.2
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: -17.124474}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1605808506
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605808504}
+  m_CullTransparentMesh: 1
+--- !u!224 &1605808507
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605808504}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 699689696}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1609285510
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17321,7 +17186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1915035471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17936,8 +17801,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHidden: 0
   electricDamage: 1
+  handPoses: {fileID: 2064165941270936303}
+  crouchHeight: 1.3
+  electricalBox: {fileID: 1014552514}
   mainCamera: {fileID: 129709377}
   centerEyeAnchor: {fileID: 129709375}
+  deafultLayerMask:
+    serializedVersion: 2
+    m_Bits: 119
+  hiddenLayerMask:
+    serializedVersion: 2
+    m_Bits: 2147483647
   volume: {fileID: 1119115666}
   hiddenObjects:
   - {fileID: 8337292244544528867}
@@ -17948,14 +17822,6 @@ MonoBehaviour:
   shiftButtons:
   - {fileID: 95343469}
   - {fileID: 223974226}
-  deafultLayerMask:
-    serializedVersion: 2
-    m_Bits: 119
-  hiddenLayerMask:
-    serializedVersion: 2
-    m_Bits: 2147483647
-  handPoses: {fileID: 2064165941270936303}
-  crouchHeight: 1.3
 --- !u!136 &1985089415
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -19052,7 +18918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2140017186
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19487,7 +19353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1504075802642994688}
   m_LocalRotation: {x: 0.0045862137, y: -0, z: -0, w: 0.9999895}
-  m_LocalPosition: {x: -0.01192521, y: 0.12458458, z: -0.10923962}
+  m_LocalPosition: {x: -0.01192521, y: 0.1338, z: -0.10923962}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19780,9 +19646,19 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9c46d21273a23f940b05997f20120e48, type: 2}
     - target: {fileID: 5390012091189510719, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
         type: 3}
+      propertyPath: hologram
+      value: 
+      objectReference: {fileID: 9180742401557889010}
+    - target: {fileID: 5390012091189510719, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
+        type: 3}
       propertyPath: placementLoc
       value: 
       objectReference: {fileID: 9180742401557889010}
+    - target: {fileID: 5390012091189510719, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
+        type: 3}
+      propertyPath: checkPlacement
+      value: 
+      objectReference: {fileID: 1264001200}
     - target: {fileID: 7305539191757201466, guid: 1cfb7bbbfb6c9a043970468af2ad3005,
         type: 3}
       propertyPath: m_RootOrder
@@ -20681,6 +20557,11 @@ PrefabInstance:
       objectReference: {fileID: 1724785771}
     - target: {fileID: 3480742408764919577, guid: 08767595e9a7fb24b9fa0e418cca96f9,
         type: 3}
+      propertyPath: hologram
+      value: 
+      objectReference: {fileID: 6011276949533926594}
+    - target: {fileID: 3480742408764919577, guid: 08767595e9a7fb24b9fa0e418cca96f9,
+        type: 3}
       propertyPath: timerLoc
       value: 
       objectReference: {fileID: 8763722239416189005}
@@ -20689,6 +20570,11 @@ PrefabInstance:
       propertyPath: placementLoc
       value: 
       objectReference: {fileID: 6011276949533926594}
+    - target: {fileID: 3480742408764919577, guid: 08767595e9a7fb24b9fa0e418cca96f9,
+        type: 3}
+      propertyPath: checkPlacement
+      value: 
+      objectReference: {fileID: 1264001200}
     - target: {fileID: 3480742408764919577, guid: 08767595e9a7fb24b9fa0e418cca96f9,
         type: 3}
       propertyPath: centerEyeAnchor
@@ -23057,7 +22943,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keypad: {fileID: 0}
   number: 0
-  key: 0
 --- !u!114 &8337292244544528870 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8337292244182478351, guid: 3b036fb8a4a1cb0419f7e1a878d67a95,
@@ -24855,11 +24740,11 @@ MonoBehaviour:
   - {fileID: 1316682545}
   - {fileID: 1611903426}
   - {fileID: 472251196}
-  waitTime: 0
-  windowWaitTime: 5
+  windowWaitTime: 7
   powerWaitTime: 30
-  reactionTime: 2
-  patrolPointTime: 10
+  reactionTime: 0.13
+  patrolPointTime: 30
+  waitTime: 0
   grunt:
   - {fileID: 8300000, guid: 66f10a504ed2b774fadfacd9afa36b71, type: 3}
   - {fileID: 8300000, guid: d3f4e2d682629184dae82b22f7788799, type: 3}
@@ -25586,9 +25471,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1155508477231724176, guid: 29e296cfd2e5e094ca92cedd70f59935,
         type: 3}
+      propertyPath: hologram
+      value: 
+      objectReference: {fileID: 555285434664847502}
+    - target: {fileID: 1155508477231724176, guid: 29e296cfd2e5e094ca92cedd70f59935,
+        type: 3}
       propertyPath: placementLoc
       value: 
       objectReference: {fileID: 555285434664847502}
+    - target: {fileID: 1155508477231724176, guid: 29e296cfd2e5e094ca92cedd70f59935,
+        type: 3}
+      propertyPath: checkPlacement
+      value: 
+      objectReference: {fileID: 1264001200}
     - target: {fileID: 4865346705355302355, guid: 29e296cfd2e5e094ca92cedd70f59935,
         type: 3}
       propertyPath: m_RootOrder
@@ -26187,9 +26082,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3826396149171171450, guid: 45697a1f78a8ed7459179239f6bc1f1a,
         type: 3}
+      propertyPath: hologram
+      value: 
+      objectReference: {fileID: 600082074321161518}
+    - target: {fileID: 3826396149171171450, guid: 45697a1f78a8ed7459179239f6bc1f1a,
+        type: 3}
       propertyPath: placementLoc
       value: 
       objectReference: {fileID: 600082074321161518}
+    - target: {fileID: 3826396149171171450, guid: 45697a1f78a8ed7459179239f6bc1f1a,
+        type: 3}
+      propertyPath: checkPlacement
+      value: 
+      objectReference: {fileID: 1264001200}
     - target: {fileID: 6109407718313356830, guid: 45697a1f78a8ed7459179239f6bc1f1a,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

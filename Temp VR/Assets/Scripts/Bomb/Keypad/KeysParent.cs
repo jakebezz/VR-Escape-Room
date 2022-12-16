@@ -1,38 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class KeysParent : MonoBehaviour
 {
-    //Keypad display
-    public Keypad keypad;
+    public Keypad keypad;                                                        //Keypad display
 
-    //Number of this key
-    public int number;
+    [Range(0, 9)]
+    public int number;                                                           //Number of this key
 
-    //Temp input
-    public KeyCode key;
+    public delegate void PressKey();                                             //Delegate Creation
+    [NonSerialized] public PressKey pressKey;                                    //Delegate Function
 
-    //Delegate
-    public delegate void PressKey();
-    public PressKey pressKey;
 
-    //Called in Oculus input 
+    //Calls Delegate in Hand Poke Interactable Event
     public void InvokePressKey()
     {
         pressKey?.Invoke();
     }
 
+    /// <summary>
+    /// Input the Key number into the Keypad screen
+    /// </summary>
     public void InputKey()
     {
         if (keypad.codeGuessed.Count < 4)
         {
-            //Adds this keys number to the list
-            keypad.codeGuessed.Add(number);
-            //Adds the text to the codeVisual array
-            keypad.codeVisual[keypad.input].SetText(number.ToString());
-            //Incrase input number
-            keypad.input++;
+            keypad.codeGuessed.Add(number);                                 //Adds this keys number to the list
+            keypad.codeVisual[keypad.input].SetText(number.ToString());     //Adds the text to the codeVisual array
+            keypad.input++;                                                 //Incrase input number        
         }
     }
 }

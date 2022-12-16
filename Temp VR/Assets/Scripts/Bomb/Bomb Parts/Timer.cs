@@ -4,23 +4,28 @@ using UnityEngine;
 using TMPro;
 public class Timer : BombParts
 {
-    //Timer Object
-    [SerializeField] private Transform timerLoc;
-    [SerializeField] private GameObject centerEyeAnchor;
+    #region Timer Object
+    [Space(20)]
+    [Header("Timer Object")]
+    [SerializeField] private Transform timerLoc;                            //Location of the Obejct, attached to centerEyeAnchor
+    [SerializeField] private GameObject centerEyeAnchor;                    //Refernce to centerEyeAnchor - The Camera
     private MeshRenderer meshRenderer;
     private bool connectedToCamera;
-    
+    #endregion
 
-    //Timer Countdown
-    [SerializeField] private float timeLeft;
+    #region Timer Countdown
+    [Space(20)]
+    [Header("Timer Countdown")]
     [SerializeField] private TextMeshPro timerText;
+    private float timeLeft;
     private bool runTimer;
+    #endregion
 
     protected override void Start()
     {
         base.Start();
 
-        //Sets variabls
+        //Set variables
         meshRenderer = GetComponent<MeshRenderer>();
         meshRenderer.enabled = false;
         connectedToCamera = true;
@@ -30,16 +35,17 @@ public class Timer : BombParts
     private void Update()
     {
         //Runs tiemr
-        if(runTimer)
+        if (runTimer)
         {
-            if(timeLeft > 0)
+            if (timeLeft > 0)
             {
                 timeLeft -= Time.deltaTime;
                 UpdateTimer(timeLeft);
             }
+
+            //Ends game
             else
             {
-                //Ends game
                 timeLeft = 0;
                 runTimer = false;
 
@@ -55,7 +61,10 @@ public class Timer : BombParts
         }
     }
 
-    //Updates and prints the timer every frame/second
+    /// <summary>
+    /// Update and Print the timer
+    /// </summary>
+    /// <param name="currentTime"></param>
     private void UpdateTimer(float currentTime)
     {
         currentTime += 1;
@@ -66,7 +75,9 @@ public class Timer : BombParts
         timerText.text = string.Format("{0:00} : {1:00}", minutes, seconds);
     }
 
-    //Drops camera
+    /// <summary>
+    /// Drop Timer when grabbed - called in Hand Grab Interactable Event
+    /// </summary>
     public void DropCamera()
     {
         meshRenderer.enabled = true;

@@ -1,25 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 
 public class Keypad : MonoBehaviour
 {
-    //The correct code
-    public int[] keyCode = new int[4];
+    public int[] keyCode = new int[4];                                              //The correct code to be compared against
+    public List<int> codeGuessed;                                                   //List of what the player has guessed, will be cleared if they guess wrong 
 
-    //Visual of the code on the pad
-    public TextMeshPro[] codeVisual = new TextMeshPro[4];
+    [NonSerialized] public int input = 0;                                           //Input number of the player, will change which part of the array will display - e.g if input == 1, the 3rd number on the display will be to next input
+    [NonSerialized] public TextMeshPro[] codeVisual = new TextMeshPro[4];           //Visual of the code on the pad
 
-    //List of what the player has guessed, will be cleared if they guess wrong 
-    public List<int> codeGuessed;
 
-    //Input number of the player, will change which part of the array will display
-    public int input = 0;
-
+    /// <summary>
+    /// Sets the Keypad password
+    /// </summary>
     private void Start()
     {
-        //Sets the keycode numbers
         keyCode[0] = 3;
         keyCode[1] = 5;
         keyCode[2] = 2;

@@ -1,36 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class ColourChangingPuzzle : MonoBehaviour
 {
-    //Event to be used when all lights are off
-    [SerializeField] private UnityEvent powerOff;
-    public UnityEvent powerOn;
+    #region Inspector Only
+    /// <summary>
+    /// Contains information about the Light Array and the correct Password
+    /// </summary>
+    [Header("Puzzle Information")]
+    [Multiline(6)]
+    [SerializeField] private string puzzleInformation;
+    [Space(10)]
+    #endregion
 
-    //Array of lights
-    [SerializeField] private Light[] spotLights;
+    #region Container Lights
+    [Header("Container Lights Visuals")]     
+    [SerializeField] private Light[] spotLights;                                     //Array of Spot Lights       
+    [SerializeField] private Material[] lightEmissions;                              //Array of the Light Emissions 
+    [SerializeField] private GameObject[] lightRays;                                 //Array of Light Ray Objects
+    [SerializeField] private MeshRenderer[] keyNumbers;                              //Array of Hidden Numbers for Keypad Passcode
+    private bool[] lightIsOn = new bool[4];                                          //Array of Bools to determine whether Light is On or Off
+    [Space(10)]
+    #endregion
 
-    //Array of the light emissions 
-    [SerializeField] private Material[] lightEmissions;
-
-    //Array of light ray objects
-    [SerializeField] private GameObject[] lightRays;
-    [SerializeField] private MeshRenderer[] keyNumbers;
-
-    //Enviroment objects
+    #region Enviroment Lights
+    [Header("Enviroment Lights Visuals")]
     [SerializeField] private GameObject[] enviromentRays;
     [SerializeField] private Material enviromentEmissions;
+    private bool envirotmentLightsEnabled = true;
+    [Space(10)]
+    #endregion
 
-    //Bools to change
-    public bool[] lightIsOn;
-
-    private bool puzzleSolved = false;
-    private bool spotlightEnabled = true;
-
+    #region Sound
+    [Header("Sounds")]
     [SerializeField] private AudioClip powerOffSound;
     [SerializeField] private AudioClip powerOnSound;
+    [Space(10)]
+    #endregion
+
+    #region Unity Events
+    [Header("Power Off Event")]
+    [SerializeField] private UnityEvent powerOffEvent;                                                   //Event to be used when all lights are off
+    [Space(10)]
+    [Header("Power On Event")]
+    public UnityEvent powerOnEvent;                                                                     //Event to be used when lights are turned back on
+    [Space(10)]
+    #endregion
+
+    private bool puzzleSolved = false;                                                                  //Sets to True when puzzle is solved so Power Off Event cant be called repeatedly
 
     private void Start()
     {
@@ -39,47 +59,21 @@ public class ColourChangingPuzzle : MonoBehaviour
         SetMeshEnabled();
     }
 
-    //CHANGE THIS TO WHEN HAND INPUT IS MADE
-    private void Update()
+    /// <summary>
+    /// Sets and Resets the Lights to default state - called on Start and Power On Event
+    /// </summary>
+    public void ResetLights()
     {
-        /// Light One - lightBool[0]
-        /// Light Two - lightBool[1]
-        /// Light Three - lightBool[2]
-        /// Light Four - lightBool[3]
-
-        //Current Code: 6 7
-
-        //If all lights are off start the powerOff event
-        if (CheckBoolArrayIsFalse() == false && puzzleSolved == false)
-        {
-            puzzleSolved = true;
-            powerOff.Invoke();
-        }
+        lightIsOn[0] = true;
+        lightIsOn[1] = true;
+        lightIsOn[2] = false;
+        lightIsOn[3] = true;
     }
 
-    //Function that changes the vaule of the light bools
-    private void ChangeOnOff(bool one, bool two, bool three, bool four)
-    {
-        lightIsOn[0] = one;
-        lightIsOn[1] = two;
-        lightIsOn[2] = three;
-        lightIsOn[3] = four;
-    }
-
-    //Checks if all bools are false
-    private bool CheckBoolArrayIsFalse()
-    {
-        for(int i = 0; i < lightIsOn.Length; i++)
-        {
-            if(lightIsOn[i] == true)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    //Funtion to set the light and emission enabled or disabled
+    #region Change Meshes
+    /// <summary>
+    /// Turns on/off the Container Lights and Emissions
+    /// </summary>
     private void SetMeshEnabled()
     {
         for (int i = 0; i < lightIsOn.Length; i++)
@@ -101,26 +95,19 @@ public class ColourChangingPuzzle : MonoBehaviour
         }
     }
 
-    //Called in Power On Event and on Start
-    public void ResetLights()
+    /// <summary>
+    /// Turns on/off the Enviroment Lights - Called in powerOff/On event
+    /// </summary>
+    public void SetEnvriomentLights()
     {
-        lightIsOn[0] = true;
-        lightIsOn[1] = true;
-        lightIsOn[2] = false;
-        lightIsOn[3] = true;
-    }
-
-    //Turns on/off the enviroment lights - Called in powerOff/On event
-    public void SwitchSpotLights()
-    {
-        if(spotlightEnabled == true)
+        if (envirotmentLightsEnabled == true)
         {
-            foreach(GameObject light in enviromentRays)
+            foreach (GameObject light in enviromentRays)
             {
                 light.SetActive(false);
             }
             enviromentEmissions.DisableKeyword("_EMISSION");
-            spotlightEnabled = false;
+            envirotmentLightsEnabled = false;
         }
         else
         {
@@ -129,35 +116,84 @@ public class ColourChangingPuzzle : MonoBehaviour
                 light.SetActive(true);
             }
             enviromentEmissions.EnableKeyword("_EMISSION");
-            spotlightEnabled = true;
+            envirotmentLightsEnabled = true;
         }
     }
+    #endregion
 
-    //Functions called when poses are made
+    #region Check Lights
+    /// <summary>
+    /// Returns True if all Lights are Off
+    /// </summary>
+    /// <returns></returns>
+    private bool CheckBoolArrayIsFalse()
+    {
+        for (int i = 0; i < lightIsOn.Length; i++)
+        {
+            if (lightIsOn[i] == true)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// //If all Lights are Off start the Power Off Event - Called when Hand Pose is made
+    /// </summary>
+    private void CheckPowerStatus()
+    {
+        if (CheckBoolArrayIsFalse() == false && puzzleSolved == false)
+        {
+            puzzleSolved = true;
+            powerOffEvent.Invoke();
+        }
+    }
+    #endregion
+
+    #region Change Lights Functions
+
+    /// <summary>
+    /// Different Function called based on Hand Pose made
+    /// </summary>
+    private void ChangeOnOff(bool one, bool two, bool three, bool four)
+    {
+        lightIsOn[0] = one;
+        lightIsOn[1] = two;
+        lightIsOn[2] = three;
+        lightIsOn[3] = four;
+    }
+
     public void ChangeRed()
     {
         ChangeOnOff(!lightIsOn[0], lightIsOn[1], !lightIsOn[2], lightIsOn[3]);
         SetMeshEnabled();
+        CheckPowerStatus();
     }
 
     public void ChangeYellow()
     {
         ChangeOnOff(lightIsOn[0], !lightIsOn[1], !lightIsOn[2], !lightIsOn[3]);
         SetMeshEnabled();
+        CheckPowerStatus();
     }
 
     public void ChangeBlue()
     {
         ChangeOnOff(!lightIsOn[0], !lightIsOn[1], lightIsOn[2], lightIsOn[3]);
         SetMeshEnabled();
+        CheckPowerStatus();
     }
 
     public void ChangeWhite()
     {
         ChangeOnOff(!lightIsOn[0], lightIsOn[1], lightIsOn[2], !lightIsOn[3]);
         SetMeshEnabled();
+        CheckPowerStatus();
     }
+    #endregion
 
+    #region Play Sound Functions
     public void PlayPowerOffSound()
     {
         SoundManager.Instance.PlaySoundAtPoint(powerOffSound, transform.position, 1f);
@@ -166,5 +202,18 @@ public class ColourChangingPuzzle : MonoBehaviour
     public void PlayPowerOnSound()
     {
         SoundManager.Instance.PlaySoundAtPoint(powerOnSound, transform.position, 1f);
+    }
+    #endregion
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            powerOffEvent?.Invoke();
+        }
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            powerOnEvent?.Invoke();
+        }
     }
 }

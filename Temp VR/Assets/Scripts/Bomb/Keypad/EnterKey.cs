@@ -5,27 +5,28 @@ using Oculus.Interaction;
 
 public class EnterKey : KeysParent
 {
-    [SerializeField] private Grabbable grabbableLid;
+    [SerializeField] private Grabbable grabbableLid;                        //Grabbable script to be activated when correct password is inputed
 
     private void Start()
     {
         grabbableLid.enabled = false;
-        //Sets delegate to Enter key
-        pressKey = EnterInput;
+
+        pressKey = EnterInput;                                              //Sets delegate to Enter key
     }
 
-    //Checks if the code inputed is correct
+    /// <summary>
+    /// Checks if Passord is correct when the Enter key is pressed
+    /// </summary>
     private void EnterInput()
     {
         if (CheckPassCode() == true)
         {
-            Debug.Log("Code Correct");
             grabbableLid.enabled = true;
         }
+
         //If code is incorrect, rest the variables and sets the screen to display four 0's
         else
         {
-            Debug.Log("Code Incorrect");
             keypad.codeGuessed.Clear();
             keypad.input = 0;
 
@@ -36,7 +37,10 @@ public class EnterKey : KeysParent
         }
     }
 
-    //Checks if the passcode is correct
+    /// <summary>
+    /// Checks if the passcode is correct
+    /// </summary>
+    /// <returns></returns>
     private bool CheckPassCode()
     {
         //If the list is empty, return false

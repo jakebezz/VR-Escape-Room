@@ -1,25 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Guard : MonoBehaviour
 {
-    //Static variables to be accessed in various classes
-    public static bool alertedGuard = false;
+    public static bool alertedGuard = false;                                                    //Static variables to be accessed in various classes
 
-    [SerializeField] private ColourChangingPuzzle puzzle;
+    private string windowTag = "WindowTrigger";                                                 //Tag for the WindowTrigger
+    private bool caughtPlayer = false;
 
-    //Guard navmesh agent
-    private NavMeshAgent agent;
+    #region References
+    [Header("References")]
+    [SerializeField] private ColourChangingPuzzle puzzle;                                       //Colour Puzzle
+    [SerializeField] private Player player;                                                     //Player
+    private NavMeshAgent agent;                                                                 //Guard navmesh agent
+    private AudioSource audioSource;                                                            //Audio Source
+    [Space(10)]
+    #endregion
 
-    //Tests if player is hidden when guard is at window
-    [SerializeField] private Player player;
-
-    //Public bool used in Power Off Event
-    private bool moveToPowerSwitch = false;
-
-
+    #region Movement Locations
     /// <summary>
     /// Move points for the Guard
     /// movePoint[0] = pointA
@@ -28,58 +29,62 @@ public class Guard : MonoBehaviour
     /// movePoint[3] = pointPower
     /// </summary>
     [SerializeField] private Transform[] movePoint;
+    private Transform patrolPoint;                                                                //Two points the Guard Patrols, will either be movePoint[0 or 1]
+    private Transform moveToLocation;                                                             //The location guard will move to
+    #endregion
 
-    //Will either be movePoint[0 or 1]
-    private Transform patrolPoint;
-    //The location guard will move to
-    private Transform moveLocation;
+    #region Wait Times
+    [Header("Wait Times")]
+    [Range(5, 10)]
+    [SerializeField] private float windowWaitTime;
+    [Range(30, 60)]
+    [SerializeField] private float powerWaitTime;
+    [Range(0, 5)]
+    [SerializeField] private float reactionTime;
+    [Range(30, 120)]
+    [SerializeField] private float patrolPointTime;
 
     //Sets delay before guard moves to location
-    [SerializeField] private float waitTime = 10f;
+    [SerializeField] private float waitTime;
     private bool runTimer = false;
+    [Space(10)]
+    #endregion
 
-    //How long guard will wait at points
-    [SerializeField] private float windowWaitTime = 30f;
-    [SerializeField] private float powerWaitTime = 30f;
-    [SerializeField] private float reactionTime = 5f;
-    [SerializeField] private float patrolPointTime = 10f;
-
+    #region Movement Bools
+    //Public bool used in Power Off Event
+    private bool moveToPowerSwitch = false;
     private bool atWindow = false;
     private bool atPower = false;
+    #endregion
 
-    private string windowTag = "WindowTrigger";
-
-    private AudioSource audioSource;
+    #region Sound
+    [Header("Sound")]
     [SerializeField] private AudioClip[] grunt;
+    private bool playCaughtSound = false;
+    #endregion
 
     private void Start()
     {
-        //Get components
         agent = GetComponent<NavMeshAgent>();
         audioSource = GetComponent<AudioSource>();
 
-        //Moves the guard to the first point
-        transform.position = movePoint[0].position;
-
-        //Sets move location to Point B
-        moveLocation = movePoint[1];
-        //Sets patrol point to Point A, this will switch to Point B in the CheckStates function
-        patrolPoint = movePoint[0];
+        transform.position = movePoint[0].position;                                             //Moves the guard to the first point
+        moveToLocation = movePoint[1];                                                          //Sets move location to Point B        
+        patrolPoint = movePoint[0];                                                             //Sets patrol point to Point A, this will switch to Point B in the CheckStates function    
     }
 
-
-    //MAYBE MAKE TRIGGERS AT LOCATIONS AND CHANGE UPDATE TO ONTRIGGER ENTER/STAY
+    /// <summary>
+    /// Runs the Guard Movement while runTimer is true
+    /// </summary>
     private void Update()
     {
-        //If the timer is being run
         if (runTimer)
         {
             if (waitTime >= 0)
             {
                 waitTime -= Time.deltaTime;
 
-                //Stops audio when guard is still
-                audioSource.Stop();
+                audioSource.Stop();                                                             //Stops audio when guard is still
 
                 if (alertedGuard == true)
                 {
@@ -91,14 +96,14 @@ public class Guard : MonoBehaviour
                     PowerPoint();
                 }
             }
+
             //Moves agent to destination when timer is 0
             else
             {
-                //Plays audio when they walk
-                audioSource.Play();
+                audioSource.Play();                                                             //Plays audio when they walk
 
                 waitTime = 0;
-                agent.SetDestination(moveLocation.position);
+                agent.SetDestination(moveToLocation.position);
                 runTimer = false;
             }
         }
@@ -121,10 +126,14 @@ public class Guard : MonoBehaviour
                     MovingToDestination();
                 }
             }
+
         }
     }
 
-    //Repeat Patrol points
+    #region Patrol Points
+    /// <summary>
+    /// Repeat Patrol points
+    /// </summary>
     private void RepeatPatrol()
     {
         //Swaps the patrol points to the two points
@@ -154,33 +163,41 @@ public class Guard : MonoBehaviour
             waitTime = patrolPointTime;
         }
         //Sets moveLocation to patrolPoint
-        moveLocation = patrolPoint;
+        moveToLocation = patrolPoint;
     }
 
-    //Moves guard to Window Point
+    /// <summary>
+    /// Moves guard to Window Point
+    /// </summary>
     private void WindowPoint()
     {
-        SoundManager.Instance.PlaySoundAtPoint(grunt[Random.Range(0, 3)], transform.position, 0.7f);
+        SoundManager.Instance.PlaySoundAtPoint(grunt[UnityEngine.Random.Range(0, 3)], transform.position, 0.7f);
 
         waitTime = reactionTime;
-        moveLocation = movePoint[2];
+        moveToLocation = movePoint[2];
         atWindow = true;
         alertedGuard = false;
         runTimer = true;
     }
 
-    //Moves guard to Power Point
+    /// <summary>
+    /// Moves guard to Power Point
+    /// </summary>
     private void PowerPoint()
     {
-        SoundManager.Instance.PlaySoundAtPoint(grunt[Random.Range(0, 3)], transform.position, 0.7f);
+        SoundManager.Instance.PlaySoundAtPoint(grunt[UnityEngine.Random.Range(0, 3)], transform.position, 0.7f);
 
         waitTime = reactionTime;
-        moveLocation = movePoint[3];
+        moveToLocation = movePoint[3];
         atPower = true;
         moveToPowerSwitch = false;
     }
+    #endregion
 
-    //Selects the next destination for the guard while they wait
+    #region Destination Logic
+    /// <summary>
+    /// Selects the next destination for the guard while they wait
+    /// </summary>
     private void AtDestination()
     {
         //If guard is alerted go to window point and start timer
@@ -202,8 +219,10 @@ public class Guard : MonoBehaviour
             runTimer = true;
         }
     }
-    
-    //Checks if guard is alerted while they are moving
+
+    /// <summary>
+    /// Checks if guard is alerted while they are moving
+    /// </summary>
     private void MovingToDestination()
     {
         if (alertedGuard == true)
@@ -219,31 +238,43 @@ public class Guard : MonoBehaviour
         }
     }
 
-    //Checks if player is hidden when guard is near the window
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.gameObject.CompareTag(windowTag))
-        {
-            if (player.isHidden == false)
-            {
-                alertedGuard = false;
-                runTimer = false;
-                GameManager.Instance.CaughtPlayer();
-            }
-        }
-    }
-
-    //Used in Power Off Event
-    public void PowerSwitchOn()
-    {
-        moveToPowerSwitch = true;
-    }
-    //Turns on power after 30 seconds
+    /// <summary>
+    /// Turns on power after powerWaitTime duration
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator TurnOnPower()
     {
         waitTime = powerWaitTime;
         atPower = false;
         yield return new WaitForSeconds(powerWaitTime);
-        puzzle.powerOn.Invoke();
+        puzzle.powerOnEvent.Invoke();
+    }
+    #endregion
+
+    /// <summary>
+    /// Checks if player is hidden when guard is near the window
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.CompareTag(windowTag))
+        {
+            if (player.isHidden == false && caughtPlayer == false)
+            {
+                caughtPlayer = true;
+                agent.isStopped = true;
+
+                GameManager.Instance.CaughtPlayer();
+                SoundManager.Instance.PlaySoundAtPoint(grunt[UnityEngine.Random.Range(0, 3)], transform.position, 0.7f);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Sets moveToPowerSwitch to true - Called in Power Off Event to move guard to powerPoint
+    /// </summary>
+    public void PowerSwitchOn()
+    {
+        moveToPowerSwitch = true;
     }
 }

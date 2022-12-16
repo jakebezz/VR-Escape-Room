@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class HiddenObject : MonoBehaviour
 {
+    /// <summary>
+    /// Range of visiblity
+    /// </summary>
     public float minValue;
     public float maxValue;
 
+    /// <summary>
+    /// //Reveals hidden objects when the hue shift reaches a certain threshold
+    /// </summary>
+    /// <param name="hueShiftValue"></param>
+    /// <returns></returns>
     public bool RevealHiddenObject(float hueShiftValue)
     {
-        //Reveals hidden objects when the hue shift reaches a certain threshold
         if (hueShiftValue > minValue && hueShiftValue < maxValue)
         {
             return true;

@@ -6,23 +6,24 @@ using Oculus.Interaction;
 public class Crowbar : MonoBehaviour
 {
     private Rigidbody crowbar;
-    //Crowbar Velocity, is its own variable to make playtesting adjustments easier
-    [SerializeField] private float velocity;
+    [SerializeField] private float velocity;                                                    //Crowbar Velocity, is its own variable to make playtesting adjustments easier
 
+    #region Wooden Crate Lid
     [SerializeField] private Grabbable grabbableLid;
-
     [SerializeField] private GameObject crowbarLidPlacement;
     private bool inLidTrigger;
+    #endregion
 
-    [SerializeField] MicrophoneDetection micDetection;
-
+    #region Sound
     [SerializeField] private AudioClip hitFloorSound;
     [SerializeField] private AudioClip hitPillowSound;
+    #endregion
 
-    //Tag
+    #region Tags
     private string floorTag = "Floor";
     private string pillowTag = "Pillow";
     private string crateLidTag = "CrateLidTrigger";
+    #endregion
 
     void Start()
     {
@@ -35,37 +36,31 @@ public class Crowbar : MonoBehaviour
 
     void Update()
     {
-        //sets the velocity 
-        velocity = crowbar.velocity.magnitude;
-
-        //Will change from space to when an object is in a trigger box near or just remove kinematic completely and balance it on somehting
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            crowbar.isKinematic = false;
-        }
+        velocity = crowbar.velocity.magnitude;                                                  //sets the velocity 
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        //If Crowbar hits Floor 
         if (other.CompareTag(floorTag) && velocity > 2f)
         {
-            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.01f);
-
-            //Sets the global variables 
-            Guard.alertedGuard = true;
+            SoundManager.Instance.PlaySoundAtPoint(hitFloorSound, transform.position, 0.01f);   //Play hitFloorSound
+            Guard.alertedGuard = true;                                                          //Alert Guard    
         }
+        //If Crowbar hits Pillow
         else if (other.CompareTag(pillowTag) && velocity > 2f)
         {
-            SoundManager.Instance.PlaySoundAtPoint(hitPillowSound, transform.position, 0.01f);
+            SoundManager.Instance.PlaySoundAtPoint(hitPillowSound, transform.position, 0.01f); //Play hitPillowSound 
         }
 
+        //If Crowbar enters the CrateLid Trigger
         if (other.CompareTag(crateLidTag))
         {
             inLidTrigger = true;
-            crowbarLidPlacement.SetActive(true);
+            crowbarLidPlacement.SetActive(true);                                               //Activate the Highlight object
         }
 
-        //If player throws an object that has a rigidbody
+        //If another Rigidbody hits the Crowbar
         if (other.gameObject.GetComponent<Rigidbody>() != null)
         {
             crowbar.isKinematic = false;
@@ -74,6 +69,7 @@ public class Crowbar : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        //Deactivate the Highlight object
         if (other.CompareTag(crateLidTag))
         {
             inLidTrigger = false;
@@ -81,6 +77,9 @@ public class Crowbar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Moves Crowbar to Highlight location - Called when Crowbar is dropped by Player's hand
+    /// </summary>
     public void MoveToHighlight()
     {
         if (inLidTrigger == true)
@@ -93,6 +92,9 @@ public class Crowbar : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Removes Crowbar from Highlight location - Called when player grabs the Crowbar
+    /// </summary>
     public void LeaveHighlight()
     {
         if (inLidTrigger == true)

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Keys : KeysParent
 {
+    //Sets delegate to this key
     private void Start()
     {
-        //Sets delegate to this key
         pressKey = InputKey;
     }
 }

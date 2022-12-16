@@ -6,14 +6,14 @@ public class ClearKey : KeysParent
 {
     private void Start()
     {
-        //Sets deleate to clear input
-        pressKey = ClearInput;
+        pressKey = ClearInput;                                                      //Sets deleate to clear input
     }
 
-    //Rests the variables and sets the screen to display four 0's
+    /// <summary>
+    /// Rests the variables and sets the screen to display four 0's
+    /// </summary>
     private void ClearInput()
     {
-        Debug.Log("Code Cleared");
         keypad.codeGuessed.Clear();
         keypad.input = 0;
 

@@ -6,103 +6,82 @@ using UnityEngine.Rendering.Universal;
 
 public class Player : MonoBehaviour
 {
-    //Used to check if player is hiding in closet
-    public bool isHidden;
+    public bool isHidden;                                                           //Check if player is crouching by window
+    public bool electricDamage = true;                                              //Check if player takes damage from Electrical box
 
-    //Add Damage Effect
-    public bool electricDamage = true;
+    [SerializeField] private GameObject handPoses;
+    [SerializeField] private float crouchHeight;
+    [SerializeField] private ElectricalBox electricalBox;
 
-    //Cameras
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private GameObject centerEyeAnchor;
-
-    //Post Processing
-    [SerializeField] private Volume volume;
-    private Vignette vignette;
-    private ColorAdjustments colorAdjustments;
-    private float deafaultIntensity;
-    private float deafaultSmoothness;
-    private float increaseIntensity = 0.1f;
-
-    //Number Objects
-    [SerializeField] private HiddenObject[] hiddenObjects;
-    [SerializeField] private GameObject[] shiftButtons;
-
+    #region Camera
+    [Header("Camera")]
+    [SerializeField] private Camera mainCamera;                                    //Main Camera
+    [SerializeField] private GameObject centerEyeAnchor;                           //VR Tracking space
     [SerializeField] private LayerMask deafultLayerMask;
     [SerializeField] private LayerMask hiddenLayerMask;
     private bool showHidden;
+    [Space(10)]
+    #endregion
 
-    [SerializeField] private GameObject handPoses;
+    #region Post Processing
+    [Header("Post Processing")]
+    [SerializeField] private Volume volume;                                         //Global Volume
+    private Vignette vignette;                                      
+    private ColorAdjustments colorAdjustments;
+    private float deafaultIntensity;                                                //Deafult Intensity of Vignette effect
+    private float deafaultSmoothness;                                               //Deafult Smoothness of Vignette effect
+    private float increaseIntensity = 0.1f;                                         //Increase intensity used while player is taking damage
+    #endregion
 
-    [SerializeField] private float crouchHeight;
+    #region Hidden Objects
+    [Header("Hidden Objects")]
+    [SerializeField] private HiddenObject[] hiddenObjects;                          //Hidden Objects
+    [SerializeField] private GameObject[] shiftButtons;                             //Buttons to change Hue Shift
+    #endregion
 
-    //Tag Strings
+    #region Tags
     private string hiddenTag = "Hidden";
     private string electricTag = "ElectricTrigger";
+    #endregion
 
     private void Start()
     {
-        //Gets the Post Processing Effects
-        volume.profile.TryGet<Vignette>(out vignette);
-        volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
-
-        colorAdjustments.active = false;
-
-        //Enable and Disable cameras
-        mainCamera.enabled = true;
-
-        showHidden = false;
+        volume.profile.TryGet<Vignette>(out vignette);                              //Gets the Vignette effect
+        volume.profile.TryGet<ColorAdjustments>(out colorAdjustments);              //Gets the ColorAdjustments effect
 
         mainCamera.cullingMask = deafultLayerMask;
 
+        colorAdjustments.active = false;
+        showHidden = false;
         isHidden = false;
 
-        //Used to reset Vignette Intensity and Smoothness
-        deafaultIntensity = vignette.intensity.value;
-        deafaultSmoothness = vignette.smoothness.value;
+        deafaultIntensity = vignette.intensity.value;                              //Set deafult intensity
+        deafaultSmoothness = vignette.smoothness.value;                            //Set deafult smoothness
 
+        //Hide hidden objects
         foreach (HiddenObject hidden in hiddenObjects)
         {
             hidden.gameObject.SetActive(false);
         }
 
+        //Hide the Hue Shift buttons
         foreach (GameObject button in shiftButtons)
         {
             button.SetActive(false);
         }
     }
 
-    private void Update()
-    {
-        //Player equips glasses so see hidden object
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            EnableHidden();
-        }
-
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            IncreaseHueShift();
-            Debug.Log(colorAdjustments.hueShift.value);
-        }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            DecreaseHueShift();
-            Debug.Log(colorAdjustments.hueShift.value);
-        }
-
-    }
-
-    //Player takes damage
+    #region Trigger Control
     private void OnTriggerEnter(Collider other)
     {
+        //Enable Hand Poses when player is near window
         if (other.CompareTag(hiddenTag))
         {
             handPoses.SetActive(true);
         }
 
-        if (other.CompareTag(electricTag))
+        //Player takes damage while in electrial trigger
+        if (other.CompareTag(electricTag) && electricalBox.isActive == true)
         {
             electricDamage = true;
         }
@@ -110,17 +89,14 @@ public class Player : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        //If player crouches by the window they are hidden
+        //If player crouches by the window player is hidden
         if (other.CompareTag(hiddenTag))
         {
-            //How far the need to crouch
-            if (centerEyeAnchor.transform.localPosition.y < crouchHeight)
+            if (centerEyeAnchor.transform.localPosition.y < crouchHeight)                    //How far the player need to crouch
             {
                 isHidden = true;
-                Debug.Log("Player Is Hidden");
                 
-                //Activate vignette effect
-                VignetteControl(Color.black, deafaultIntensity, deafaultSmoothness);
+                VignetteControl(Color.black, deafaultIntensity, deafaultSmoothness);        //Activate vignette effect
             }
             else
             {
@@ -129,18 +105,17 @@ public class Player : MonoBehaviour
         }
 
         //Plays vignette effect if player is in electic trigger
-        if (other.CompareTag(electricTag))
+        if (other.CompareTag(electricTag) && electricalBox.isActive == true)
         {
-            //Increase the vignette intensity overtime
-            increaseIntensity += 0.01f;
-            if(electricDamage == true)
+            increaseIntensity += 0.01f;                                                     //Increase the vignette intensity overtime
+            if (electricDamage == true)
             {
                 VignetteControl(Color.cyan, increaseIntensity, 0.5f);
-                Debug.Log("Player take damage");
-            }
-            else
-            {
-                Debug.Log("Player take no damage");
+
+                if (vignette.intensity == 1)
+                {
+                    GameManager.Instance.KilledByElectricBox();
+                }
             }
         }
     }
@@ -162,12 +137,18 @@ public class Player : MonoBehaviour
             increaseIntensity = 0.1f;
             electricDamage = false;
 
-            //Remove vignette effect over time
             StartCoroutine(RemoveVignette());
         }
     }
+    #endregion
 
-    //Activate vignette effect with variables
+    #region Vignette
+    /// <summary>
+    /// Activate Vignette effect with variables
+    /// </summary>
+    /// <param name="color"></param>
+    /// <param name="intensity"></param>
+    /// <param name="smoothness"></param>
     private void VignetteControl(Color color, float intensity, float smoothness)
     {
         vignette.active = true;
@@ -176,7 +157,10 @@ public class Player : MonoBehaviour
         vignette.smoothness.Override(smoothness);
     }
 
-    //Removes the vignette effect overtime
+    /// <summary>
+    /// Remove Vignette effect over time
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator RemoveVignette()
     {
         do 
@@ -188,7 +172,12 @@ public class Player : MonoBehaviour
 
         vignette.active = false;
     }
+    #endregion
 
+    #region Hidden Objects
+    /// <summary>
+    /// Shows Hidden objects if their Hue Shift range is viewable
+    /// </summary>
     private void ShowHiddenObjects()
     {
         for (int i = 0; i < hiddenObjects.Length; i++)
@@ -204,6 +193,10 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Shows Buttons when glasses are equiped
+    /// </summary>
+    /// <param name="showButtons"></param>
     private void MakeButtonsVisible(bool showButtons)
     {
         foreach (GameObject button in shiftButtons)
@@ -212,6 +205,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Increases Hue Shift when Button Pressed
+    /// </summary>
     public void IncreaseHueShift()
     {
         if (colorAdjustments.hueShift.value < 175)
@@ -221,6 +217,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Decreases Hue Shift when Button Pressed
+    /// </summary>
     public void DecreaseHueShift()
     {
         if (colorAdjustments.hueShift.value > 20)
@@ -230,6 +229,9 @@ public class Player : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Enables player to see Hidden Objects when Glasses are equipped
+    /// </summary>
     public void EnableHidden()
     {
         colorAdjustments.active = !colorAdjustments.active;
@@ -239,6 +241,9 @@ public class Player : MonoBehaviour
         MakeButtonsVisible(true);
     }
 
+    /// <summary>
+    /// Disable Hidden Objects when Glasses are un-equipped
+    /// </summary>
     public void DisableHidden()
     {
         colorAdjustments.active = !colorAdjustments.active;
@@ -247,5 +252,5 @@ public class Player : MonoBehaviour
 
         MakeButtonsVisible(false);
     }
-
+    #endregion
 }
