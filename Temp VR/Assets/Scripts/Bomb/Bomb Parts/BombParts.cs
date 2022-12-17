@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class BombParts : MonoBehaviour
 {
+    [NonSerialized] public bool isPlaced;                                                   //Check if Object is placed
+
+    public Rigidbody bombPartRigid;                                                         //Rigidbody of the Bomb Parts
+
     [Header("Placement References")]
     [SerializeField] private CheckAllParts checkPlacement;                                  //Reference to Check if all parts are placed
-    [SerializeField] private GameObject hologram;                                                             //HologramObject to move Bomb part to
+    [SerializeField] private GameObject hologram;                                           //HologramObject to move Bomb part to
 
-    [NonSerialized] public bool isPlaced;                                                   //Check if Object is placed
-    [NonSerialized] public Rigidbody bombPartRigid;                                         //Rigidbody of the Bomb Parts
     private string bombPlacementTag = "BombPlacement";                                      //Tag to compare
 
     /// <summary>
@@ -18,8 +20,6 @@ public class BombParts : MonoBehaviour
     /// </summary>
     protected virtual void Start()
     {
-        hologram.SetActive(false);
-
         bombPartRigid = gameObject.GetComponent<Rigidbody>();
     }
 
@@ -31,13 +31,13 @@ public class BombParts : MonoBehaviour
     {
         if (other.CompareTag(bombPlacementTag))
         {
-            hologram.SetActive(true);
-
+            hologram.SetActive(false);
             MoveToPlacement();
 
             //Checks if all parts have been placed when an object is placed
             if (checkPlacement.CheckAllPlaced() == true)
             {
+                Debug.Log("All Parts Placed");
                 GameManager.Instance.PlacedAllBombParts();
 
             }
@@ -55,7 +55,7 @@ public class BombParts : MonoBehaviour
             bombPartRigid.isKinematic = false;
             bombPartRigid.useGravity = true;
             isPlaced = false;
-            hologram.SetActive(false);
+            hologram.SetActive(true);
         }
     }
 

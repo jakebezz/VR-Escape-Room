@@ -30,6 +30,7 @@ public class Timer : BombParts
         meshRenderer.enabled = false;
         connectedToCamera = true;
         runTimer = true;
+        timeLeft = 300f;
     }
 
     private void Update()

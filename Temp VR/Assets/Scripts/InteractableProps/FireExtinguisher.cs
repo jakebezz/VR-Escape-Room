@@ -40,17 +40,6 @@ public class FireExtinguisher : MonoBehaviour
                 }
             }
 
-            //If the hit collider has a rigidbody you can add force to it
-            else if (hit.rigidbody != null)
-            {
-                hit.rigidbody.AddForce(transform.forward * force);
-
-                if (!smoke.isPlaying)
-                {
-                    smoke.Play();
-                }
-            }
-
             else
             {
                 highlightVent.SetActive(false);

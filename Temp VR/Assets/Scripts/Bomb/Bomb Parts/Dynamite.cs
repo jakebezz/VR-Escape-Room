@@ -16,6 +16,7 @@ public class Dynamite : BombParts
     private string pillowTag = "Pillow";
     private string floorTag = "Floor";
     private string dynamiteTrigger = "DynamiteTrigger";
+    private string ventCollision = "VentCollision";
     #endregion
 
     protected override void Start()
@@ -43,6 +44,11 @@ public class Dynamite : BombParts
                 grabbable.enabled = true;
             }
 
+            if (outOfVent == false)
+            {
+                outOfVent = true;
+            }
+
             //Alert guard and play loud sound if Velocity is too high when hitting floor
             if (velocity > 2f)
             {
@@ -55,18 +61,29 @@ public class Dynamite : BombParts
         //Dynamite hitting pillow
         if (collision.gameObject.CompareTag(pillowTag))
         {
-            grabbable.enabled = true;
+            if (grabbable.enabled == false)
+            {
+                grabbable.enabled = true;
+            }
 
-            SoundManager.Instance.PlaySoundAtPoint(hitGroundSound, transform.position, 0.01f);
+            if (outOfVent == false)
+            {
+                outOfVent = true;
+            }
+
+            if (velocity > 2f)
+            {
+                SoundManager.Instance.PlaySoundAtPoint(hitGroundSound, transform.position, 0.01f);
+            }
         }
-    }
 
-    //Set outOfVent true when Dynamite has reached the trigger
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.name == dynamiteTrigger && outOfVent == false)
+        //Dynamite hits back of vent
+        if (collision.gameObject.CompareTag(ventCollision))
         {
-            outOfVent = true;
+            if (outOfVent == false)
+            {
+                outOfVent = true;
+            }
         }
     }
 }

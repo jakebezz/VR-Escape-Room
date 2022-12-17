@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &790680698718499733
+--- !u!1 &375478828085660715
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,29 +8,85 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3524045897578085678}
+  - component: {fileID: 2876749543645581098}
+  - component: {fileID: 5376197085113766703}
+  - component: {fileID: 8734862533941955936}
   m_Layer: 0
-  m_Name: PivotPoint
+  m_Name: HandGrabInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3524045897578085678
+--- !u!4 &2876749543645581098
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 790680698718499733}
-  m_LocalRotation: {x: -0, y: -0, z: -0.106020205, w: 0.99436396}
-  m_LocalPosition: {x: -1.3799996, y: 1.251776, z: 0}
-  m_LocalScale: {x: 3.6665726, y: 0.597099, z: 0.88478947}
+  m_GameObject: {fileID: 375478828085660715}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1596638403660117348}
-  m_RootOrder: 1
+  m_Father: {fileID: 1596638402914727421}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5376197085113766703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375478828085660715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a7676b01585ce43908639a27765dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interactorFilters: []
+  _maxInteractors: -1
+  _maxSelectingInteractors: -1
+  _data: {fileID: 0}
+  _pointableElement: {fileID: 0}
+  _rigidbody: {fileID: 0}
+  _resetGrabOnGrabsUpdated: 1
+  _physicsGrabbable: {fileID: 0}
+  _scoringModifier:
+    _maxDistance: 0.1
+    _positionRotationWeight: 0.8
+  _supportedGrabTypes: 3
+  _pinchGrabRules:
+    _thumbRequirement: 1
+    _indexRequirement: 1
+    _middleRequirement: 1
+    _ringRequirement: 0
+    _pinkyRequirement: 0
+    _unselectMode: 0
+  _palmGrabRules:
+    _thumbRequirement: 1
+    _indexRequirement: 2
+    _middleRequirement: 2
+    _ringRequirement: 2
+    _pinkyRequirement: 1
+    _unselectMode: 0
+  _movementProvider: {fileID: 0}
+  _handAligment: 1
+  _handGrabPoses: []
+--- !u!114 &8734862533941955936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 375478828085660715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8951a656a7c00e74094166ef415cdce5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 1596638402914727422}
 --- !u!1 &1596638402914727417
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,6 +120,7 @@ Transform:
   m_Children:
   - {fileID: 1596638404808122037}
   - {fileID: 1596638403660117348}
+  - {fileID: 2876749543645581098}
   m_Father: {fileID: 1596638403545753931}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -304,11 +361,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11ddea1571124274eb84629824c943c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dynamite: {fileID: 0}
+  hitRange: 8
   force: 8
   sprayPoint: {fileID: 1596638403371038461}
   highlightVent: {fileID: 0}
-  hitRange: 8
+  smoke: {fileID: 0}
+  dynamite: {fileID: 0}
 --- !u!1 &1596638403546946902
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +400,7 @@ Transform:
   m_Children:
   - {fileID: 1596638403371038450}
   m_Father: {fileID: 1596638403660117348}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!33 &1596638403546946922
 MeshFilter:
@@ -440,7 +498,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1596638403288430188}
-  - {fileID: 3524045897578085678}
   - {fileID: 1596638404431183931}
   - {fileID: 1596638403546946903}
   m_Father: {fileID: 1596638402914727421}
@@ -541,7 +598,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1596638403660117348}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 8.893}
 --- !u!33 &1596638404431183934
 MeshFilter:
@@ -617,7 +674,7 @@ GameObject:
   - component: {fileID: 1596638404808122037}
   - component: {fileID: 1596638404808122036}
   - component: {fileID: 1596638404808122039}
-  - component: {fileID: 1596638404808122038}
+  - component: {fileID: 6852301271728060807}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -690,8 +747,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &1596638404808122038
-CapsuleCollider:
+--- !u!65 &6852301271728060807
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -700,7 +757,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 2
+  m_Size: {x: 1.0000001, y: 2.0000002, z: 1.0000002}
+  m_Center: {x: 0.00000013411045, y: -0.0000019073486, z: -0.00000008940697}

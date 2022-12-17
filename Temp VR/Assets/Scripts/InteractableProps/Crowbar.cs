@@ -5,9 +5,12 @@ using Oculus.Interaction;
 
 public class Crowbar : MonoBehaviour
 {
-    private Rigidbody crowbar;
+    #region Crowbar
+    private Rigidbody crowbarRigid;
     [SerializeField] private float velocity;                                                    //Crowbar Velocity, is its own variable to make playtesting adjustments easier
-
+    private Crowbar crowbarScript;
+    #endregion
+    
     #region Wooden Crate Lid
     [SerializeField] private Grabbable grabbableLid;
     [SerializeField] private GameObject crowbarLidPlacement;
@@ -27,8 +30,11 @@ public class Crowbar : MonoBehaviour
 
     void Start()
     {
-        crowbar = GetComponent<Rigidbody>();
-        crowbar.isKinematic = true;
+        crowbarRigid = GetComponent<Rigidbody>();
+        crowbarRigid.isKinematic = true;
+
+        crowbarScript = GetComponent<Crowbar>();
+        crowbarScript.enabled = false;
 
         grabbableLid.enabled = false;
         crowbarLidPlacement.SetActive(false);
@@ -36,7 +42,7 @@ public class Crowbar : MonoBehaviour
 
     void Update()
     {
-        velocity = crowbar.velocity.magnitude;                                                  //sets the velocity 
+        velocity = crowbarRigid.velocity.magnitude;                                                  //sets the velocity 
     }
 
     private void OnTriggerEnter(Collider other)
@@ -63,7 +69,7 @@ public class Crowbar : MonoBehaviour
         //If another Rigidbody hits the Crowbar
         if (other.gameObject.GetComponent<Rigidbody>() != null)
         {
-            crowbar.isKinematic = false;
+            crowbarRigid.isKinematic = false;
         }
     }
 
@@ -86,7 +92,7 @@ public class Crowbar : MonoBehaviour
         {
             gameObject.transform.position = crowbarLidPlacement.transform.position;
             gameObject.transform.rotation = crowbarLidPlacement.transform.rotation;
-            crowbar.isKinematic = true;
+            crowbarRigid.isKinematic = true;
             crowbarLidPlacement.SetActive(false);
             grabbableLid.enabled = true;
         }
@@ -100,7 +106,7 @@ public class Crowbar : MonoBehaviour
         if (inLidTrigger == true)
         {
             inLidTrigger = false;
-            crowbar.isKinematic = false;
+            crowbarRigid.isKinematic = false;
             crowbarLidPlacement.SetActive(false);
         }
     }

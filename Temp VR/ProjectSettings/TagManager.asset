@@ -17,6 +17,7 @@ TagManager:
   - RoomLight
   - GlassesTrigger
   - CrateLidTrigger
+  - VentCollision
   layers:
   - Default
   - TransparentFX

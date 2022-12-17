@@ -58,6 +58,8 @@ public class Player : MonoBehaviour
         deafaultIntensity = vignette.intensity.value;                              //Set deafult intensity
         deafaultSmoothness = vignette.smoothness.value;                            //Set deafult smoothness
 
+        handPoses.SetActive(false);
+
         //Hide hidden objects
         foreach (HiddenObject hidden in hiddenObjects)
         {
