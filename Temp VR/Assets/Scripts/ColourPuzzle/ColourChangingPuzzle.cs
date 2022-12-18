@@ -193,6 +193,9 @@ public class ColourChangingPuzzle : MonoBehaviour
     }
     #endregion
 
+    /// <summary>
+    /// Functions called in Power Events
+    /// </summary>
     #region Play Sound Functions
     public void PlayPowerOffSound()
     {
@@ -204,16 +207,4 @@ public class ColourChangingPuzzle : MonoBehaviour
         SoundManager.Instance.PlaySoundAtPoint(powerOnSound, transform.position, 1f);
     }
     #endregion
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.I))
-        {
-            powerOffEvent?.Invoke();
-        }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            powerOnEvent?.Invoke();
-        }
-    }
 }

@@ -247,7 +247,7 @@ public class Guard : MonoBehaviour
         waitTime = powerWaitTime;
         atPower = false;
         yield return new WaitForSeconds(powerWaitTime);
-        puzzle.powerOnEvent.Invoke();
+        puzzle.powerOnEvent?.Invoke();
     }
     #endregion
 
@@ -273,7 +273,7 @@ public class Guard : MonoBehaviour
     /// <summary>
     /// Sets moveToPowerSwitch to true - Called in Power Off Event to move guard to powerPoint
     /// </summary>
-    public void PowerSwitchOn()
+    public void PowerOut()
     {
         moveToPowerSwitch = true;
     }
